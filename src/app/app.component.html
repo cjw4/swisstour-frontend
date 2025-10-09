@@ -19,4 +19,9 @@
     </nav>
 </header>
 <router-outlet></router-outlet>
-<footer class="bg-gray-100 text-center py-4 text-sm text-gray-700">{{ settings.title }} v{{ settings.version}}</footer>
+<footer class="bg-gray-100 text-center py-4 text-sm text-gray-700">
+    <div>
+        {{ settings.title }} v{{ settings.version}}
+    </div>
+    <div appCopyright></div>
+</footer>
