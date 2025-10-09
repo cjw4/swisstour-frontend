@@ -1,1 +1,38 @@
-<p>event-list works!</p>
+
+@if (events) {
+
+<div class="max-w-7xl mx-auto p-6 lg:px-8">
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDGA Event</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tier</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Players</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purse</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        @for (event of events; track $index) {
+            <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.displayName }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.tier }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.numberPlayers }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.purse }}</td>
+            </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-event-create></app-event-create>
+} @else
+{
+    <p>No events.</p>
+}
