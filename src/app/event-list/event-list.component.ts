@@ -21,7 +21,7 @@ export class EventListComponent implements OnInit {
   events: any;
   private eventsUrl = this.settings.apiUrl + '/events';
 
-  private getEvents() {
+  public getEvents() {
     this.http.get(this.eventsUrl).subscribe((result) => this.events = result);
   }
 

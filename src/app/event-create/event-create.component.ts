@@ -1,35 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { APP_SETTINGS, appSettings } from '../app.settings';
+import { EventListComponent } from '../event-list/event-list.component';
 
 @Component({
   selector: 'app-event-create',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './event-create.component.html',
-  styleUrl: './event-create.component.css'
+  styleUrl: './event-create.component.css',
+  providers: [
+    { provide: APP_SETTINGS, useValue: appSettings }
+  ]
 })
 export class EventCreateComponent {
-  eventForm: FormGroup;
-  http = inject(HttpClient);
+  
+  eventForm = new FormGroup({
+    id: new FormControl(''),
+    displayName: new FormControl(''),
+    points: new FormControl(''),
+    isChampionship: new FormControl(false),
+    isSwisstour: new FormControl(false)
+  });
 
-  constructor(private fb: FormBuilder) {
-    this.eventForm = this.fb.group({
-      id: [null, [Validators.required, Validators.pattern(/^\d+$/)]],
-      eventName: ['', Validators.required],
-      displayName: ['', Validators.required],
-      points: [null, [Validators.required, Validators.pattern(/^\d+$/)]],
-      isChampionship: [false],
-      isSwisstour: [true]
-    });
-  }
+  http = inject(HttpClient);
+  eventListComponent = inject(EventListComponent);
+  settings = inject(APP_SETTINGS);
+  eventUrl = this.settings.apiUrl + '/events';
+
+  constructor() { }
 
   onSubmit() {
     if (this.eventForm.valid) {
-      this.http.post('http://localhost:8080/api/events', this.eventForm.value)
+      debugger;
+      this.http.post(this.eventUrl, this.eventForm.value)
         .subscribe({
           next: (res) => {
             // handle success, e.g. show a message or redirect
             console.log('Event created:', res);
+            this.eventListComponent.getEvents(); // Refresh the event list
+            this.eventForm.reset(); // Reset the form after submission
           },
           error: (err) => {
             // handle error

@@ -1,23 +1,35 @@
 <div class="flex justify-center overflow-x-auto bg-white rounded-lg shadow px-3 py-4 mb-6">
-  <form (ngSubmit)="onSubmit()" class="w-full max-w-md flex justify-center items-center space-x-4">
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="w-full max-w-md flex justify-center items-center space-x-4">
     <div class="flex-shrink-0">
-      <input type="number" name="pdgaEvent" placeholder="PDGA Event"
+      <input type="number" formControlName="id" placeholder="PDGA Event"
         class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
     </div>
     <div class="flex-shrink-0">
-      <input type="text" name="name" placeholder="Name"
+      <input type="text" formControlName="displayName" placeholder="Name"
         class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
     </div>
     <div class="flex-shrink-0">
-      <input type="number" name="points" placeholder="Points"
+      <input type="number" formControlName="points" placeholder="Points"
         class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
+    </div>
+    <div class="flex-shrink-0">
+      <label class="inline-flex items-center space-x-2">
+        <input type="checkbox" formControlName="isSwisstour" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
+        <span class="text-sm text-gray-700">Swisstour Event</span>
+      </label>
+    </div>
+    <div class="flex-shrink-0">
+      <label class="inline-flex items-center space-x-2">
+        <input type="checkbox" formControlName="isChampionship" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
+        <span class="text-sm text-gray-700">CH Championship</span>
+      </label>
     </div>
     <div class="flex-shrink-0">
       <button type="submit"
-        class="inline-flex items-center rounded-md bg-green-600 px-4 py-1 text-sm font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none">
+        class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none">
         Add Event
       </button>
     </div>
