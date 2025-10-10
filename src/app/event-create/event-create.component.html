@@ -1,37 +1,25 @@
-<div class="max-w-7xl mx-auto p-6 lg:px-8">
-  <div class="overflow-x-auto bg-white rounded-lg shadow">
-    <form (ngSubmit)="onSubmit()" class="w-full">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDGA Event</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <input type="number"
-                     name="pdgaEvent"
-                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900" 
-                     required />
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <input type="text"
-                     name="name"
-                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900" 
-                     required />
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <button type="submit"
-                      class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                Add Event
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
-  </div>
+<div class="flex justify-center overflow-x-auto bg-white rounded-lg shadow px-3 py-4 mb-6">
+  <form (ngSubmit)="onSubmit()" class="w-full max-w-md flex justify-center items-center space-x-4">
+    <div class="flex-shrink-0">
+      <input type="number" name="pdgaEvent" placeholder="PDGA Event"
+        class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required />
+    </div>
+    <div class="flex-shrink-0">
+      <input type="text" name="name" placeholder="Name"
+        class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required />
+    </div>
+    <div class="flex-shrink-0">
+      <input type="number" name="points" placeholder="Points"
+        class="block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required />
+    </div>
+    <div class="flex-shrink-0">
+      <button type="submit"
+        class="inline-flex items-center rounded-md bg-green-600 px-4 py-1 text-sm font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none">
+        Add Event
+      </button>
+    </div>
+  </form>
 </div>
