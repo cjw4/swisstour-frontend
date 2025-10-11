@@ -25,6 +25,7 @@ export class EventListComponent implements OnInit {
   settings = inject(APP_SETTINGS);
   events: any;
   private eventsUrl = this.settings.apiUrl + '/events';
+  private eventResultUrl = this.settings.apiUrl + '/events/results/'
 
   bannerInfo : BannerInfo | undefined;
 
@@ -46,6 +47,26 @@ export class EventListComponent implements OnInit {
 
   public getEvents() {
     this.http.get(this.eventsUrl).subscribe((result) => this.events = result);
+  }
+
+  public addResults(id:number) {
+    const url = `${this.eventsUrl}/results/${id}`;
+    this.http.post(url, undefined).subscribe({
+      next: (res) => {
+        this.bannerInfo = {
+          message: "Event results added.",
+          visible: true,
+          type: 'success'
+        }
+      },
+      error: (err) => {
+        this.bannerInfo = {
+          message: "Event results could not be added.",
+          visible: true,
+          type: 'error'
+        }
+      }
+    })
   }
 
   public deleteEvent(id: number) {
