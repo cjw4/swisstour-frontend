@@ -40,22 +40,20 @@ export class EventCreateComponent {
 
   onSubmit() {
     if (this.eventForm.valid) {
-      debugger;
       this.http.post(this.eventUrl, this.eventForm.value)
         .subscribe({
-          next: (res) => {
+          next: (res: any) => {
+            debugger;
             this.bannerInfo = {
-              message: "Event successfully created.",
+              message: `PDGA event ${res.id} (${res.name}) was added.`,
               visible: true,
               type: 'success'
             }
-            debugger;
             this.emitBannerInfo(this.bannerInfo);
             this.eventListComponent.getEvents(); // Refresh the event list
             this.eventForm.reset(); // Reset the form after submission
           },
           error: (err) => {
-            debugger;
             this.bannerInfo = {
               message: "Error creating event: " + err.message,
               visible: true,

@@ -39,9 +39,21 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.numberPlayers }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.purse }}</td>
-          <td class="whitespace-nowrap"><button
-              class="bg-green-600 text-gray-100 hover:bg-green-500 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm"
-              (click)="addResults(event.id)">Add Results</button></td>
+          <td class="whitespace-nowrap">
+            <button
+              class="bg-green-600 text-gray-100 hover:bg-green-500 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm flex items-center justify-center"
+              [disabled]="loadingResults()[event.id]"
+              (click)="addResults(event.id)">
+              @if (loadingResults()[event.id]) {
+                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              } @else {
+                Add Results
+              }
+            </button>
+          </td>
           <td class="whitespace-nowrap"><button
               class="bg-red-700 font-medium text-gray-100 hover:bg-red-600 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm"
               (click)="deleteEvent(event.id)">Remove</button>

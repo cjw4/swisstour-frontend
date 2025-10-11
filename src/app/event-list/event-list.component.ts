@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { EventsService } from '../services/events.service';
 import { Observable } from 'rxjs';
-import { PdgaEvent } from '../pdga-event';
+import { PdgaEvent } from '../interfaces/pdga-event';
 import { HttpClient } from '@angular/common/http';
 import { EventCreateComponent } from "../event-create/event-create.component";
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerComponent } from '../banner/banner.component';
 import { BannerInfo } from '../interfaces/banner-info';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-event-list',
@@ -20,14 +21,16 @@ import { BannerInfo } from '../interfaces/banner-info';
     { provide: APP_SETTINGS, useValue: appSettings }
   ]
 })
+
 export class EventListComponent implements OnInit {
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
-  events: any;
+  events: Array<PdgaEvent> | undefined;
   private eventsUrl = this.settings.apiUrl + '/events';
-  private eventResultUrl = this.settings.apiUrl + '/events/results/'
 
   bannerInfo : BannerInfo | undefined;
+
+  loadingResults = signal<Record<number, boolean>>({});
 
   public createBanner(bannerInfo: BannerInfo) {
     this.bannerInfo = {
@@ -46,10 +49,13 @@ export class EventListComponent implements OnInit {
   }
 
   public getEvents() {
-    this.http.get(this.eventsUrl).subscribe((result) => this.events = result);
+    this.http.get(this.eventsUrl).subscribe((result: any) => this.events = result);
   }
 
-  public addResults(id:number) {
+  public addResults(id: number) {
+    // Set the loading state for the specific event
+    this.loadingResults.update(state => ({ ...state, [id]: true }));
+
     const url = `${this.eventsUrl}/results/${id}`;
     this.http.post(url, undefined).subscribe({
       next: (res) => {
@@ -57,28 +63,32 @@ export class EventListComponent implements OnInit {
           message: "Event results added.",
           visible: true,
           type: 'success'
-        }
+        };
       },
       error: (err) => {
         this.bannerInfo = {
           message: "Event results could not be added.",
           visible: true,
           type: 'error'
-        }
+        };
+      },
+      complete: () => {
+        // Reset the loading state for the specific event
+        this.loadingResults.update(state => ({ ...state, [id]: false }));
       }
-    })
+    });
   }
 
   public deleteEvent(id: number) {
-    if (confirm("Are you sure you want to delete this event?")) {
+    if (confirm(`Are you sure you want to delete pdga event ${id}?`)) {
       const url = `${this.eventsUrl}/${id}`;
       this.http.delete(url).subscribe({
         next: (res) => {
           this.getEvents(); // Refresh the event list after deletion
           this.bannerInfo = {
-            message: "Event deleted.",
+            message: `PDGA event was deleted.`,
             visible: true,
-            type: 'success'
+            type: 'info'
           }
         },
         error: (err) => {

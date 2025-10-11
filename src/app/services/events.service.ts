@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PdgaEvent } from '../pdga-event';
+import { PdgaEvent } from '../interfaces/pdga-event';
 
 @Injectable({
   providedIn: 'root'
