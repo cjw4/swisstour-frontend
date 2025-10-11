@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { EventListComponent } from '../event-list/event-list.component';
+import { BannerInfo } from '../interfaces/banner-info';
 
 @Component({
   selector: 'app-event-create',
@@ -15,7 +16,7 @@ import { EventListComponent } from '../event-list/event-list.component';
   ]
 })
 export class EventCreateComponent {
-  
+
   eventForm = new FormGroup({
     id: new FormControl(''),
     displayName: new FormControl(''),
@@ -29,7 +30,13 @@ export class EventCreateComponent {
   settings = inject(APP_SETTINGS);
   eventUrl = this.settings.apiUrl + '/events';
 
-  constructor() { }
+  bannerInfoOutput = output<BannerInfo>();
+  bannerInfo : BannerInfo | undefined;
+
+  private emitBannerInfo(bannerInfo: BannerInfo) {
+    debugger;
+    this.bannerInfoOutput.emit(bannerInfo);
+  }
 
   onSubmit() {
     if (this.eventForm.valid) {
@@ -37,14 +44,24 @@ export class EventCreateComponent {
       this.http.post(this.eventUrl, this.eventForm.value)
         .subscribe({
           next: (res) => {
-            // handle success, e.g. show a message or redirect
-            console.log('Event created:', res);
+            this.bannerInfo = {
+              message: "Event successfully created.",
+              visible: true,
+              type: 'success'
+            }
+            debugger;
+            this.emitBannerInfo(this.bannerInfo);
             this.eventListComponent.getEvents(); // Refresh the event list
             this.eventForm.reset(); // Reset the form after submission
           },
           error: (err) => {
-            // handle error
-            console.error('Error creating event:', err);
+            debugger;
+            this.bannerInfo = {
+              message: "Error creating event: " + err.message,
+              visible: true,
+              type: 'error'
+            }
+            this.emitBannerInfo(this.bannerInfo);
           }
         });
     }

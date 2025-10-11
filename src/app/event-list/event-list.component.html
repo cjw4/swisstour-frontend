@@ -1,5 +1,11 @@
 <div class="max-w-7xl mx-auto p-6 lg:px-8">
-  <app-event-create></app-event-create>
+  <app-banner
+    [bannerInfo]="bannerInfo"
+    (close)="closeBanner()">
+  </app-banner>
+  <app-event-create
+    (bannerInfoOutput)="createBanner($event)">
+  </app-event-create>
   @if (events) {
   <div class="overflow-x-auto bg-white rounded-lg shadow">
     <table class="min-w-full divide-y divide-gray-200">
@@ -37,7 +43,8 @@
               class="bg-green-600 text-gray-100 hover:bg-green-500 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm">Add
               Results</button></td>
           <td class="whitespace-nowrap"><button
-              class="bg-red-700 font-medium text-gray-100 hover:bg-red-600 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm">Remove</button>
+              class="bg-red-700 font-medium text-gray-100 hover:bg-red-600 focus:outline-none rounded-md px-2 py-1 text-sm shadow-sm"
+              (click)="deleteEvent(event.id)">Remove</button>
           </td>
         </tr>
         }
