@@ -25,7 +25,7 @@ import { signal } from '@angular/core';
 export class EventListComponent implements OnInit {
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
-  events: Array<PdgaEvent> | undefined;
+  events: any;
   private eventsUrl = this.settings.apiUrl + '/events';
 
   bannerInfo : BannerInfo | undefined;
@@ -46,6 +46,10 @@ export class EventListComponent implements OnInit {
       visible: false,
       type: 'success'
     }
+  }
+
+  refreshEvents() {
+    this.getEvents();
   }
 
   public getEvents() {

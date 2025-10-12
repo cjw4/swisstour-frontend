@@ -26,7 +26,8 @@ export class EventCreateComponent {
   });
 
   http = inject(HttpClient);
-  eventListComponent = inject(EventListComponent);
+  refreshEvents = output();
+  // eventListComponent = inject(EventListComponent);
   settings = inject(APP_SETTINGS);
   eventUrl = this.settings.apiUrl + '/events';
 
@@ -40,6 +41,7 @@ export class EventCreateComponent {
 
   onSubmit() {
     if (this.eventForm.valid) {
+      debugger;
       this.http.post(this.eventUrl, this.eventForm.value)
         .subscribe({
           next: (res: any) => {
@@ -50,12 +52,22 @@ export class EventCreateComponent {
               type: 'success'
             }
             this.emitBannerInfo(this.bannerInfo);
-            this.eventListComponent.getEvents(); // Refresh the event list
-            this.eventForm.reset(); // Reset the form after submission
+            this.refreshEvents.emit();
+            // this.eventListComponent.getEvents(); // Refresh the event list
+            this.eventForm.reset({
+              id: '',
+              displayName: '',
+              points: '',
+              isChampionship: false,
+              isSwisstour: false
+            }); // Reset the form after submission
           },
           error: (err) => {
+            debugger;
+            const serverError = err.error;
+            const errorMessage = serverError?.message || "An unknown error occured."
             this.bannerInfo = {
-              message: "Error creating event: " + err.message,
+              message: errorMessage,
               visible: true,
               type: 'error'
             }
