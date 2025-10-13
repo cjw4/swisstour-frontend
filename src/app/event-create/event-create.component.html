@@ -2,29 +2,56 @@
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="w-full max-w-md space-y-4">
     <div>
       <input type="number" formControlName="id" placeholder="PDGA Event Number"
-        class="block w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
+      @if (id?.invalid && id?.touched) {
+        <span class="text-red-600 text-sm ml-1">
+          @if (id?.errors?.['required']) {
+            <span>* required</span>
+          }
+        </span>
+      }
     </div>
     <div>
       <input type="text" formControlName="displayName" placeholder="Displayed Name"
-        class="block w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
+      @if (displayName?.invalid && displayName?.touched) {
+        <span class="text-red-600 text-sm ml-1">
+          @if (displayName?.errors?.['required']) {
+            <span>* required</span>
+          }
+          @if (displayName?.errors?.['minlength']) {
+            <span>* minimum of 3 characters</span>
+          }
+        </span>
+      }
     </div>
     <div>
       <input type="number" formControlName="points" placeholder="Swisstour Points"
-        class="block w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
         required />
-    </div>
-    <div>
-      <label class="inline-flex items-center space-x-2">
-        <input type="checkbox" formControlName="isSwisstour" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
-        <span class="text-sm text-gray-700">Swisstour Event</span>
-      </label>
+      @if (points?.invalid && points?.touched) {
+        <span class="text-red-600 text-sm ml-1">
+          @if (points?.errors?.['required']) {
+            <span>* required</span>
+          }
+          @if (points?.errors?.['pattern']) {
+            <span>* must be a number</span>
+          }
+       </span>
+      }
     </div>
     <div>
       <label class="inline-flex items-center space-x-2">
         <input type="checkbox" formControlName="isChampionship" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
         <span class="text-sm text-gray-700">CH Championship</span>
+      </label>
+    </div>
+    <div>
+      <label class="inline-flex items-center space-x-2">
+        <input type="checkbox" formControlName="isSwisstour" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
+        <span class="text-sm text-gray-700">Swisstour Event</span>
       </label>
     </div>
     <div>
