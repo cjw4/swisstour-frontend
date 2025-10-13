@@ -33,7 +33,6 @@ export class EventCreateComponent {
 
   http = inject(HttpClient);
   refreshEvents = output();
-  // eventListComponent = inject(EventListComponent);
   settings = inject(APP_SETTINGS);
   eventUrl = this.settings.apiUrl + '/events';
 

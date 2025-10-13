@@ -25,7 +25,7 @@ import { signal } from '@angular/core';
 export class EventListComponent implements OnInit {
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
-  events: any;
+  events!: PdgaEvent[] | [];
   private eventsUrl = this.settings.apiUrl + '/events';
 
   bannerInfo : BannerInfo | undefined;
@@ -62,7 +62,7 @@ export class EventListComponent implements OnInit {
 
     const url = `${this.eventsUrl}/results/${id}`;
     this.http.post(url, undefined).subscribe({
-      next: (res) => {
+      next: () => {
         this.bannerInfo = {
           message: "Event results added.",
           visible: true,
@@ -83,9 +83,9 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  public deleteEvent(id: number) {
-    if (confirm(`Are you sure you want to delete pdga event ${id}?`)) {
-      const url = `${this.eventsUrl}/${id}`;
+  public deleteEvent(event: PdgaEvent) {
+    if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
+      const url = `${this.eventsUrl}/${event.id}`;
       this.http.delete(url).subscribe({
         next: (res) => {
           this.getEvents(); // Refresh the event list after deletion
@@ -96,7 +96,7 @@ export class EventListComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Error deleting event:', err);
+          console.error('Error deleting event:', err.error.message);
         }
       });
     }
