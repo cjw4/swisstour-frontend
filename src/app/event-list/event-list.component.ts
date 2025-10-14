@@ -30,8 +30,6 @@ export class EventListComponent implements OnInit {
 
   bannerInfo : BannerInfo | undefined;
 
-  loadingResults = signal<Record<number, boolean>>({});
-
   public createBanner(bannerInfo: BannerInfo) {
     this.bannerInfo = {
       message: bannerInfo.message,
@@ -57,9 +55,6 @@ export class EventListComponent implements OnInit {
   }
 
   public addResults(id: number) {
-    // Set the loading state for the specific event
-    this.loadingResults.update(state => ({ ...state, [id]: true }));
-
     const url = `${this.eventsUrl}/results/${id}`;
     this.http.post(url, undefined).subscribe({
       next: () => {
@@ -75,10 +70,6 @@ export class EventListComponent implements OnInit {
           visible: true,
           type: 'error'
         };
-      },
-      complete: () => {
-        // Reset the loading state for the specific event
-        this.loadingResults.update(state => ({ ...state, [id]: false }));
       }
     });
   }
