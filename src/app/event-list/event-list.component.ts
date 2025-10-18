@@ -8,12 +8,14 @@ import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerComponent } from '../banner/banner.component';
 import { BannerInfo } from '../interfaces/banner-info';
 import { signal } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-event-list',
   imports: [
     EventCreateComponent,
-    BannerComponent
+    BannerComponent,
+    AsyncPipe
   ],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
@@ -23,9 +25,15 @@ import { signal } from '@angular/core';
 })
 
 export class EventListComponent implements OnInit {
+  private eventService: EventsService;
+
+  constructor() {
+    this.eventService = new EventsService();
+  }
+
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
-  events!: PdgaEvent[] | [];
+  events$: Observable<PdgaEvent[]> | undefined;
   private eventsUrl = this.settings.apiUrl + '/events';
 
   bannerInfo : BannerInfo | undefined;
@@ -51,7 +59,7 @@ export class EventListComponent implements OnInit {
   }
 
   public getEvents() {
-    this.http.get(this.eventsUrl).subscribe((result: any) => this.events = result);
+    this.events$ = this.eventService.getEvents();
   }
 
   public addResults(id: number) {
