@@ -18,7 +18,7 @@ import { Player } from '../interfaces/player';
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class StandingsComponent implements OnInit {
-  category = input();
+  category = 'MPO';
   private eventsService: EventsService;
   private playerService: PlayerService;
   playersSignal: Signal<any>;
@@ -77,7 +77,9 @@ export class StandingsComponent implements OnInit {
     debugger;
   }
 
-  onCategoryChange(): void {
+  onCategoryChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.category = selectElement.value;
     this.standingsUrl = this.settings.apiUrl + '/standings/' + this.category;
     this.getStandings();
   }
