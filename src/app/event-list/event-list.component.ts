@@ -12,46 +12,35 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-event-list',
-  imports: [
-    EventCreateComponent,
-    BannerComponent,
-    AsyncPipe
-  ],
+  imports: [EventCreateComponent, BannerComponent, AsyncPipe],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
-  providers: [
-    { provide: APP_SETTINGS, useValue: appSettings }
-  ]
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
-
 export class EventListComponent implements OnInit {
-  private eventService: EventsService;
-
-  constructor() {
-    this.eventService = new EventsService();
-  }
+  private eventService = inject(EventsService);
 
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
   events$: Observable<PdgaEvent[]> | undefined;
   private eventsUrl = this.settings.apiUrl + '/events';
 
-  bannerInfo : BannerInfo | undefined;
+  bannerInfo: BannerInfo | undefined;
 
   public createBanner(bannerInfo: BannerInfo) {
     this.bannerInfo = {
       message: bannerInfo.message,
       visible: bannerInfo.visible,
-      type: bannerInfo.type
-    }
+      type: bannerInfo.type,
+    };
   }
 
   public closeBanner() {
     this.bannerInfo = {
       message: '',
       visible: false,
-      type: 'success'
-    }
+      type: 'success',
+    };
   }
 
   refreshEvents() {
@@ -67,18 +56,18 @@ export class EventListComponent implements OnInit {
     this.http.post(url, undefined).subscribe({
       next: () => {
         this.bannerInfo = {
-          message: "Event results added.",
+          message: 'Event results added.',
           visible: true,
-          type: 'success'
+          type: 'success',
         };
       },
       error: (err) => {
         this.bannerInfo = {
-          message: "Event results could not be added.",
+          message: 'Event results could not be added.',
           visible: true,
-          type: 'error'
+          type: 'error',
         };
-      }
+      },
     });
   }
 
@@ -91,12 +80,12 @@ export class EventListComponent implements OnInit {
           this.bannerInfo = {
             message: `PDGA event was deleted.`,
             visible: true,
-            type: 'info'
-          }
+            type: 'info',
+          };
         },
         error: (err) => {
           console.error('Error deleting event:', err.error.message);
-        }
+        },
       });
     }
   }
