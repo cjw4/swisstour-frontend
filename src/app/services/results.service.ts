@@ -1,14 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
-import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS } from '../app.settings';
+import { HttpClient } from '@angular/common/http';
 import { BannerInfo } from '../interfaces/banner-info';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EventsService {
+export class ResultsService {
   private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
   http = inject(HttpClient);
   bannerInfo: BannerInfo = {
@@ -17,21 +16,17 @@ export class EventsService {
     type: 'info',
   };
 
-  getEvents(): Observable<PdgaEvent[]> {
-    return this.http.get<PdgaEvent[]>(this.eventsUrl);
-  }
-
-  deleteEvent(event: PdgaEvent): Observable<BannerInfo> {
-    const url = `${this.eventsUrl}/${event.id}`;
-    return this.http.delete(url).pipe(
+  addResults(id: number): Observable<BannerInfo> {
+    const url = `${this.eventsUrl}/results/${id}`;
+    return this.http.post(url, undefined).pipe(
       map(() => ({
-        message: `PDGA event was deleted.`,
+        message: `Results were added for event ${id}.`,
         visible: true,
         type: 'info' as const,
       })),
       catchError((error) =>
         of({
-          message: `PDGA event was not deleted: ${error.message}`,
+          message: `Results were not able to be added: ${error.value.message}`,
           visible: true,
           type: 'error' as const,
         })

@@ -7,8 +7,8 @@ import { EventCreateComponent } from "../event-create/event-create.component";
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerComponent } from '../banner/banner.component';
 import { BannerInfo } from '../interfaces/banner-info';
-import { signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { ResultsService } from '../services/results.service';
 
 @Component({
   selector: 'app-event-list',
@@ -18,15 +18,44 @@ import { AsyncPipe } from '@angular/common';
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class EventListComponent implements OnInit {
+  // inject services
   private eventService = inject(EventsService);
+  private resultsService = inject(ResultsService);
 
-  http = inject(HttpClient);
-  settings = inject(APP_SETTINGS);
+  // observables
   events$: Observable<PdgaEvent[]> | undefined;
-  private eventsUrl = this.settings.apiUrl + '/events';
 
+  // lifecylce hooks
+  ngOnInit(): void {
+    this.getEvents();
+  }
+
+  // event functions
+  public getEvents() {
+    this.events$ = this.eventService.getEvents();
+  }
+
+  public addResults(id: number) {
+    this.resultsService.addResults(id).subscribe({
+      next: (bannerInfo) => {
+        this.bannerInfo = bannerInfo;
+      },
+    });
+  }
+
+  public deleteEvent(event: PdgaEvent) {
+    if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
+      this.eventService.deleteEvent(event).subscribe({
+        next: (bannerInfo) => {
+          this.bannerInfo = bannerInfo;
+          this.getEvents();
+        },
+      });
+    }
+  }
+
+  // banner
   bannerInfo: BannerInfo | undefined;
-
   public createBanner(bannerInfo: BannerInfo) {
     this.bannerInfo = {
       message: bannerInfo.message,
@@ -41,56 +70,5 @@ export class EventListComponent implements OnInit {
       visible: false,
       type: 'success',
     };
-  }
-
-  refreshEvents() {
-    this.getEvents();
-  }
-
-  public getEvents() {
-    this.events$ = this.eventService.getEvents();
-  }
-
-  public addResults(id: number) {
-    const url = `${this.eventsUrl}/results/${id}`;
-    this.http.post(url, undefined).subscribe({
-      next: () => {
-        this.bannerInfo = {
-          message: 'Event results added.',
-          visible: true,
-          type: 'success',
-        };
-      },
-      error: (err) => {
-        this.bannerInfo = {
-          message: 'Event results could not be added.',
-          visible: true,
-          type: 'error',
-        };
-      },
-    });
-  }
-
-  public deleteEvent(event: PdgaEvent) {
-    if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
-      const url = `${this.eventsUrl}/${event.id}`;
-      this.http.delete(url).subscribe({
-        next: (res) => {
-          this.getEvents(); // Refresh the event list after deletion
-          this.bannerInfo = {
-            message: `PDGA event was deleted.`,
-            visible: true,
-            type: 'info',
-          };
-        },
-        error: (err) => {
-          console.error('Error deleting event:', err.error.message);
-        },
-      });
-    }
-  }
-
-  ngOnInit(): void {
-    this.getEvents();
   }
 }
