@@ -54,11 +54,15 @@
         <span class="text-sm text-gray-700">Swisstour Event</span>
       </label>
     </div>
-    <div>
-      <button type="submit"
-        class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none">
-        Add Event
-      </button>
-    </div>
+      <div>
+        <button type="submit"
+          class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none">
+          @if (event()) {
+            Edit Event
+          } @else {
+            Add Event
+          }
+        </button>
+      </div>
   </form>
 </div>

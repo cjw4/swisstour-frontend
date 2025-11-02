@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, output } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
+import { PdgaEvent } from '../interfaces/pdga-event';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-create',
@@ -14,6 +16,7 @@ import { BannerInfo } from '../interfaces/banner-info';
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class EventCreateComponent {
+  event = input<PdgaEvent>();
   eventForm = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     displayName: new FormControl('', [
@@ -28,6 +31,21 @@ export class EventCreateComponent {
     isSwisstour: new FormControl(false),
   });
 
+  constructor() {
+    // Create an effect to watch for event changes
+    effect(() => {
+      const currentEvent = this.event();
+      if (currentEvent) {
+        this.eventForm.patchValue({
+          id: currentEvent.id.toString(),
+          displayName: currentEvent.displayName,
+          points: currentEvent.points.toString(),
+          isChampionship: currentEvent.isChampionship,
+          isSwisstour: currentEvent.isSwisstour,
+        });
+      }
+    });
+  }
 
   isFormInvalid = this.eventForm.invalid;
 
@@ -45,41 +63,46 @@ export class EventCreateComponent {
 
   onSubmit() {
     if (this.eventForm.invalid) {
-      this.eventForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
+      this.eventForm.markAllAsTouched();
       return;
     }
-    if (this.eventForm.valid) {
-      this.http.post(this.eventUrl, this.eventForm.value).subscribe({
-        next: (res: any) => {
-          this.bannerInfo = {
-            message: `PDGA event ${res.id} (${res.name}) was added.`,
-            visible: true,
-            type: 'success',
-          };
-          this.emitBannerInfo(this.bannerInfo);
-          this.refreshEvents.emit();
-          // this.eventListComponent.getEvents(); // Refresh the event list
-          this.eventForm.reset({
-            id: '',
-            displayName: '',
-            points: '',
-            isChampionship: false,
-            isSwisstour: false,
-          }); // Reset the form after submission
-        },
-        error: (err) => {
-          const serverError = err.error;
-          const errorMessage =
-            serverError?.message || 'An unknown error occured.';
-          this.bannerInfo = {
-            message: errorMessage,
-            visible: true,
-            type: 'error',
-          };
-          this.emitBannerInfo(this.bannerInfo);
-        },
-      });
-    }
+
+    const formValue = this.eventForm.value;
+    const isEdit = !!this.event();
+
+    // Choose between PATCH and POST based on whether we're editing
+    const request = isEdit
+      ? this.http.put<PdgaEvent>(this.eventUrl, formValue)
+      : this.http.post<PdgaEvent>(this.eventUrl, formValue);
+
+    request.subscribe({
+      next: (res) => {
+        this.bannerInfo = {
+          message: `PDGA event ${res.id} (${res.displayName}) was ${isEdit ? 'updated' : 'created'}.`,
+          visible: true,
+          type: 'success',
+        };
+        this.emitBannerInfo(this.bannerInfo);
+        this.refreshEvents.emit();
+
+        this.eventForm.reset({
+          id: null,
+          displayName: '',
+          points: '',
+          isChampionship: false,
+          isSwisstour: false,
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        const errorMessage = err.error?.message ?? 'An unknown error occurred.';
+        this.bannerInfo = {
+          message: errorMessage,
+          visible: true,
+          type: 'error',
+        };
+        this.emitBannerInfo(this.bannerInfo);
+      }
+    });
   }
 
   get id() {

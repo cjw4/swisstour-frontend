@@ -23,6 +23,7 @@ export class EventListComponent implements OnInit {
   private resultsService = inject(ResultsService);
 
   // observables
+  event$: Observable<PdgaEvent> | undefined;
   events$: Observable<PdgaEvent[]> | undefined;
 
   // lifecylce hooks
@@ -33,6 +34,10 @@ export class EventListComponent implements OnInit {
   // event functions
   public getEvents() {
     this.events$ = this.eventService.getEvents();
+  }
+
+  public getEvent(id: number) {
+    this.event$ = this.eventService.getEvent(id);
   }
 
   public addResults(id: number) {

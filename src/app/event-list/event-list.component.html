@@ -1,12 +1,15 @@
 @let events = (events$ | async)!;
+@let event = (event$ | async)!;
 <div class="max-w-7xl mx-auto p-6 lg:px-8">
   <app-banner
     [bannerInfo]="bannerInfo"
     (close)="closeBanner()">
   </app-banner>
   <app-event-create
-    (refreshEvents)="refreshEvents()"
-    (bannerInfoOutput)="createBanner($event)">
+    (refreshEvents)="getEvents()"
+    (bannerInfoOutput)="createBanner($event)"
+    [event]="event"
+    >
   </app-event-create>
   @if (events) {
   <div class="overflow-x-auto bg-white rounded-lg shadow">
@@ -53,9 +56,14 @@
           </span>
           </td>
           <td class="whitespace-nowrap">
-              <span class="text-gray-600 cursor-pointer px-2"
-                    (click)="deleteEvent(event)"><span class="sr-only">Close</span>&times;
-              </span>
+            <span class="text-gray-600 cursor-pointer px-2"
+              (click)="getEvent(event.id)"><span class="sr-only">Edit</span>✏️
+            </span>
+          </td>
+          <td class="whitespace-nowrap">
+            <span class="text-gray-600 cursor-pointer px-2"
+              (click)="deleteEvent(event)"><span class="sr-only">Close</span>&times;
+            </span>
           </td>
         </tr>
         }

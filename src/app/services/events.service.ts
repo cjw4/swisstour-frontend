@@ -21,6 +21,10 @@ export class EventsService {
     return this.http.get<PdgaEvent[]>(this.eventsUrl);
   }
 
+  getEvent(id: number): Observable<PdgaEvent> {
+    return this.http.get<PdgaEvent>(this.eventsUrl + '/' + id);
+  }
+
   deleteEvent(event: PdgaEvent): Observable<BannerInfo> {
     const url = `${this.eventsUrl}/${event.id}`;
     return this.http.delete(url).pipe(
