@@ -1,11 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
 import { PdgaEvent } from '../interfaces/pdga-event';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-create',
@@ -17,6 +16,7 @@ import { Observable } from 'rxjs';
 })
 export class EventCreateComponent {
   event = input<PdgaEvent>();
+  isEvent = signal(false);
   eventForm = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     displayName: new FormControl('', [
@@ -36,6 +36,7 @@ export class EventCreateComponent {
     effect(() => {
       const currentEvent = this.event();
       if (currentEvent) {
+        this.isEvent.set(true);
         this.eventForm.patchValue({
           id: currentEvent.id.toString(),
           displayName: currentEvent.displayName,
@@ -70,15 +71,15 @@ export class EventCreateComponent {
     const formValue = this.eventForm.value;
     const isEdit = !!this.event();
 
-    // Choose between PATCH and POST based on whether we're editing
+    // Choose between PUT and POST based on whether we're editing
     const request = isEdit
-      ? this.http.put<PdgaEvent>(this.eventUrl, formValue)
+      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
       : this.http.post<PdgaEvent>(this.eventUrl, formValue);
 
     request.subscribe({
       next: (res) => {
         this.bannerInfo = {
-          message: `PDGA event ${res.id} (${res.displayName}) was ${isEdit ? 'updated' : 'created'}.`,
+          message: `PDGA event ${res} was ${isEdit ? 'updated' : 'created'}.`,
           visible: true,
           type: 'success',
         };
@@ -92,6 +93,8 @@ export class EventCreateComponent {
           isChampionship: false,
           isSwisstour: false,
         });
+        // reset the input
+        this.isEvent.set(false);
       },
       error: (err: HttpErrorResponse) => {
         const errorMessage = err.error?.message ?? 'An unknown error occurred.';
