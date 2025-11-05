@@ -23,7 +23,6 @@
           <th scope="col" class="text-center px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Swisstour</th>
           <th scope="col" class="text-center py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Championship</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
@@ -51,19 +50,14 @@
           }
           <td class="whitespace-nowrap">
             <span class="text-gray-600 cursor-pointer px-2"
-              (click)="addResults(event.id)"
-            ><span class="sr-only">Add Results</span>+
-          </span>
-          </td>
-          <td class="whitespace-nowrap">
-            <span class="text-gray-600 cursor-pointer px-2"
               (click)="getEvent(event.id)"><span class="sr-only">Edit</span>✏️
             </span>
-          </td>
-          <td class="whitespace-nowrap">
+
             <span class="text-gray-600 cursor-pointer px-2"
               (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
             </span>
+
+            <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none" (click)="addResults(event.id)">Add Results</button>
           </td>
         </tr>
         }

@@ -79,7 +79,7 @@ export class EventCreateComponent {
     request.subscribe({
       next: (res) => {
         this.bannerInfo = {
-          message: `PDGA event ${res} was ${isEdit ? 'updated' : 'created'}.`,
+          message: `PDGA event ${isEdit ? res : res.displayName} was ${isEdit ? 'updated' : 'created'}.`,
           visible: true,
           type: 'success',
         };
