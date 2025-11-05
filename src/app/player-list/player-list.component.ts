@@ -5,28 +5,31 @@ import { Observable } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
+import { PlayerInputComponent } from '../player-input/player-input.component';
 
 @Component({
   selector: 'app-player-list',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, PlayerInputComponent],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class PlayerListComponent implements OnInit {
-  private playerService: PlayerService;
+  playerService = inject(PlayerService);
 
-  constructor() {
-    this.playerService = new PlayerService();
-  }
-
-  http = inject(HttpClient);
-  settings = inject(APP_SETTINGS);
-  playersUrl = this.settings.apiUrl + '/players';
   players$: Observable<Player[]> | undefined;
+  player$: Observable<Player> | undefined;
 
   private getPlayers() {
     this.players$ = this.playerService.getPlayers();
+  }
+
+  getPlayer(id: number) {
+    this.player$ = this.playerService.getPlayer(id);
+  }
+
+  deletePlayer(player: Player) {
+
   }
 
   ngOnInit(): void {
