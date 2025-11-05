@@ -7,12 +7,12 @@ import { EventCreateComponent } from "../event-create/event-create.component";
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerComponent } from '../banner/banner.component';
 import { BannerInfo } from '../interfaces/banner-info';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { ResultsService } from '../services/results.service';
 
 @Component({
   selector: 'app-event-list',
-  imports: [EventCreateComponent, BannerComponent, AsyncPipe],
+  imports: [EventCreateComponent, BannerComponent, AsyncPipe, NgClass],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -34,6 +34,7 @@ export class EventListComponent implements OnInit {
   // event functions
   public getEvents() {
     this.events$ = this.eventService.getEvents();
+    debugger;
   }
 
   public getEvent(id: number) {
@@ -44,6 +45,7 @@ export class EventListComponent implements OnInit {
     this.resultsService.addResults(id).subscribe({
       next: (bannerInfo) => {
         this.bannerInfo = bannerInfo;
+        this.getEvents();
       },
     });
   }

@@ -20,12 +20,15 @@ export class PlayerService {
   }
 
   addPlayer(player: any): Observable<any> {
-    debugger;
     return this.http.post<Player>(this.playersUrl, player);
   }
 
   updatePlayer(player: any, id: number): Observable<any> {
-    debugger;
     return this.http.put<Player>(this.playersUrl + '/' + id, player)
+  }
+
+  deletePlayer(player: Player) {
+    const url = `${this.playersUrl}/${player.id}`;
+    return this.http.delete(url);
   }
 }

@@ -12,4 +12,5 @@ export interface PdgaEvent {
     purse: number;
     isChampionship: boolean;
     isSwisstour: boolean;
+    hasResults: boolean;
 }

@@ -29,7 +29,12 @@ export class PlayerListComponent implements OnInit {
   }
 
   deletePlayer(player: Player) {
-
+    this.playerService.deletePlayer(player).subscribe(
+      (res) => {
+        this.getPlayers()
+        debugger;
+      }
+    );
   }
 
   ngOnInit(): void {

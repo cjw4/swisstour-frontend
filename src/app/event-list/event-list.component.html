@@ -57,7 +57,11 @@
               (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
             </span>
 
-            <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none" (click)="addResults(event.id)">Add Results</button>
+            <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+            (click)="addResults(event.id)"
+            [disabled]="event.hasResults"
+            [ngClass]="{'disabled-button': event.hasResults}"
+            >Add Results</button>
           </td>
         </tr>
         }
