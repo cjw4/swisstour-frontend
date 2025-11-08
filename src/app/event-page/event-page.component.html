@@ -1,0 +1,25 @@
+@let event = (event$ | async)!;
+@let events = (events$ | async)!;
+
+<app-banner
+  [bannerInfo]="bannerInfo"
+  (close)="closeBanner()">
+</app-banner>
+
+<!-- event input -->
+<div class="w-1/3">
+  <app-event-create
+  (refreshEvents)="getEvents()"
+  (bannerInfoOutput)="createBanner($event)"
+  [event]="event"
+  />
+</div>
+
+<!-- event list -->
+<app-event-list
+  [events]="events"
+  (addedResults)="addResults($event)"
+  (deletedEvent)="deleteEvent($event)"
+  (selectedEvent)="getEvent($event)"
+/>
+

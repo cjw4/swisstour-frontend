@@ -16,7 +16,7 @@ export class ResultsService {
     type: 'info',
   };
 
-  addResults(id: number): Observable<BannerInfo> {
+  addResults(id: number | null): Observable<BannerInfo> {
     const url = `${this.eventsUrl}/results/${id}`;
     return this.http.post(url, undefined).pipe(
       map(() => ({

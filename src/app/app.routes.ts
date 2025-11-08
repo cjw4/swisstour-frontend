@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { EventListComponent } from './event-list/event-list.component';
+import { EventPageComponent } from './event-page/event-page.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { StandingsComponent } from './standings/standings.component';
 
@@ -11,7 +11,7 @@ export const routes: Routes = [
     },
     {
       path: 'events',
-      component: EventListComponent
+      component: EventPageComponent
     },
     {
       path: 'players',

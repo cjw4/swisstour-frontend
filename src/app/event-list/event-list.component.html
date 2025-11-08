@@ -1,75 +1,62 @@
-@let events = (events$ | async)!;
-@let event = (event$ | async)!;
-<div class="max-w-7xl mx-auto p-6 lg:px-8">
-  <app-banner
-    [bannerInfo]="bannerInfo"
-    (close)="closeBanner()">
-  </app-banner>
-  <app-event-create
-    (refreshEvents)="getEvents()"
-    (bannerInfoOutput)="createBanner($event)"
-    [event]="event"
-    >
-  </app-event-create>
-  @if (events) {
-  <div class="overflow-x-auto bg-white rounded-lg shadow">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-          <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDGA Event</th>
-          <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Display Name</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-          <th scope="col" class="text-center px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Swisstour</th>
-          <th scope="col" class="text-center py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Championship</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        @for (event of events; track $index) {
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.displayName }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>
-          @switch (event.isSwisstour) {
-            @case (true) {
-              <td class="px-6 py-4 whitespace-nowrap text-sm justify-center flex text-gray-500">✅</td>
-            }
-            @case (false) {
-              <td class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500"></td>
-            }
+@if (events()) {
+<div class="overflow-x-auto bg-white rounded-lg shadow">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDGA Event</th>
+        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Display Name</th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+        <th scope="col" class="text-center px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Swisstour</th>
+        <th scope="col" class="text-center py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Championship</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      @for (event of events(); track $index) {
+      <tr>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.displayName }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>
+        @switch (event.isSwisstour) {
+          @case (true) {
+            <td class="px-6 py-4 whitespace-nowrap text-sm justify-center flex text-gray-500">✅</td>
           }
-          @switch (event.isChampionship) {
-            @case (true) {
-              <td class="px-6 py-4 whitespace-nowrap text-sm justify-center text-gray-500 text-center">✅</td>
-            }
-            @case (false) {
-              <td class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500 text-center"></td>
-            }
+          @case (false) {
+            <td class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500"></td>
           }
-          <td class="whitespace-nowrap">
-            <span class="text-gray-600 cursor-pointer px-2"
-              (click)="getEvent(event.id)"><span class="sr-only">Edit</span>✏️
-            </span>
-
-            <span class="text-gray-600 cursor-pointer px-2"
-              (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
-            </span>
-
-            <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
-            (click)="addResults(event.id)"
-            [disabled]="event.hasResults"
-            [ngClass]="{'disabled-button': event.hasResults}"
-            >Add Results</button>
-          </td>
-        </tr>
         }
-      </tbody>
-    </table>
-  </div>
-  } @else
-  {
-  <p>No events.</p>
-  }
+        @switch (event.isChampionship) {
+          @case (true) {
+            <td class="px-6 py-4 whitespace-nowrap text-sm justify-center text-gray-500 text-center">✅</td>
+          }
+          @case (false) {
+            <td class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500 text-center"></td>
+          }
+        }
+        <td class="whitespace-nowrap">
+          <span class="text-gray-600 cursor-pointer px-2"
+            (click)="getEvent(event.id)"><span class="sr-only">Edit</span>✏️
+          </span>
+
+          <span class="text-gray-600 cursor-pointer px-2"
+            (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
+          </span>
+
+          <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+          (click)="addResults(event.id)"
+          [disabled]="event.hasResults"
+          [ngClass]="{'disabled-button': event.hasResults}"
+          >Add Results</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
 </div>
+} @else
+{
+<p>No events.</p>
+}
+
