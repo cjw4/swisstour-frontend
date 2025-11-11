@@ -1,11 +1,6 @@
 @let event = (event$ | async)!;
 @let events = (events$ | async)!;
 
-<app-banner
-  [bannerInfo]="bannerInfo"
-  (close)="closeBanner()">
-</app-banner>
-
 <!-- event input -->
 <div class="w-1/3">
   <app-event-create

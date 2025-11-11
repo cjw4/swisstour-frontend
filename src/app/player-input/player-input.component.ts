@@ -1,7 +1,9 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
+import { BannerService, BannerType } from '../services/banner.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-player-input',
@@ -12,9 +14,11 @@ import { PlayerService } from '../services/player.service';
 export class PlayerInputComponent {
   // inject services
   playerService = inject(PlayerService);
+  bannerService = inject(BannerService);
 
   // signals
   player = input<Player>();
+  refreshList = output();
   isPlayer = signal(false);
 
   // create player form
@@ -44,7 +48,6 @@ export class PlayerInputComponent {
   onSubmit() {
     const formValue = this.playerForm.value;
     const isEdit = !!this.player();
-    debugger;
     const request = isEdit
       ? this.playerService.updatePlayer(formValue, this.player()!.id)
       : this.playerService.addPlayer(formValue);
@@ -58,8 +61,13 @@ export class PlayerInputComponent {
           swisstourLicense: false,
           sdaNumber: null,
         });
+        this.bannerService.updateBanner(`Player ${formValue.firstname} ${formValue.lastname} was saved`, BannerType.SUCCESS);
         this.isPlayer.set(false);
+        this.refreshList.emit();
       },
+      error: (err: HttpErrorResponse) => {
+        this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
+      }
     });
   }
 }

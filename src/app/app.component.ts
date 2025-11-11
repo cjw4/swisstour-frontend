@@ -9,7 +9,8 @@ import { BannerComponent } from './banner/banner.component';
   imports: [
     RouterOutlet,
     RouterLink,
-    CopyrightDirective
+    CopyrightDirective,
+    BannerComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

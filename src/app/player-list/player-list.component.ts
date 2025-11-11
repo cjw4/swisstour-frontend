@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
 import { PlayerInputComponent } from '../player-input/player-input.component';
+import { BannerService, BannerType } from '../services/banner.service';
 
 @Component({
   selector: 'app-player-list',
@@ -15,12 +15,14 @@ import { PlayerInputComponent } from '../player-input/player-input.component';
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class PlayerListComponent implements OnInit {
+  // inject services
   playerService = inject(PlayerService);
+  bannerService = inject(BannerService);
 
   players$: Observable<Player[]> | undefined;
   player$: Observable<Player> | undefined;
 
-  private getPlayers() {
+  getPlayers() {
     this.players$ = this.playerService.getPlayers();
   }
 
@@ -29,12 +31,15 @@ export class PlayerListComponent implements OnInit {
   }
 
   deletePlayer(player: Player) {
-    this.playerService.deletePlayer(player).subscribe(
-      (res) => {
-        this.getPlayers()
-        debugger;
-      }
-    );
+    if (confirm(`Are you sure you want to delete the player ${player.firstname} ${player.lastname}?`)) {
+      this.playerService.deletePlayer(player).subscribe((res) => {
+        this.bannerService.updateBanner(
+          `Player was deleted.`,
+          BannerType.SUCCESS
+        );
+        this.getPlayers();
+      });
+    }
   }
 
   ngOnInit(): void {

@@ -1,8 +1,8 @@
 @let players = (players$ | async)!;
 @let player = (player$ | async)!;
-<div class="max-w-7xl mx-auto p-6 lg:px-8">
   <app-player-input
     [player]="player"
+    (refreshList)="getPlayers()"
   ></app-player-input>
     <div class="overflow-x-auto bg-white rounded-lg shadow">
         @if (players) {
@@ -60,4 +60,3 @@
         </table>
         }
     </div>
-</div>

@@ -15,7 +15,6 @@ import { ResultsService } from '../services/results.service';
     AsyncPipe,
     EventListComponent,
     EventCreateComponent,
-    BannerComponent,
   ],
   templateUrl: './event-page.component.html',
   styleUrl: './event-page.component.css',
@@ -44,12 +43,8 @@ export class EventPageComponent implements OnInit {
   }
 
   deleteEvent(pdgaEvent: PdgaEvent) {
-    this.eventService.deleteEvent(pdgaEvent).subscribe({
-      next: (bannerInfo) => {
-        this.bannerInfo = bannerInfo;
-        this.getEvents();
-      },
-    });
+    this.eventService.deleteEvent(pdgaEvent);
+    this.getEvents();
   }
 
   addResults(id: number | null) {
