@@ -1,37 +1,75 @@
-<div class="overflow-x-auto bg-white rounded-lg shadow px-3 py-4 mb-6">
-  <form [formGroup]="playerForm" (ngSubmit)="onSubmit()" class="w-full max-w-md space-y-4">
-    <div>
-      <input type="number" formControlName="pdgaNumber" placeholder="PDGA Number"
-          class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"/>
+<div class="overflow-x-auto bg-white rounded-lg shadow px-3 py-4">
+  <form
+    [formGroup]="playerForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full space-y-4"
+  >
+    <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="pdgaNumber"
+        placeholder="PDGA Number"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+      />
     </div>
-    <div>
-      <input type="text" formControlName="firstname" placeholder="First Name"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"/>
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        formControlName="firstname"
+        placeholder="First Name"
+        [readOnly]="!!playerForm.get('pdgaNumber')?.value"
+        [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
+        [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+      />
     </div>
-    <div>
-      <input type="text" formControlName="lastname" placeholder="Last Name"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"/>
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        formControlName="lastname"
+        placeholder="Last Name"
+        [readOnly]="!!playerForm.get('pdgaNumber')?.value"
+        [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
+        [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+      />
     </div>
-    <div>
+    <div class="flex justify-center">
       <label class="inline-flex items-center space-x-2">
-        <input type="checkbox" formControlName="swisstourLicense" class="form-checkbox h-4 w-4 text-indigo-600 rounded" />
-        <span class="text-sm text-gray-700">SUI License</span>
+        <input
+          type="checkbox"
+          formControlName="swisstourLicense"
+          class="form-checkbox h-4 w-4 text-indigo-600 rounded"
+        />
+        <span class="text-sm text-gray-700">Swisstour License</span>
       </label>
     </div>
-    <div>
-      SUI.<input type="number" formControlName="sdaNumber" placeholder="Number"
+    <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="sdaNumber"
+        placeholder="License Number"
+        [readOnly]="!playerForm.get('swisstourLicense')?.value"
+        [class.opacity-50]="!playerForm.get('swisstourLicense')?.value"
+        [class.bg-gray-100]="!playerForm.get('swisstourLicense')?.value"
         class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
-        (active)="playerForm.value.swisstourLicense" />
+        (active)="(playerForm.value.swisstourLicense)"
+      />
     </div>
-    <div>
-      <button type="submit"
-        class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none">
-        @if (player()) {
-          Edit Player
-        } @else {
-          Add Player
-        }
+    <div class="flex justify-center">
+      <button
+        type="submit"
+        class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+      >
+        Save Player
       </button>
-      </div>
+      <button
+        type="button"
+        class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 text-sm font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
+        (click)="this.router.navigate(['/players'])"
+        >
+        Cancel
+      </button>
+    </div>
   </form>
 </div>

@@ -19,11 +19,11 @@ export class PlayerService {
     return this.http.get<Player>(this.playersUrl + '/' + id);
   }
 
-  addPlayer(player: any): Observable<any> {
+  addPlayer(player: any): Observable<Player> {
     return this.http.post<Player>(this.playersUrl, player);
   }
 
-  updatePlayer(player: any, id: number): Observable<any> {
+  updatePlayer(player: any, id: number | null): Observable<any> {
     return this.http.put<Player>(this.playersUrl + '/' + id, player)
   }
 

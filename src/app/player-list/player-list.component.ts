@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
-import { PlayerInputComponent } from '../player-input/player-input.component';
 import { BannerService, BannerType } from '../services/banner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-player-list',
-  imports: [AsyncPipe, PlayerInputComponent],
+  imports: [AsyncPipe],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -18,9 +18,18 @@ export class PlayerListComponent implements OnInit {
   // inject services
   playerService = inject(PlayerService);
   bannerService = inject(BannerService);
+  router = inject(Router)
 
   players$: Observable<Player[]> | undefined;
   player$: Observable<Player> | undefined;
+
+  addPlayer() {
+    this.router.navigate(['/player/input'])
+  }
+
+  editPlayer(id: number) {
+    this.router.navigate(['/player/input', id])
+  }
 
   getPlayers() {
     this.players$ = this.playerService.getPlayers();

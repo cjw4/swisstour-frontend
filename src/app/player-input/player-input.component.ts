@@ -1,9 +1,10 @@
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-player-input',
@@ -11,45 +12,71 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './player-input.component.html',
   styleUrl: './player-input.component.css',
 })
-export class PlayerInputComponent {
+export class PlayerInputComponent implements OnInit {
   // inject services
   playerService = inject(PlayerService);
   bannerService = inject(BannerService);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
-  // signals
-  player = input<Player>();
-  refreshList = output();
-  isPlayer = signal(false);
+  // variables
+  playerId: number | null = null;
+  editMode: boolean = false;
 
-  // create player form
-  playerForm = new FormGroup({
-    pdgaNumber: new FormControl(''),
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    sdaNumber: new FormControl(''),
-    swisstourLicense: new FormControl(false),
-  });
+  // lifecycle hooks
+  ngOnInit(): void {
+    // check if the parameter id exists
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id');
 
-  constructor() {
-    effect(() => {
-      const currentPlayer = this.player();
-      if (currentPlayer) {
-        this.isPlayer.set(true);
-        this.playerForm.patchValue({
-          pdgaNumber: currentPlayer.pdgaNumber.toString(),
-          firstname: currentPlayer.firstname,
-          lastname: currentPlayer.lastname,
-          swisstourLicense: currentPlayer.swisstourLicense
+      // convert to number if exists, otherwise set to null
+      this.playerId = id ? Number(id) : null
+
+      // pathc the form with existing player data if we are editing
+      if (this.playerId) {
+        this.editMode = true;
+        this.playerService.getPlayer(this.playerId).subscribe(player => {
+          this.playerForm.patchValue({
+            pdgaNumber: player.pdgaNumber?.toString(),
+            firstname: player.firstname,
+            lastname: player.lastname,
+            swisstourLicense: player.swisstourLicense,
+            sdaNumber: player.sdaNumber?.toString()
+          });
         });
       }
     });
   }
 
+  ngAfterViewInit(): void {
+    this.playerForm.get('pdgaNumber')?.valueChanges.subscribe((value) => {
+      const firstnameControl = this.playerForm.get('firstname');
+      const lastnameControl = this.playerForm.get('lastname');
+      if (value) {
+        this.playerForm.patchValue({
+          firstname: '',
+          lastname: ''
+        });
+      }
+    });
+  }
+
+  // create player form
+  playerForm = new FormGroup({
+    id: new FormControl(''),
+    pdgaNumber: new FormControl(''),
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
+    sdaNumber: new FormControl(''),
+    swisstourLicense: new FormControl(false),
+    isPro: new FormControl(false)
+  });
+
   onSubmit() {
     const formValue = this.playerForm.value;
-    const isEdit = !!this.player();
+    const isEdit = this.editMode;
     const request = isEdit
-      ? this.playerService.updatePlayer(formValue, this.player()!.id)
+      ? this.playerService.updatePlayer(formValue, this.playerId)
       : this.playerService.addPlayer(formValue);
 
     request.subscribe({
@@ -61,9 +88,8 @@ export class PlayerInputComponent {
           swisstourLicense: false,
           sdaNumber: null,
         });
-        this.bannerService.updateBanner(`Player ${formValue.firstname} ${formValue.lastname} was saved`, BannerType.SUCCESS);
-        this.isPlayer.set(false);
-        this.refreshList.emit();
+        this.bannerService.updateBanner(`Player ${res} was saved`, BannerType.SUCCESS);
+        this.router.navigate(['/players']);
       },
       error: (err: HttpErrorResponse) => {
         this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
