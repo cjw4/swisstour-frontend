@@ -9,6 +9,7 @@ import { AsyncPipe } from '@angular/common';
 import { StandingsDTO } from '../interfaces/standings-dto';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-standings',
@@ -18,6 +19,9 @@ import { Player } from '../interfaces/player';
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class StandingsComponent implements OnInit {
+  // inject dependencies
+  router = inject(Router);
+
   category = 'MPO';
   private eventsService: EventsService;
   private playerService: PlayerService;

@@ -36,8 +36,11 @@
         @for (standing of standings; track $index) {
         <tr>
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-900 flex justify-center">{{ standing.rank }}</td>
-          <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">{{ findPlayer(standing.playerId).firstname }} {{ findPlayer(standing.playerId).lastname }}</td>
-          <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">SUI-{{ findPlayer(standing.playerId).sdaNumber }}</td>
+          <td
+            class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 hover:text-blue-700 cursor-pointer"
+            (click)="this.router.navigate(['/player', standing.playerId])"
+            >{{ findPlayer(standing.playerId).firstname }} {{ findPlayer(standing.playerId).lastname }}</td>
+          <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">SUI.{{ findPlayer(standing.playerId).sdaNumber }}</td>
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 flex justify-center">{{ standing.totalPoints }}</td>
           @for (event of events; track event.id) {
             @if (hasEventId(standing, event.id)) {

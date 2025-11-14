@@ -45,7 +45,9 @@
     </thead>
     <tbody class="divide-y divide-gray-200">
       @for (player of players; track $index) {
-      <tr>
+      <tr class="cursor-pointer group hover:bg-gray-100"
+        (click)="this.router.navigate(['/player', player.id])"
+      >
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
           {{ player.firstname }}
         </td>
@@ -79,17 +81,17 @@
           class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500"
         ></td>
         } }
-        <td class="whitespace-nowrap">
+        <td class="whitespace-nowrap group-hover:bg-white">
           <span
             class="text-gray-600 cursor-pointer px-2"
-            (click)="editPlayer(player.id)"
+            (click)="editPlayer(player.id); $event.stopPropagation()"
             ><span class="sr-only">Edit</span>✏️
           </span>
         </td>
-        <td class="whitespace-nowrap">
+        <td class="whitespace-nowrap group-hover:bg-white">
           <span
             class="text-gray-600 cursor-pointer px-2"
-            (click)="deletePlayer(player)"
+            (click)="deletePlayer(player); $event.stopPropagation()"
             ><span class="sr-only">Close</span>🗑️
           </span>
         </td>

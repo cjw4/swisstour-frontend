@@ -4,6 +4,7 @@ import { PlayerInputComponent } from './player-input/player-input.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventInputComponent } from './event-input/event-input.component';
+import { PlayerDetailsComponent } from './player-details/player-details.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,10 @@ export const routes: Routes = [
     {
     path: 'player/input/:id',
     component: PlayerInputComponent
+    },
+    {
+    path: 'player/:id',
+    component: PlayerDetailsComponent
     },
     {
       path: 'standings',
