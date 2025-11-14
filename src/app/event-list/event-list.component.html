@@ -1,5 +1,11 @@
-@if (events()) {
+@let events = (events$ | async)!;
+@if (events) {
 <div class="overflow-x-auto bg-white rounded-lg shadow">
+  <div class="px-2 pb-4"><button
+    class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+    (click)="addEvent()"
+    >+ Add Event</button>
+  </div>
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr>
@@ -13,7 +19,7 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
-      @for (event of events(); track $index) {
+      @for (event of events; track $index) {
       <tr>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
@@ -37,7 +43,7 @@
         }
         <td class="whitespace-nowrap">
           <span class="text-gray-600 cursor-pointer px-2"
-            (click)="getEvent(event.id)"><span class="sr-only">Edit</span>✏️
+            (click)="editEvent(event.id)"><span class="sr-only">Edit</span>✏️
           </span>
 
           <span class="text-gray-600 cursor-pointer px-2"

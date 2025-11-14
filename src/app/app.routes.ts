@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import { EventPageComponent } from './event-page/event-page.component';
 import { StandingsComponent } from './standings/standings.component';
 import { PlayerInputComponent } from './player-input/player-input.component';
 import { PlayerListComponent } from './player-list/player-list.component';
+import { EventListComponent } from './event-list/event-list.component';
+import { EventInputComponent } from './event-input/event-input.component';
 
 export const routes: Routes = [
     {
@@ -12,7 +13,15 @@ export const routes: Routes = [
     },
     {
       path: 'events',
-      component: EventPageComponent
+      component: EventListComponent
+    },
+    {
+      path: 'event/input',
+      component: EventInputComponent
+    },
+    {
+      path: 'event/input/:id',
+      component: EventInputComponent
     },
     {
       path: 'players',

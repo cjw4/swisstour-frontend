@@ -1,22 +1,61 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
 import { PdgaEvent } from '../interfaces/pdga-event';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventsService } from '../services/events.service';
+import { BannerService, BannerType } from '../services/banner.service';
 
 @Component({
   selector: 'app-event-create',
   imports: [ReactiveFormsModule],
-  templateUrl: './event-create.component.html',
-  styleUrl: './event-create.component.css',
+  templateUrl: './event-input.component.html',
+  styleUrl: './event-input.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
-export class EventCreateComponent {
+export class EventInputComponent implements OnInit {
+  // inject dependencies
+  eventService = inject(EventsService);
+  bannerService = inject(BannerService);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+
+  //variables
   event = input<PdgaEvent>();
   isEvent = signal(false);
+  eventId: number | null = null;
+  editMode: boolean = false;
+
+  // lifecycle hooks
+  ngOnInit(): void {
+    // check if the parameter id exists
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const id = params.get('id');
+
+      // convert to number if exists, otherwise set to null
+      this.eventId = id ? Number(id) : null;
+
+      // patch the form with existing event data if we are editing
+      if (this.eventId) {
+        this.editMode = true;
+        this.eventService.getEvent(this.eventId).subscribe((event) => {
+          this.eventForm.patchValue({
+            id: event.id?.toString(),
+            displayName: event.displayName,
+            points: event.points.toString(),
+            isChampionship: event.isChampionship,
+            isSwisstour: event.isSwisstour,
+          });
+        });
+      }
+    });
+  }
+
+  // create form
   eventForm = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     displayName: new FormControl('', [
@@ -30,24 +69,6 @@ export class EventCreateComponent {
     isChampionship: new FormControl(false),
     isSwisstour: new FormControl(false),
   });
-
-  constructor() {
-    // Create an effect to watch for event changes
-    effect(() => {
-      const currentEvent = this.event();
-      if (currentEvent) {
-        this.isEvent.set(true);
-        this.eventForm.patchValue({
-          id: currentEvent.id.toString(),
-          displayName: currentEvent.displayName,
-          points: currentEvent.points.toString(),
-          isChampionship: currentEvent.isChampionship,
-          isSwisstour: currentEvent.isSwisstour,
-        });
-      }
-    });
-  }
-
   isFormInvalid = this.eventForm.invalid;
 
   http = inject(HttpClient);
@@ -69,42 +90,22 @@ export class EventCreateComponent {
     }
 
     const formValue = this.eventForm.value;
-    const isEdit = !!this.event();
-
-    // Choose between PUT and POST based on whether we're editing
+    const isEdit = this.editMode;
     const request = isEdit
       ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
       : this.http.post<PdgaEvent>(this.eventUrl, formValue);
 
     request.subscribe({
       next: (res) => {
-        this.bannerInfo = {
-          message: `PDGA event ${isEdit ? res : res.displayName} was ${isEdit ? 'updated' : 'created'}.`,
-          visible: true,
-          type: 'success',
-        };
-        this.emitBannerInfo(this.bannerInfo);
-        this.refreshEvents.emit();
-
-        this.eventForm.reset({
-          id: null,
-          displayName: '',
-          points: '',
-          isChampionship: false,
-          isSwisstour: false,
-        });
-        // reset the input
-        this.isEvent.set(false);
+        this.bannerService.updateBanner(
+          `Event ${res} was saved`,
+          BannerType.SUCCESS
+        );
+        this.router.navigate(['/events']);
       },
       error: (err: HttpErrorResponse) => {
-        const errorMessage = err.error?.message ?? 'An unknown error occurred.';
-        this.bannerInfo = {
-          message: errorMessage,
-          visible: true,
-          type: 'error',
-        };
-        this.emitBannerInfo(this.bannerInfo);
-      }
+        this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
+      },
     });
   }
 

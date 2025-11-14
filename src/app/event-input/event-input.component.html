@@ -1,0 +1,99 @@
+<div class="overflow-x-auto mx-auto max-w-md bg-white rounded-lg shadow px-3 py-4">
+  <h1 class="flex justify-center text-gray-700 mb-5 font-medium text-2xl">Event Info</h1>
+  <form
+    [formGroup]="eventForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full space-y-4"
+  >
+    <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="id"
+        placeholder="PDGA Event Number"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required
+        [class.opacity-50]="editMode"
+        [class.bg-gray-100]="editMode"
+        [readOnly]="editMode"
+      />
+      @if (id?.invalid && id?.touched) {
+      <span class="text-red-600 text-sm ml-1">
+        @if (id?.errors?.['required']) {
+        <span>* required</span>
+        }
+      </span>
+      }
+    </div>
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        formControlName="displayName"
+        placeholder="Display Name"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required
+      />
+      @if (displayName?.invalid && displayName?.touched) {
+      <span class="text-red-600 text-sm ml-1">
+        @if (displayName?.errors?.['required']) {
+        <span>* required</span>
+        } @if (displayName?.errors?.['minlength']) {
+        <span>* minimum of 3 characters</span>
+        }
+      </span>
+      }
+    </div>
+    <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="points"
+        placeholder="Swisstour Points"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required
+      />
+      @if (points?.invalid && points?.touched) {
+      <span class="text-red-600 text-sm ml-1">
+        @if (points?.errors?.['required']) {
+        <span>* required</span>
+        } @if (points?.errors?.['pattern']) {
+        <span>* must be a number</span>
+        }
+      </span>
+      }
+    </div>
+    <div class="flex justify-center items-center">
+      <label class="inline-flex items-center space-x-2">
+        <input
+          type="checkbox"
+          formControlName="isChampionship"
+          class="form-checkbox h-4 w-4 text-indigo-600 rounded"
+        />
+        <span class="text-sm text-gray-700">CH Championship</span>
+      </label>
+    </div>
+    <div class="flex justify-center items-center">
+      <label class="inline-flex items-center space-x-2">
+        <input
+          type="checkbox"
+          formControlName="isSwisstour"
+          class="form-checkbox h-4 w-4 text-indigo-600 rounded"
+        />
+        <span class="text-sm text-gray-700">Swisstour Event</span>
+      </label>
+    </div>
+    <div class="flex justify-center items-center">
+      <button
+        type="submit"
+        class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+      >
+      Save Event
+      </button>
+      <button
+        type="button"
+        class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 text-sm font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
+        (click)="this.router.navigate(['/events'])"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

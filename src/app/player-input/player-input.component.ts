@@ -32,7 +32,7 @@ export class PlayerInputComponent implements OnInit {
       // convert to number if exists, otherwise set to null
       this.playerId = id ? Number(id) : null
 
-      // pathc the form with existing player data if we are editing
+      // patch the form with existing player data if we are editing
       if (this.playerId) {
         this.editMode = true;
         this.playerService.getPlayer(this.playerId).subscribe(player => {
