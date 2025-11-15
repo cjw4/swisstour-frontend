@@ -8,6 +8,7 @@ import { PdgaEvent } from '../interfaces/pdga-event';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '../services/events.service';
 import { BannerService, BannerType } from '../services/banner.service';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-event-create',
@@ -23,6 +24,7 @@ export class EventInputComponent implements OnInit {
   bannerService = inject(BannerService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  loadingService = inject(LoadingService);
 
   //variables
   event = input<PdgaEvent>();
@@ -95,6 +97,9 @@ export class EventInputComponent implements OnInit {
       ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
       : this.http.post<PdgaEvent>(this.eventUrl, formValue);
 
+    // enable loader
+    this.loadingService.loadingOn();
+
     request.subscribe({
       next: (res) => {
         this.bannerService.updateBanner(
@@ -102,11 +107,14 @@ export class EventInputComponent implements OnInit {
           BannerType.SUCCESS
         );
         this.router.navigate(['/events']);
+        this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {
-        this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
+        this.bannerService.updateBanner(`Event could not be saved: ${err.error?.message}`, BannerType.ERROR);
+        this.loadingService.loadingOff();
       },
     });
+
   }
 
   get id() {

@@ -3,6 +3,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { APP_SETTINGS, appSettings } from './app.settings';
 import { CopyrightDirective } from './directives/copyright.directive';
 import { BannerComponent } from './banner/banner.component';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import { BannerComponent } from './banner/banner.component';
     RouterOutlet,
     RouterLink,
     CopyrightDirective,
-    BannerComponent
+    BannerComponent,
+    LoadingIndicatorComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

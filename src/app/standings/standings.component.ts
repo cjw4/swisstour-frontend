@@ -78,7 +78,6 @@ export class StandingsComponent implements OnInit {
     this.getStandings();
     this.getEvents();
     this.getPlayers();
-    debugger;
   }
 
   onCategoryChange(event: Event): void {

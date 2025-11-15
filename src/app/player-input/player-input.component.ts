@@ -5,6 +5,7 @@ import { PlayerService } from '../services/player.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-player-input',
@@ -18,6 +19,7 @@ export class PlayerInputComponent implements OnInit {
   bannerService = inject(BannerService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  loadingService = inject(LoadingService);
 
   // variables
   playerId: number | null = null;
@@ -79,20 +81,16 @@ export class PlayerInputComponent implements OnInit {
       ? this.playerService.updatePlayer(formValue, this.playerId)
       : this.playerService.addPlayer(formValue);
 
+    this.loadingService.loadingOn();
     request.subscribe({
       next: (res) => {
-        this.playerForm.reset({
-          pdgaNumber: null,
-          firstname: '',
-          lastname: '',
-          swisstourLicense: false,
-          sdaNumber: null,
-        });
         this.bannerService.updateBanner(`Player ${res} was saved`, BannerType.SUCCESS);
         this.router.navigate(['/players']);
+        this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {
         this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
+        this.loadingService.loadingOff();
       }
     });
   }
