@@ -4,7 +4,6 @@ import { BannerComponent } from './banner/banner.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { CopyrightDirective } from './directives/copyright.directive';
 import { APP_SETTINGS, appSettings } from './app.settings';
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,6 @@ import { NgOptimizedImage } from '@angular/common';
     BannerComponent,
     LoadingIndicatorComponent,
     CopyrightDirective,
-    NgOptimizedImage,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
