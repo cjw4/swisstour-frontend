@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '../services/events.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-event-create',
@@ -25,6 +26,7 @@ export class EventInputComponent implements OnInit {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   loadingService = inject(LoadingService);
+  authService = inject(AuthService);
 
   //variables
   event = input<PdgaEvent>();
@@ -91,11 +93,16 @@ export class EventInputComponent implements OnInit {
       return;
     }
 
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.authService.accessToken()}`,
+      }),
+    };
     const formValue = this.eventForm.value;
     const isEdit = this.editMode;
     const request = isEdit
-      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
-      : this.http.post<PdgaEvent>(this.eventUrl, formValue);
+      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue, options)
+      : this.http.post<PdgaEvent>(this.eventUrl, formValue, options);
 
     // enable loader
     this.loadingService.loadingOn();

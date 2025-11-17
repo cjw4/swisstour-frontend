@@ -1,19 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerType } from './banner.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
-  private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
+  // inject dependencies
   http = inject(HttpClient);
   bannerService = inject(BannerService);
+  authService = inject(AuthService);
 
+  // variables
+  private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
   bannerInfo: BannerInfo = {
     message: ``,
     visible: true,
@@ -30,10 +34,18 @@ export class EventsService {
 
   deleteEvent(event: PdgaEvent): void {
     const url = `${this.eventsUrl}/${event.id}`;
-    this.http.delete(url).subscribe({
-      next: res => {
-        this.bannerService.updateBanner('PDGA event was deleted.', BannerType.SUCCESS);
-      }
+    const options = {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.authService.accessToken()}`,
+        }),
+      };
+    this.http.delete(url, options).subscribe({
+      next: (res) => {
+        this.bannerService.updateBanner(
+          'PDGA event was deleted.',
+          BannerType.SUCCESS
+        );
+      },
     });
   }
 }

@@ -11,7 +11,7 @@ export class AuthService {
   private http = inject(HttpClient);
 
   // signals
-  private accessToken = signal('');
+  accessToken = signal('');
   adminLoggedIn = computed(() => this.accessToken() !== '');
 
   // variables

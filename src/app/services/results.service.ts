@@ -1,14 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { APP_SETTINGS } from '../app.settings';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BannerInfo } from '../interfaces/banner-info';
 import { catchError, map, Observable, of } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResultsService {
   private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
+  authService = inject(AuthService);
   http = inject(HttpClient);
   bannerInfo: BannerInfo = {
     message: ``,
@@ -18,7 +20,12 @@ export class ResultsService {
 
   addResults(id: number | null): Observable<BannerInfo> {
     const url = `${this.eventsUrl}/results/${id}`;
-    return this.http.post(url, undefined).pipe(
+    const options = {
+      headers: new HttpHeaders({
+      Authorization: `Bearer ${this.authService.accessToken()}`
+        }),
+      };
+    return this.http.post(url, undefined, options).pipe(
       map(() => ({
         message: `Results were added for event ${id}.`,
         visible: true,
