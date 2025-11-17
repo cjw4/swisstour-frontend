@@ -4,6 +4,7 @@ import { BannerComponent } from './banner/banner.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { CopyrightDirective } from './directives/copyright.directive';
 import { APP_SETTINGS, appSettings } from './app.settings';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import { APP_SETTINGS, appSettings } from './app.settings';
     RouterLink,
     BannerComponent,
     LoadingIndicatorComponent,
-    CopyrightDirective,
+    CopyrightDirective
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -22,6 +23,7 @@ import { APP_SETTINGS, appSettings } from './app.settings';
 export class AppComponent {
   settings = inject(APP_SETTINGS);
   mobileMenuOpen = signal(false);
+  authService = inject(AuthService);
 
   toggleMobileMenu() {
     this.mobileMenuOpen.update((v) => !v);

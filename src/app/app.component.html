@@ -41,9 +41,12 @@
       <a routerLink="standings" class="text-sm/6 font-semibold text-gray-900"
         >Standings</a
       >
-      <a routerLink="events" class="text-sm/6 font-semibold text-gray-900"
+      @if(authService.adminLoggedIn()) {
+        <a routerLink="events" class="text-sm/6 font-semibold text-gray-900"
         >Events</a
       >
+      }
+
       <a routerLink="players" class="text-sm/6 font-semibold text-gray-900"
         >Players</a
       >
@@ -158,7 +161,7 @@
   <div class="flex space-x-10 justify-center pb-4">
     <a href="#" class="hover:font-semibold">FAQ</a>
     <a href="#" class="hover:font-semibold">Feedback</a>
-    <a href="#" class="hover:font-semibold">Admin</a>
+    <p (click)="authService.testLogin()" class="hover:font-semibold">Admin</p>
   </div>
   <div class="text-xs">
     {{ settings.title }} v{{ settings.version }}
