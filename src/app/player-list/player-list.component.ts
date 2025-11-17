@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
 import { BannerService, BannerType } from '../services/banner.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-player-list',
@@ -18,6 +19,7 @@ export class PlayerListComponent implements OnInit {
   // inject services
   playerService = inject(PlayerService);
   bannerService = inject(BannerService);
+  authService = inject(AuthService);
   router = inject(Router)
 
   players$: Observable<Player[]> | undefined;
@@ -32,7 +34,14 @@ export class PlayerListComponent implements OnInit {
   }
 
   getPlayers() {
-    this.players$ = this.playerService.getPlayers();
+    if (this.authService.adminLoggedIn()) {
+      this.players$ = this.playerService.getPlayers();
+    } else {
+      this.players$ = this.playerService.getPlayers().pipe(
+        map(players => players.filter(player => player.swisstourLicense))
+      );
+    }
+
   }
 
   getPlayer(id: number) {

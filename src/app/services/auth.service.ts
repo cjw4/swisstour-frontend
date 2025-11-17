@@ -18,9 +18,9 @@ export class AuthService {
   private loginUrl = inject(APP_SETTINGS).baseUrl + '/login';
 
   // functions
-  login(username: string, password: string): Observable<string> {
+  login(formValue: any): Observable<string> {
     return this.http
-      .post(this.loginUrl, { username: username, password: password }, { responseType: 'text'})
+      .post(this.loginUrl, formValue, { responseType: 'text'})
       .pipe(
         tap({
           next: (token) => {
@@ -44,13 +44,4 @@ export class AuthService {
     this.accessToken.set('');
   }
 
-  testLogin(event?: Event) {
-    if (event) {
-      event.preventDefault()
-    }
-    this.login('swiss-dg-admin', 'sw1SSt0ur').subscribe({
-      next: () => console.log("success"),
-      error: () => console.log("error")
-    });
-  }
 }

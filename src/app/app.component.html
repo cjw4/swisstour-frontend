@@ -161,7 +161,12 @@
   <div class="flex space-x-10 justify-center pb-4">
     <a href="#" class="hover:font-semibold">FAQ</a>
     <a href="#" class="hover:font-semibold">Feedback</a>
-    <p (click)="authService.testLogin()" class="hover:font-semibold">Admin</p>
+    @if (!authService.adminLoggedIn()) {
+      <a routerLink="/admin/login" class="hover:font-semibold">Admin</a>
+    } @else {
+      <a href="#" (click)="authService.logout()" class="hover:font-semibold">Log Out</a>
+    }
+
   </div>
   <div class="text-xs">
     {{ settings.title }} v{{ settings.version }}

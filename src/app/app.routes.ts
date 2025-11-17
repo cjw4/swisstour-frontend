@@ -5,6 +5,7 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventInputComponent } from './event-input/event-input.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {
@@ -43,5 +44,9 @@ export const routes: Routes = [
     {
       path: 'standings',
       component: StandingsComponent
+    },
+    {
+      path: 'admin/login',
+      component: LoginComponent
     }
 ];
