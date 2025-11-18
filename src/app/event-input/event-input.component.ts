@@ -93,16 +93,11 @@ export class EventInputComponent implements OnInit {
       return;
     }
 
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${this.authService.accessToken()}`,
-      }),
-    };
     const formValue = this.eventForm.value;
     const isEdit = this.editMode;
     const request = isEdit
-      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue, options)
-      : this.http.post<PdgaEvent>(this.eventUrl, formValue, options);
+      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
+      : this.http.post<PdgaEvent>(this.eventUrl, formValue);
 
     // enable loader
     this.loadingService.loadingOn();

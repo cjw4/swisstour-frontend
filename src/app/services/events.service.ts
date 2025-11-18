@@ -34,12 +34,7 @@ export class EventsService {
 
   deleteEvent(event: PdgaEvent): void {
     const url = `${this.eventsUrl}/${event.id}`;
-    const options = {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.authService.accessToken()}`,
-        }),
-      };
-    this.http.delete(url, options).subscribe({
+    this.http.delete(url).subscribe({
       next: (res) => {
         this.bannerService.updateBanner(
           'PDGA event was deleted.',
