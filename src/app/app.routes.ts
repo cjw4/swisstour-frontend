@@ -6,6 +6,7 @@ import { EventListComponent } from './event-list/event-list.component';
 import { EventInputComponent } from './event-input/event-input.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LoginComponent } from './login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -19,11 +20,13 @@ export const routes: Routes = [
     },
     {
       path: 'event/input',
-      component: EventInputComponent
+      component: EventInputComponent,
+      canActivate: [authGuard]
     },
     {
       path: 'event/input/:id',
-      component: EventInputComponent
+      component: EventInputComponent,
+      canActivate: [authGuard]
     },
     {
       path: 'players',
@@ -31,11 +34,13 @@ export const routes: Routes = [
     },
     {
       path: 'player/input',
-      component: PlayerInputComponent
+      component: PlayerInputComponent,
+      canActivate: [authGuard]
     },
     {
     path: 'player/input/:id',
-    component: PlayerInputComponent
+    component: PlayerInputComponent,
+    canActivate: [authGuard]
     },
     {
     path: 'player/:id',
