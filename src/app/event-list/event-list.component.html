@@ -1,11 +1,11 @@
 @let events = (events$ | async)!;
 @if (events) {
-<div class="overflow-x-auto bg-white rounded-lg shadow">
   <div class="px-2 pb-4"><button
     class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
     (click)="addEvent()"
     >+ Add Event</button>
   </div>
+<div class="overflow-x-auto bg-white rounded-lg shadow">
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr>
