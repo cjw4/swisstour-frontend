@@ -9,7 +9,7 @@ import { AsyncPipe } from '@angular/common';
 import { StandingsDTO } from '../interfaces/standings-dto';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-standings',
@@ -20,9 +20,12 @@ import { Router } from '@angular/router';
 })
 export class StandingsComponent implements OnInit {
   // inject dependencies
+  private activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  private http = inject(HttpClient);
+  settings = inject(APP_SETTINGS);
 
-  category = 'MPO';
+  category: string | null = 'MPO';
   private eventsService: EventsService;
   private playerService: PlayerService;
   playersSignal: Signal<any>;
@@ -30,16 +33,24 @@ export class StandingsComponent implements OnInit {
   constructor() {
     this.eventsService = new EventsService();
     this.playerService = new PlayerService();
-    this.playersSignal = toSignal(this.playerService.getPlayers())
+    this.playersSignal = toSignal(this.playerService.getPlayers());
   }
-
-  http = inject(HttpClient);
 
   events$: Observable<PdgaEvent[]> | undefined;
   players$: Observable<Player[]> | undefined;
-  settings = inject(APP_SETTINGS);
+
   standingsUrl = this.settings.apiUrl + '/standings/' + this.category;
   standings: any;
+
+  // lifecycle hooks
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(
+      (params) => (this.category = params.get('category'))
+    );
+    this.getStandings();
+    this.getEvents();
+    this.getPlayers();
+  }
 
   public getStandings() {
     this.http
@@ -57,7 +68,7 @@ export class StandingsComponent implements OnInit {
 
   findPlayer(playerId: number) {
     const players = this.playersSignal();
-    const player = players.find((p: { id: number; }) => p.id === playerId);
+    const player = players.find((p: { id: number }) => p.id === playerId);
     return player;
   }
 
@@ -72,12 +83,6 @@ export class StandingsComponent implements OnInit {
       (event) => event.eventId === eventIdToFind
     );
     return foundEvent ? foundEvent.points : 0;
-  }
-
-  ngOnInit(): void {
-    this.getStandings();
-    this.getEvents();
-    this.getPlayers();
   }
 
   onCategoryChange(event: Event): void {

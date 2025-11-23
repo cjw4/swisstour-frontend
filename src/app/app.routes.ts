@@ -47,7 +47,7 @@ export const routes: Routes = [
     component: PlayerDetailsComponent
     },
     {
-      path: 'standings',
+      path: 'standings/:category',
       component: StandingsComponent
     },
     {

@@ -42,13 +42,13 @@
             Standings
             <div class="flex flex-col absolute scale-y-0 top-full left-0 w-full [&>a]:pl-2 [&>a]:py-2 [&>a]:hover:bg-white group-hover:scale-y-100 bg-gray-100 rounded-b-xl
               shadow-xl shadow-gray-400 [&>*:last-child]:rounded-b-xl origin-top duration-300">
-              <a>MPO</a>
-              <a>FPO</a>
-              <a>MP40</a>
-              <a>FP40</a>
-              <a>MP50</a>
-              <a>MP60</a>
-              <a>MJ18</a>
+              <a routerLink="standings/MPO">MPO</a>
+              <a routerLink="standings/FPO">FPO</a>
+              <a routerLink="standings/MP40">MP40</a>
+              <a routerLink="standings/FP40">FP40</a>
+              <a routerLink="standings/MP50">MP50</a>
+              <a routerLink="standings/MP60">MP60</a>
+              <a routerLink="standings/MJ18">MJ18</a>
             </div>
           </div>
         @if(authService.adminLoggedIn()) {
