@@ -1,20 +1,9 @@
 @let events = (events$ | async)!;
 <div class="max-w-7xl mx-auto p-6 lg:px-8">
-  {{ this.category }}
-  <!-- Dropdown for category selection -->
-  <div class="mb-4">
-    <label for="category" class="block text-sm font-medium text-gray-700">Select Category:</label>
-    <select
-      id="category"
-      (change)="onCategoryChange($event)"
-      class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-    >
-      <option value="MPO">MPO</option>
-      <option value="FPO">FPO</option>
-      <option value="MP40">MP40</option>
-      <option value="FP40">FP40</option>
-    </select>
-  </div>
+  <h1 class="flex justify-center text-2xl pb-5">
+    Current {{ this.category }} Standings
+  </h1>
+
 
   <div class="overflow-x-auto bg-white rounded-lg shadow">
     <table class="min-w-full divide-y divide-gray-200">

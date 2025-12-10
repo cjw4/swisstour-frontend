@@ -85,10 +85,4 @@ export class StandingsComponent implements OnInit {
     return foundEvent ? foundEvent.points : 0;
   }
 
-  onCategoryChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.category = selectElement.value;
-    this.standingsUrl = this.settings.apiUrl + '/standings/' + this.category;
-    this.getStandings();
-  }
 }
