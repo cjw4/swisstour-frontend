@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { EventsService } from '../services/events.service';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { StandingsDTO } from '../interfaces/standings-dto';
 import { PlayerService } from '../services/player.service';
@@ -19,7 +19,7 @@ import { StandingsService } from '../services/standings.service';
   styleUrl: './standings.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
-export class StandingsComponent implements OnInit {
+export class StandingsComponent {
   // inject dependencies
   private activatedRoute = inject(ActivatedRoute);
   private playerService = inject(PlayerService);
@@ -32,22 +32,21 @@ export class StandingsComponent implements OnInit {
   players$: Observable<Player[]> | undefined;
   standings$: Observable<StandingsDTO[]> | undefined;
   category: string | null = '';
-
   playersSignal: Signal<any>;
 
   constructor() {
-    this.activatedRoute.paramMap
-      .subscribe((params) =>
-        this.category = params.get('category')
-    );
+    this.activatedRoute.paramMap.pipe(
+        map(params => params.get('category')),
+        tap(category => {this.category = category
+          console.log(category)
+        }),
+        tap(() => {
+          this.getStandings();
+          this.getEvents()
+        })
+    ).subscribe();
+    // assign the observable of all players to a signal
     this.playersSignal = toSignal(this.playerService.getPlayers());
-  }
-
-  // lifecycle hooks
-  ngOnInit(): void {
-    this.getStandings();
-    this.getEvents();
-    this.getPlayers();
   }
 
   public getStandings() {
