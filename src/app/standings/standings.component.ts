@@ -10,6 +10,7 @@ import { StandingsDTO } from '../interfaces/standings-dto';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StandingsService } from '../services/standings.service';
 
 @Component({
   selector: 'app-standings',
@@ -21,41 +22,36 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StandingsComponent implements OnInit {
   // inject dependencies
   private activatedRoute = inject(ActivatedRoute);
+  private playerService = inject(PlayerService);
+  private eventsService = inject(EventsService);
+  private standingService = inject(StandingsService);
   router = inject(Router);
-  private http = inject(HttpClient);
-  settings = inject(APP_SETTINGS);
 
-  category: string | null = 'MPO';
-  private eventsService: EventsService;
-  private playerService: PlayerService;
+  // define variables
+  events$: Observable<PdgaEvent[]> | undefined;
+  players$: Observable<Player[]> | undefined;
+  standings$: Observable<StandingsDTO[]> | undefined;
+  category: string | null = '';
+
   playersSignal: Signal<any>;
 
   constructor() {
-    this.eventsService = new EventsService();
-    this.playerService = new PlayerService();
+    this.activatedRoute.paramMap
+      .subscribe((params) =>
+        this.category = params.get('category')
+    );
     this.playersSignal = toSignal(this.playerService.getPlayers());
   }
 
-  events$: Observable<PdgaEvent[]> | undefined;
-  players$: Observable<Player[]> | undefined;
-
-  standingsUrl = this.settings.apiUrl + '/standings/' + this.category;
-  standings: any;
-
   // lifecycle hooks
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(
-      (params) => (this.category = params.get('category'))
-    );
     this.getStandings();
     this.getEvents();
     this.getPlayers();
   }
 
   public getStandings() {
-    this.http
-      .get(this.standingsUrl)
-      .subscribe((result: any) => (this.standings = result));
+    this.standings$ = this.standingService.getStanding(this.category);
   }
 
   public getEvents() {
@@ -84,5 +80,4 @@ export class StandingsComponent implements OnInit {
     );
     return foundEvent ? foundEvent.points : 0;
   }
-
 }
