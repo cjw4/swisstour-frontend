@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
@@ -32,15 +32,16 @@ export class EventsService {
     return this.http.get<PdgaEvent>(this.eventsUrl + '/' + id);
   }
 
-  deleteEvent(event: PdgaEvent): void {
+  deleteEvent(event: PdgaEvent): Observable<PdgaEvent[]> {
     const url = `${this.eventsUrl}/${event.id}`;
-    this.http.delete(url).subscribe({
-      next: (res) => {
+    return this.http.delete(url).pipe(
+      tap(() => {
         this.bannerService.updateBanner(
           'PDGA event was deleted.',
           BannerType.SUCCESS
         );
-      },
-    });
+      }),
+      switchMap(() => this.getEvents())
+    );
   }
 }

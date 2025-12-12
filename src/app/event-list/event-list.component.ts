@@ -70,8 +70,7 @@ export class EventListComponent implements OnInit {
 
   public deleteEvent(event: PdgaEvent) {
     if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
-      this.eventService.deleteEvent(event);
-      this.events$ = this.eventService.getEvents();
+      this.events$ = this.eventService.deleteEvent(event);
     }
   }
 }
