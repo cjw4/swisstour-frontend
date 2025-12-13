@@ -35,7 +35,7 @@
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 flex justify-center">{{ standing.totalPoints }}</td>
           @for (event of events; track event.id) {
             @if (hasEventId(standing, event.id)) {
-              <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400"
+              <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400 text-center"
                 [style.text-decoration]="isEventIncluded(standing, event.id) ? '' : 'line-through'">
                 {{ getEventPoints(standing, event.id) }}
               </td>

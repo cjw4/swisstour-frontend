@@ -53,8 +53,13 @@ export class StandingsComponent {
 
   public getEvents() {
     this.events$ = this.eventsService.getEvents().pipe(
-      map(events => events.filter(event => event.isSwisstour)),
-      map(events => events.filter(event => event.hasResults))
+      map((events) => events.filter((event) => event.isSwisstour)),
+      map((events) => events.filter((event) => event.hasResults)),
+      map((events) =>
+        events.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )
+      )
     );
   }
 
