@@ -37,9 +37,7 @@ export class StandingsComponent {
   constructor() {
     this.activatedRoute.paramMap.pipe(
         map(params => params.get('category')),
-        tap(category => {this.category = category
-          console.log(category)
-        }),
+        tap(category => {this.category = category}),
         tap(() => {
           this.getStandings();
           this.getEvents()
@@ -55,7 +53,8 @@ export class StandingsComponent {
 
   public getEvents() {
     this.events$ = this.eventsService.getEvents().pipe(
-      map(events => events.filter(event => event.isSwisstour))
+      map(events => events.filter(event => event.isSwisstour)),
+      map(events => events.filter(event => event.hasResults))
     );
   }
 
@@ -80,5 +79,15 @@ export class StandingsComponent {
       (event) => event.eventId === eventIdToFind
     );
     return foundEvent ? foundEvent.points : 0;
+  }
+
+  isEventIncluded(standing: StandingsDTO, eventIdToFind: number): boolean {
+    const foundEvent = standing.eventPoints.find(
+      (event) => event.eventId == eventIdToFind
+    );
+    console.log(
+      `Event ID: ${eventIdToFind}, ${foundEvent?.included}`
+    );
+    return foundEvent?.included ?? false;
   }
 }

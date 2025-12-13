@@ -17,7 +17,7 @@
           @for (event of events; track event.id) {
             <th
             scope="col"
-            class="whitespace-nowrap px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+            class="whitespace-nowrap px-2 py-3 justify-center text-xs font-medium text-gray-400 uppercase tracking-wider">
             {{ event.displayName }}
             </th>
           }
@@ -35,7 +35,10 @@
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 flex justify-center">{{ standing.totalPoints }}</td>
           @for (event of events; track event.id) {
             @if (hasEventId(standing, event.id)) {
-              <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400">{{ getEventPoints(standing, event.id) }}</td>
+              <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400"
+                [style.text-decoration]="isEventIncluded(standing, event.id) ? '' : 'line-through'">
+                {{ getEventPoints(standing, event.id) }}
+              </td>
             } @else {
               <td></td>
             }
