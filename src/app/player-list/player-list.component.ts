@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { filter, map, Observable } from 'rxjs';
+import { filter, map, Observable, switchMap, tap } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
@@ -50,13 +50,7 @@ export class PlayerListComponent implements OnInit {
 
   deletePlayer(player: Player) {
     if (confirm(`Are you sure you want to delete the player ${player.firstname} ${player.lastname}?`)) {
-      this.playerService.deletePlayer(player).subscribe((res) => {
-        this.bannerService.updateBanner(
-          `Player was deleted.`,
-          BannerType.SUCCESS
-        );
-        this.getPlayers();
-      });
+      this.players$ = this.playerService.deletePlayer(player)
     }
   }
 

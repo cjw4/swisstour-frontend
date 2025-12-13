@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { APP_SETTINGS } from '../app.settings';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { Player } from '../interfaces/player';
+import { BannerService, BannerType } from './banner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { Player } from '../interfaces/player';
 export class PlayerService {
   private playersUrl: string = inject(APP_SETTINGS).apiUrl + '/players'
   http = inject(HttpClient)
+  bannerService = inject(BannerService)
 
   getPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(this.playersUrl);
@@ -29,6 +31,14 @@ export class PlayerService {
 
   deletePlayer(player: Player) {
     const url = `${this.playersUrl}/${player.id}`;
-    return this.http.delete(url);
-  }
+    return this.http.delete(url).pipe(
+        tap(() => {
+          this.bannerService.updateBanner(
+            `Player was deleted.`,
+            BannerType.SUCCESS
+          );
+        }),
+        switchMap(() => this.getPlayers())
+      );
+  };
 }
