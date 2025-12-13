@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { EventsService } from '../services/events.service';
-import { map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { StandingsDTO } from '../interfaces/standings-dto';
 import { PlayerService } from '../services/player.service';
@@ -54,7 +54,9 @@ export class StandingsComponent {
   }
 
   public getEvents() {
-    this.events$ = this.eventsService.getEvents();
+    this.events$ = this.eventsService.getEvents().pipe(
+      map(events => events.filter(event => event.isSwisstour))
+    );
   }
 
   public getPlayers() {
