@@ -37,7 +37,7 @@
             @if (hasEventId(standing, event.id)) {
               <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400 text-center"
                 [style.text-decoration]="isEventIncluded(standing, event.id) ? '' : 'line-through'">
-                {{ getEventPoints(standing, event.id) }}
+                {{ getEventPoints(standing, event.id) != 0 ?  getEventPoints(standing, event.id) : 'DNF' }}
               </td>
             } @else {
               <td></td>
