@@ -4,6 +4,7 @@ export interface PdgaEvent {
     displayName: string;
     tier: string;
     date: Date;
+    year: number;
     numberDays: number,
     city: string;
     country: string;

@@ -61,6 +61,24 @@
       }
     </div>
     <div class="flex justify-center items-center">
+      <input
+        type="number"
+        formControlName="year"
+        placeholder="Year"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        required
+      />
+      @if (points?.invalid && points?.touched) {
+      <span class="text-red-600 text-sm ml-1">
+        @if (points?.errors?.['required']) {
+        <span>* required</span>
+        } @if (points?.errors?.['pattern']) {
+        <span>* must be a number</span>
+        }
+      </span>
+      }
+    </div>
+    <div class="flex justify-center items-center">
       <label class="inline-flex items-center space-x-2">
         <input
           type="checkbox"

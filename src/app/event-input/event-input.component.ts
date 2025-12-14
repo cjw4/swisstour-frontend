@@ -51,6 +51,7 @@ export class EventInputComponent implements OnInit {
             id: event.id?.toString(),
             displayName: event.displayName,
             points: event.points.toString(),
+            year: event.year.toString(),
             isChampionship: event.isChampionship,
             isSwisstour: event.isSwisstour,
           });
@@ -70,6 +71,7 @@ export class EventInputComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^\d+$/),
     ]),
+    year: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     isChampionship: new FormControl(false),
     isSwisstour: new FormControl(false),
   });
