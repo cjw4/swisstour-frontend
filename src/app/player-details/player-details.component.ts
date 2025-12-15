@@ -2,10 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-player-details',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './player-details.component.html',
   styleUrl: './player-details.component.css'
 })
@@ -15,16 +17,15 @@ export class PlayerDetailsComponent implements OnInit {
   private playerService = inject(PlayerService);
 
   // variables
-  player: Player | null = null;
+  player$: Observable<Player> | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
-    // check if the parameter id exists
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.playerService.getPlayer(Number(id)).subscribe(player => {
-        this.player = player;
-      })
-    });
+    // get the player id
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      const numId = Number(id);
+      this.player$ = this.playerService.getPlayer(numId);
+    }
   }
 }
