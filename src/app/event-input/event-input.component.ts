@@ -107,10 +107,10 @@ export class EventInputComponent implements OnInit {
     request.subscribe({
       next: (res) => {
         this.bannerService.updateBanner(
-          `Event ${res} was saved`,
+          `Event ${res.id}: ${res.name} was successfully saved.`,
           BannerType.SUCCESS
         );
-        this.router.navigate(['/events']);
+        this.router.navigate(['/events', res.year]);
         this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {

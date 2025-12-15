@@ -52,7 +52,7 @@
             </div>
           </div>
         @if(authService.adminLoggedIn()) {
-        <a routerLink="events" class="text-sm px-4 py-5 hover:bg-white font-semibold text-gray-900">Events</a>
+        <a [routerLink]="'events/' + settings.currentYear" class="text-sm px-4 py-5 hover:bg-white font-semibold text-gray-900">Events</a>
         }
         <a routerLink="players" class="text-sm px-4 py-5 hover:bg-white font-semibold text-gray-900">Players</a>
       </div>

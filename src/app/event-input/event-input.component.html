@@ -108,7 +108,7 @@
       <button
         type="button"
         class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 text-sm font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
-        (click)="this.router.navigate(['/events'])"
+        (click)="this.router.navigate(['/events', eventForm.value.year])"
       >
         Cancel
       </button>

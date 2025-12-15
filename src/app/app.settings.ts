@@ -5,13 +5,15 @@ export interface AppSettings {
   version: string;
   baseUrl: string;
   apiUrl: string;
+  currentYear: number
 }
 
 export const appSettings: AppSettings = {
   title: 'Disc Golf Database',
   version: '0.0.0',
   baseUrl: 'http://localhost:8080',
-  apiUrl: 'http://localhost:8080/api'
+  apiUrl: 'http://localhost:8080/api',
+  currentYear: 2025
 };
 
 export const APP_SETTINGS = new InjectionToken<AppSettings>('app.settings');

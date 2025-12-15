@@ -5,9 +5,10 @@ import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { ResultsService } from '../services/results.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
@@ -22,6 +23,7 @@ export class EventListComponent implements OnInit {
   private resultsService = inject(ResultsService);
   private bannerService = inject(BannerService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
 
   // inputs and outputs
@@ -36,7 +38,15 @@ export class EventListComponent implements OnInit {
 
   // lifecycle hooks
   ngOnInit(): void {
-    this.events$ = this.eventService.getEvents();
+    // get the parameter using snapshot
+    const year = this.activatedRoute.snapshot.paramMap.get('year');
+    if (year) {
+      const numYear = Number(year);
+      this.events$ = this.eventService.getEvents(numYear);
+    } else {
+      this.events$ = this.eventService.getEvents(appSettings.currentYear);
+    }
+
   }
 
   // functions
@@ -58,7 +68,7 @@ export class EventListComponent implements OnInit {
     this.resultsService.addResults(id).subscribe({
       next: (res) => {
       this.bannerService.updateBanner(`Result ${res} was saved`, BannerType.SUCCESS);
-      this.events$ = this.eventService.getEvents();
+      this.events$ = this.eventService.getEvents(appSettings.currentYear);
       this.loadingService.loadingOff();
     },
       error: (err) => {

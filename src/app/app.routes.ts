@@ -15,8 +15,9 @@ export const routes: Routes = [
       pathMatch: 'full'
     },
     {
-      path: 'events',
-      component: EventListComponent
+      path: 'events/:year',
+      component: EventListComponent,
+      canActivate: [authGuard]
     },
     {
       path: 'event/input',
@@ -38,13 +39,13 @@ export const routes: Routes = [
       canActivate: [authGuard]
     },
     {
-    path: 'player/input/:id',
-    component: PlayerInputComponent,
-    canActivate: [authGuard]
+      path: 'player/input/:id',
+      component: PlayerInputComponent,
+      canActivate: [authGuard]
     },
     {
-    path: 'player/:id',
-    component: PlayerDetailsComponent
+      path: 'player/:id',
+      component: PlayerDetailsComponent
     },
     {
       path: 'standings/:category',

@@ -24,8 +24,8 @@ export class EventsService {
     type: 'info',
   };
 
-  getEvents(): Observable<PdgaEvent[]> {
-    return this.http.get<PdgaEvent[]>(this.eventsUrl);
+  getEvents(year: number): Observable<PdgaEvent[]> {
+    return this.http.get<PdgaEvent[]>(this.eventsUrl + '/year/' + year);
   }
 
   getEvent(id: number): Observable<PdgaEvent> {
@@ -41,7 +41,7 @@ export class EventsService {
           BannerType.SUCCESS
         );
       }),
-      switchMap(() => this.getEvents())
+      switchMap(() => this.getEvents(inject(APP_SETTINGS).currentYear))
     );
   }
 }

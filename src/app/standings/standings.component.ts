@@ -32,6 +32,7 @@ export class StandingsComponent {
   standings$: Observable<StandingsDTO[]> | undefined;
   category: string | null = '';
   playersSignal: Signal<any>;
+  appSettings = appSettings;
 
   constructor() {
     this.activatedRoute.paramMap.pipe(
@@ -51,7 +52,7 @@ export class StandingsComponent {
   }
 
   public getEvents() {
-    this.events$ = this.eventsService.getEvents().pipe(
+    this.events$ = this.eventsService.getEvents(appSettings.currentYear).pipe(
       map((events) => events.filter((event) => event.isSwisstour)),
       map((events) => events.filter((event) => event.hasResults)),
       map((events) =>

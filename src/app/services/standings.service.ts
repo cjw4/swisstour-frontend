@@ -12,7 +12,7 @@ export class StandingsService {
   settings = inject(APP_SETTINGS);
 
   getStanding(category: string | null) : Observable<StandingsDTO[]> {
-    const standingsUrl = this.settings.apiUrl + '/standings/' + category;
+    const standingsUrl = this.settings.apiUrl + '/standings/' + this.settings.currentYear + '/' + category;
     return this.http.get<StandingsDTO[]>(standingsUrl)
   }
 
