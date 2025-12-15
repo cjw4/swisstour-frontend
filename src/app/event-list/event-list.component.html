@@ -1,4 +1,17 @@
 @let events = (events$ | async)!;
+  <!-- Dropdown for year selection -->
+  <div class="mb-4">
+    <label for="category" class="block text-sm font-medium text-gray-700">Select Year:</label>
+    <select
+      id="category"
+      (change)="onYearChange($event)"
+      class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+    >
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+    </select>
+  </div>
 @if (events) {
   <div class="px-2 pb-4"><button
     class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"

@@ -32,6 +32,9 @@ export class EventListComponent implements OnInit {
   deletedEvent = output<PdgaEvent>();
   selectedEvent = output<number>();
 
+  // variables
+  year: number | undefined;
+
   // observables
   event$: Observable<PdgaEvent> | undefined;
   events$: Observable<PdgaEvent[]> | undefined;
@@ -41,21 +44,20 @@ export class EventListComponent implements OnInit {
     // get the parameter using snapshot
     const year = this.activatedRoute.snapshot.paramMap.get('year');
     if (year) {
-      const numYear = Number(year);
-      this.events$ = this.eventService.getEvents(numYear);
+      this.year = Number(year);
+      this.events$ = this.eventService.getEvents(this.year);
     } else {
       this.events$ = this.eventService.getEvents(appSettings.currentYear);
     }
-
   }
 
   // functions
   addEvent() {
-    this.router.navigate(['/event/input'])
+    this.router.navigate(['/event/input']);
   }
 
   editEvent(id: number) {
-    this.router.navigate(['/event/input', id])
+    this.router.navigate(['/event/input', id]);
   }
 
   public getEvent(id: number) {
@@ -67,14 +69,20 @@ export class EventListComponent implements OnInit {
     this.loadingService.loadingOn();
     this.resultsService.addResults(id).subscribe({
       next: (res) => {
-      this.bannerService.updateBanner(`Result ${res} was saved`, BannerType.SUCCESS);
-      this.events$ = this.eventService.getEvents(appSettings.currentYear);
-      this.loadingService.loadingOff();
-    },
-      error: (err) => {
-        this.bannerService.updateBanner(`There was an error adding the results: ${err}`, BannerType.ERROR);
+        this.bannerService.updateBanner(
+          `Result ${res} was saved`,
+          BannerType.SUCCESS
+        );
+        this.events$ = this.eventService.getEvents(appSettings.currentYear);
         this.loadingService.loadingOff();
-      }
+      },
+      error: (err) => {
+        this.bannerService.updateBanner(
+          `There was an error adding the results: ${err}`,
+          BannerType.ERROR
+        );
+        this.loadingService.loadingOff();
+      },
     });
   }
 
@@ -82,5 +90,11 @@ export class EventListComponent implements OnInit {
     if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
       this.events$ = this.eventService.deleteEvent(event);
     }
+  }
+
+  onYearChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.year = Number(selectElement.value);
+    this.events$ = this.eventService.getEvents(this.year);
   }
 }
