@@ -31,28 +31,37 @@ export class StandingsComponent {
   players$: Observable<Player[]> | undefined;
   standings$: Observable<StandingsDTO[]> | undefined;
   category: string | null = '';
+  year: number | undefined;
   playersSignal: Signal<any>;
   appSettings = appSettings;
 
   constructor() {
-    this.activatedRoute.paramMap.pipe(
-        map(params => params.get('category')),
-        tap(category => {this.category = category}),
+    this.activatedRoute.paramMap
+      .pipe(
+        map((params) => ({
+          category: params.get('category'),
+          year: params.get('year'),
+        })),
+        tap(({category, year}) => {
+          this.category = category;
+          this.year = Number(year)
+        }),
         tap(() => {
           this.getStandings();
-          this.getEvents()
+          this.getEvents();
         })
-    ).subscribe();
+      )
+      .subscribe();
     // assign the observable of all players to a signal
     this.playersSignal = toSignal(this.playerService.getPlayers());
   }
 
   public getStandings() {
-    this.standings$ = this.standingService.getStanding(this.category);
+    this.standings$ = this.standingService.getStanding(this.year, this.category);
   }
 
   public getEvents() {
-    this.events$ = this.eventsService.getEvents(appSettings.currentYear).pipe(
+    this.events$ = this.eventsService.getEvents(this.year).pipe(
       map((events) => events.filter((event) => event.isSwisstour)),
       map((events) => events.filter((event) => event.hasResults)),
       map((events) =>

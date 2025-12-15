@@ -11,8 +11,8 @@ export class StandingsService {
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
 
-  getStanding(category: string | null) : Observable<StandingsDTO[]> {
-    const standingsUrl = this.settings.apiUrl + '/standings/' + this.settings.currentYear + '/' + category;
+  getStanding(year: number | undefined, category: string | null) : Observable<StandingsDTO[]> {
+    const standingsUrl = this.settings.apiUrl + '/standings/' + year + '/' + category;
     return this.http.get<StandingsDTO[]>(standingsUrl)
   }
 
