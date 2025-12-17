@@ -6,6 +6,7 @@ import { APP_SETTINGS } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerType } from './banner.service';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,9 @@ export class EventsService {
   authService = inject(AuthService);
 
   // variables
-  private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
+  private apiUrl = environment.apiUrl;
+  private eventsUrl = this.apiUrl + '/events';
+  // private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
   bannerInfo: BannerInfo = {
     message: ``,
     visible: true,

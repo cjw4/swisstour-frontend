@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, switchMap, tap } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { BannerService, BannerType } from './banner.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
-  private playersUrl: string = inject(APP_SETTINGS).apiUrl + '/players'
+  private playersUrl: string = environment.apiUrl + '/players'
   http = inject(HttpClient)
   bannerService = inject(BannerService)
 

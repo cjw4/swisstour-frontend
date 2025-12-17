@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BannerInfo } from '../interfaces/banner-info';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResultsService {
-  private eventsUrl = inject(APP_SETTINGS).apiUrl + '/events';
+  private eventsUrl = environment.apiUrl + '/events';
   authService = inject(AuthService);
   http = inject(HttpClient);
   bannerInfo: BannerInfo = {

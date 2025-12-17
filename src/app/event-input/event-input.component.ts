@@ -10,6 +10,7 @@ import { EventsService } from '../services/events.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-event-create',
@@ -80,7 +81,7 @@ export class EventInputComponent implements OnInit {
   http = inject(HttpClient);
   refreshEvents = output();
   settings = inject(APP_SETTINGS);
-  eventUrl = this.settings.apiUrl + '/events';
+  eventUrl = environment.apiUrl + '/events';
 
   bannerInfoOutput = output<BannerInfo>();
   bannerInfo: BannerInfo | undefined;
