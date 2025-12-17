@@ -1,8 +1,12 @@
 @let player = (player$ | async)!;
+@let events = (events$ | async)!;
 <div class="text-center justify-center bg-gray-100 rounded-lg">
   <h2 class="bg-gray-100 text-lg">{{ player?.firstname }} {{ player?.lastname}}</h2>
   <div>
     <p class="font-medium">SUI.{{ player?.sdaNumber }}</p>
+  </div>
+  <div>
+    {{ events }}
   </div>
 </div>
 

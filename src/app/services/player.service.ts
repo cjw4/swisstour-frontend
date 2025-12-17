@@ -41,4 +41,9 @@ export class PlayerService {
         switchMap(() => this.getPlayers())
       );
   };
+
+  getPlayersEvents(id: number) {
+    const url = `${this.playersUrl}/events/${id}`
+    return this.http.get(url);
+  }
 }

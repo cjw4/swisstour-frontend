@@ -18,6 +18,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   // variables
   player$: Observable<Player> | undefined;
+  events$: Observable<any> | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
@@ -26,6 +27,7 @@ export class PlayerDetailsComponent implements OnInit {
     if (id) {
       const numId = Number(id);
       this.player$ = this.playerService.getPlayer(numId);
+      this.events$ = this.playerService.getPlayersEvents(numId);
     }
   }
 }
