@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "dist/swiss-dg-db",
               "budgets": [
                 {
                   "type": "initial",
