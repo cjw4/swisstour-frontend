@@ -1,12 +1,11 @@
 @let events = (events$ | async)!;
 @let standings = (standings$ | async)!;
-<div class="max-w-7xl mx-auto p-6 lg:px-8">
-  <h1 class="flex justify-center text-2xl pb-5">
+  <h1 class="flex justify-center text-3xl py-5">
     {{ this.year }} {{ this.category }} Standings
   </h1>
 
 
-  <div class="overflow-x-auto bg-white rounded-lg shadow">
+  <div class="overflow-x-auto rounded-lg shadow">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -49,4 +48,3 @@
       </tbody>
     </table>
   </div>
-</div>

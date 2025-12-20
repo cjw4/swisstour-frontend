@@ -1,22 +1,17 @@
-<header class="bg-gray-100 py-2">
+<header class="bg-gray-100 py-2 text-lg font-medium">
   <nav aria-label="Global" class="mx-auto flex items-center justify-between whitespace-nowrap md:p-0">
     <!-- Left-side navigation -->
     <div class="flex items-center">
       <!-- Image and name -->
       <img src="assets/images/switzerland-flag-xs.png" alt="Swiss flag" class="ml-3 h-8 w-auto" />
-      <span class="font-medium text-gray-700 flex items-center px-2">
+      <span class="text-gray-700 flex items-center px-2">
         <span class="sm:hidden">Swisstour Standings</span>
         <span class="hidden sm:block">Swisstour Standings</span>
       </span>
       <!-- Logged in tag -->
       @if (this.authService.adminLoggedIn()) {
-        <div class="flex flex-row items-center text-sm px-3 py-1 bg-slate-300 rounded-md shadow-gray-200 shadow-md">
-          <span class="font-medium">Admin View</span>
-          <button type="button"
-                  (click)="this.authService.logout()"
-                  class="bg-gray-200 hover:bg-gray-300 h-6 px-2 ml-3 my-0.5 border border-gray-400 rounded-md cursor-pointer">
-            Log Out
-          </button>
+        <div class="hidden md:flex flex-row items-center px-2 py-1 bg-slate-300 rounded-md shadow-gray-200 shadow-md">
+          <span>Admin</span>
         </div>
       }
     </div>
@@ -30,15 +25,15 @@
           class="m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
           <span class="sr-only">Open main menu</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
-            aria-hidden="true" class="size-6">
+            aria-hidden="true" class="size-8">
             <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       </div>
 
       <!-- Links -->
-      <div class="hidden md:flex items-center [&>*]:px-4 [&>*]:py-2 mr-10 [&>*]:rounded-xl">
-        <div class="relative group text-sm cursor-pointer hover:bg-white font-semibold text-gray-900"
+      <div class="hidden md:flex items-center [&>*]:px-4 [&>*]:py-2 mr-3 [&>*]:rounded-xl">
+        <div class="relative group cursor-pointer hover:bg-white text-gray-900"
             [class.open]="isStandingsOpen"
             (click)="toggleStandings()">
           <div class="flex items-center">
@@ -51,7 +46,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          <div class="absolute top-12 left-0 w-full
+          <div class="absolute top-14 left-0 w-full
                       flex flex-col
                       bg-gray-100
                       rounded-xl
@@ -78,21 +73,27 @@
           </div>
         </div>
 
+        <a routerLink="players"
+          class="hover:bg-white text-gray-900">
+          Players
+        </a>
+
         @if(authService.adminLoggedIn()) {
           <a [routerLink]="'events/' + settings.currentYear"
-            class="text-sm hover:bg-white font-semibold text-gray-900">
+            class="hover:bg-white text-gray-900">
             Events
+          </a>
+
+          <a (click)="this.authService.logout()"
+            class="hover:bg-white text-gray-900 hover:cursor-pointer">
+            Log Out
           </a>
         }
 
-        <a routerLink="players"
-          class="text-sm hover:bg-white font-semibold text-gray-900">
-          Players
-        </a>
       </div>
 
       <!-- Language Selection -->
-      <div class="md:flex md:gap-x-6 group relative hover:bg-white cursor-pointer py-2 px-4 mr-2 rounded-lg hidden bg-gray-300"
+      <div class="md:flex md:gap-x-6 group relative hover:bg-white cursor-pointer py-2 px-4 mr-2 rounded-lg hidden"
         [class.open]="isLanguageOpen"
         (click)="toggleLanguage()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -101,7 +102,7 @@
           <line x1="2" y1="12" x2="22" y2="12"></line>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <div class="absolute top-12 left-0.5 scale-y-0 group-[.open]:scale-y-100  bg-gray-100
+        <div class="absolute top-14 left-0.5 scale-y-0 group-[.open]:scale-y-100  bg-gray-100
                       rounded-xl
                       shadow-xl
                       shadow-gray-400 flex flex-col origin-top duration-300
@@ -120,7 +121,7 @@
 
   <!-- Mobile menu -->
   @if (mobileMenuOpen()) {
-  <div class="lg:hidden" role="dialog" aria-modal="true">
+  <div class="md:hidden" role="dialog" aria-modal="true">
     <div class="fixed inset-0 z-10"></div>
     <div
       class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -136,7 +137,7 @@
       <div class="mt-6 flow-root">
         <div class="-my-6 divide-y divide-gray-500/10">
           <div class="space-y-2 py-6 [&>div]:my-8">
-            <div class="relative group text-lg cursor-pointer font-semibold text-gray-900 flex items-center"
+            <div class="relative group cursor-pointer text-gray-900 flex items-center"
               [class.open]="isStandingsOpen" (click)="toggleStandings()">
               <span>Standings</span>
               <svg class="ml-2 w-4 h-4 transition-transform transform group-[.open]:rotate-180"
@@ -162,7 +163,7 @@
 
             <div>
               <a routerLink="players" (click)="mobileMenuOpen.set(false)"
-              class="text-lg -mx-3 px-3 py-2 font-semibold text-gray-900">
+              class="text-lg -mx-3 px-3 py-2 text-gray-900">
               Players
               </a>
             </div>
@@ -170,15 +171,21 @@
             @if (this.authService.adminLoggedIn()) {
               <div>
                 <a [routerLink]="'events/' + settings.currentYear" (click)="mobileMenuOpen.set(false)"
-                class="text-lg -mx-3 m-6 px-3 py-2 font-semibold text-gray-900">
+                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
                 Events
+                </a>
+              </div>
+              <div class="hover:cursor-pointer">
+                <a (click)="this.authService.logout(); mobileMenuOpen.set(false)"
+                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
+                Log Out
                 </a>
               </div>
 
             }
 
 
-           <div class="relative group text-lg cursor-pointer font-semibold text-gray-900 flex items-center"
+           <div class="relative group text-lg cursor-pointer text-gray-900 flex items-center"
               [class.open]="isLanguageOpen" (click)="toggleLanguage()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
