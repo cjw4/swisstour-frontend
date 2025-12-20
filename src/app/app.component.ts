@@ -5,6 +5,7 @@ import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator
 import { CopyrightDirective } from './directives/copyright.directive';
 import { APP_SETTINGS, appSettings } from './app.settings';
 import { AuthService } from './services/auth.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { AuthService } from './services/auth.service';
     RouterOutlet,
     RouterLink,
     BannerComponent,
+    NavbarComponent,
     LoadingIndicatorComponent,
     CopyrightDirective
   ],
@@ -22,10 +24,5 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   settings = inject(APP_SETTINGS);
-  mobileMenuOpen = signal(false);
   authService = inject(AuthService);
-
-  toggleMobileMenu() {
-    this.mobileMenuOpen.update((v) => !v);
-  }
 }
