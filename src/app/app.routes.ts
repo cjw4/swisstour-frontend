@@ -8,6 +8,7 @@ import { PlayerDetailsComponent } from './player-details/player-details.componen
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { appSettings } from './app.settings';
 
 export const routes: Routes = [
     {
@@ -54,5 +55,10 @@ export const routes: Routes = [
     {
       path: 'admin/login',
       component: LoginComponent
-    }
+    },
+    {
+      path: '**',
+      redirectTo: 'standings/' + appSettings.currentYear,
+      pathMatch: 'full',
+    },
 ];

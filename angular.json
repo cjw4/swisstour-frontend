@@ -25,6 +25,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "_redirects",
+                "input": "./",
+                "output": "/"
               }
             ],
             "styles": [
@@ -35,6 +40,13 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "dist/swiss-dg-db",
               "budgets": [
                 {
                   "type": "initial",
@@ -84,6 +96,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "_redirects",
+                "input": "./",
+                "output": "/"
               }
             ],
             "styles": [

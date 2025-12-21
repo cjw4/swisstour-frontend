@@ -2,13 +2,14 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { APP_SETTINGS } from '../app.settings';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private loginUrl = inject(APP_SETTINGS).baseUrl + '/login';
+  private loginUrl = environment.baseUrl + '/login';
 
   accessToken = signal(this.getValidStoredToken());
   adminLoggedIn = computed(() => this.accessToken() !== '');

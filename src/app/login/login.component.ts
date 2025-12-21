@@ -6,6 +6,7 @@ import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
   http = inject(HttpClient);
   settings = inject(APP_SETTINGS);
 
-  private loginUrl = this.settings.apiUrl + '/auth/login';
+  private loginUrl = environment.apiUrl + '/auth/login';
 
   // create form
   loginForm = new FormGroup({
