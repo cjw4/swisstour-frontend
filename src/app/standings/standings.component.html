@@ -1,5 +1,6 @@
 @let events = (events$ | async)!;
 @let standings = (standings$ | async)!;
+<div class="md:mx-20 md:my-10">
   <h1 class="flex justify-center text-3xl py-5">
     {{ this.year }} {{ this.category }} Standings
   </h1>
@@ -48,3 +49,4 @@
       </tbody>
     </table>
   </div>
+</div>

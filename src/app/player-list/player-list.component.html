@@ -1,4 +1,5 @@
 @let players = (players$ | async)!;
+<div class="md:mx-20 md:my-10">
 @if (authService.adminLoggedIn()) {
 <div class="px-2 pb-4">
   <button
@@ -85,4 +86,5 @@
     </tbody>
   </table>
   }
+</div>
 </div>

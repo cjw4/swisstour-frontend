@@ -7,12 +7,12 @@ import { EventInputComponent } from './event-input/event-input.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 export const routes: Routes = [
     {
       path:'',
-      redirectTo: 'standings',
-      pathMatch: 'full'
+      component: LandingPageComponent,
     },
     {
       path: 'events/:year',

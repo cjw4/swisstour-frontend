@@ -2,7 +2,8 @@
   <div [ngClass]="{'bg-green-100 text-green-800': currentBanner.type == 'success',
                   'bg-red-100 text-red-800': currentBanner.type === 'error',
                   'bg-yellow-100 text-yellow-800': currentBanner.type == 'info'}"
-                  class="mb-6 p-4 rounded-md flex justify-between items-center">
+                  class="p-4 rounded-md flex justify-between items-center
+                  absolute top-0 h-16 left-0 right-0">
     {{ currentBanner.message }}
     <button (click)="closeBanner()" class="text-gray-500 hover:text-gray-700">
       <span class="sr-only">Close</span>

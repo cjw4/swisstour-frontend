@@ -1,12 +1,11 @@
-<header class="bg-gray-100 py-2 text-lg font-medium">
-  <nav aria-label="Global" class="mx-auto flex items-center justify-between whitespace-nowrap md:p-0">
+<header class="fixed top-0 left-0 right-0 z-40 h-15 bg-gray-100 py-2 text-lg font-medium">
+  <nav aria-label="Global" class="mx-auto flex items-center justify-between whitespace-nowrap p-0">
     <!-- Left-side navigation -->
     <div class="flex items-center">
       <!-- Image and name -->
       <img src="assets/images/switzerland-flag-xs.png" alt="Swiss flag" class="ml-3 h-8 w-auto" />
       <span class="text-gray-700 flex items-center px-2">
-        <span class="sm:hidden">Swisstour Standings</span>
-        <span class="hidden sm:block">Swisstour Standings</span>
+        <span class="hover:cursor-pointer" [routerLink]="'/'">Swisstour Standings</span>
       </span>
       <!-- Logged in tag -->
       @if (this.authService.adminLoggedIn()) {
@@ -22,7 +21,7 @@
       <!-- Mobile menu icon -->
       <div class="flex md:hidden">
         <button type="button" (click)="toggleMobileMenu()"
-          class="m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+          class="mx-4 p-1.5 inline-flex items-center justify-center rounded-md text-gray-700">
           <span class="sr-only">Open main menu</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
             aria-hidden="true" class="size-8">
@@ -46,7 +45,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          <div class="absolute top-14 left-0 w-full
+          <div class="absolute z-50 top-14 left-0 w-full
                       flex flex-col
                       bg-gray-100
                       rounded-xl
@@ -102,7 +101,7 @@
           <line x1="2" y1="12" x2="22" y2="12"></line>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <div class="absolute top-14 left-0.5 scale-y-0 group-[.open]:scale-y-100  bg-gray-100
+        <div class="absolute z-50 top-14 left-0.5 scale-y-0 group-[.open]:scale-y-100  bg-gray-100
                       rounded-xl
                       shadow-xl
                       shadow-gray-400 flex flex-col origin-top duration-300
