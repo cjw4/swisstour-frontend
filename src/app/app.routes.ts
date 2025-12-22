@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { appSettings } from './app.settings';
+import { PlayerDetailsResolver } from './player-details/player-details.resolver';
 
 export const routes: Routes = [
     {
@@ -46,7 +47,10 @@ export const routes: Routes = [
     },
     {
       path: 'player/:id',
-      component: PlayerDetailsComponent
+      component: PlayerDetailsComponent,
+      resolve: {
+        data: PlayerDetailsResolver
+      }
     },
     {
       path: 'standings/:year/:category',
