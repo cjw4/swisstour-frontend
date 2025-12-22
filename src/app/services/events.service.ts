@@ -28,7 +28,11 @@ export class EventsService {
   };
 
   getEvents(year: number | undefined): Observable<PdgaEvent[]> {
-    return this.http.get<PdgaEvent[]>(this.eventsUrl + '/year/' + year);
+    if (year) {
+      return this.http.get<PdgaEvent[]>(this.eventsUrl + '/year/' + year);
+    } else {
+      return this.http.get<PdgaEvent[]>(this.eventsUrl);
+    }
   }
 
   getEvent(id: number): Observable<PdgaEvent> {

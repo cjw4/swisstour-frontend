@@ -1,6 +1,6 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { EventsService } from '../services/events.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { AsyncPipe, NgClass } from '@angular/common';
@@ -25,6 +25,7 @@ export class EventListComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
+  appSettings = inject(APP_SETTINGS)
 
   // inputs and outputs
   events = input<PdgaEvent[]>();
@@ -36,11 +37,20 @@ export class EventListComponent implements OnInit {
   year: number | undefined;
 
   // observables
+  allYears: number[] = [];
   event$: Observable<PdgaEvent> | undefined;
   events$: Observable<PdgaEvent[]> | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
+    // get unique event years
+    this.eventService.getEvents(undefined).pipe(
+      map((response) => {
+        const years = response.map(e => e.year);
+        return Array.from(new Set(years))
+      })
+    ).subscribe(years => { this.allYears = years });
+
     // get the parameter using snapshot
     const year = this.activatedRoute.snapshot.paramMap.get('year');
     if (year) {
