@@ -99,9 +99,6 @@ export class StandingsComponent {
     const foundEvent = standing.eventPoints.find(
       (event) => event.eventId == eventIdToFind
     );
-    console.log(
-      `Event ID: ${eventIdToFind}, ${foundEvent?.included}`
-    );
     return foundEvent?.included ?? false;
   }
 }

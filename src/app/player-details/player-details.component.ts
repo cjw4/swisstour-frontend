@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
+import { DivisionStats } from '../interfaces/division-stats';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
@@ -9,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
   selector: 'app-player-details',
   imports: [AsyncPipe],
   templateUrl: './player-details.component.html',
-  styleUrl: './player-details.component.css'
+  styleUrl: './player-details.component.css',
 })
 export class PlayerDetailsComponent implements OnInit {
   // inject dependencies
@@ -18,7 +19,8 @@ export class PlayerDetailsComponent implements OnInit {
 
   // variables
   player$: Observable<Player> | undefined;
-  events$: Observable<any> | undefined;
+  playerStats: DivisionStats | undefined;
+  divisions: string[] | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
@@ -27,7 +29,10 @@ export class PlayerDetailsComponent implements OnInit {
     if (id) {
       const numId = Number(id);
       this.player$ = this.playerService.getPlayer(numId);
-      this.events$ = this.playerService.getPlayersEvents(numId);
+      this.playerService.getPlayerStats(numId).subscribe((result) => {
+        this.playerStats = result;
+        this.divisions = Object.keys(result);
+      });
     }
   }
 }
