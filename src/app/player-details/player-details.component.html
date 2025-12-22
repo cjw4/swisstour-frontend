@@ -1,55 +1,105 @@
 @let player = (player$ | async)!;
-  <div class="flex justify-center items-baseline bg-gray-300 my-3 p-4 rounded-md">
-    <h2 class="font-semibold text-3xl">{{ player?.firstname }} {{ player?.lastname}}</h2>
-    <span class="font-medium text-xl px-3">SUI.{{ player?.sdaNumber }}</span>
-  </div>
+<div class="flex justify-center items-baseline bg-gray-300 my-3 p-4 rounded-md">
+  <h2 class="font-semibold text-3xl">{{ player?.firstname }} {{ player?.lastname}}</h2>
+  <span class="font-medium text-xl px-3">SUI.{{ player?.sdaNumber }}</span>
+</div>
 
-  @if (divisions && playerStats) {
-      <div class="overflow-x-auto bg-white rounded-lg shadow">
-        <div class="text-center text-lg bg-gray-200">Swisstour</div>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th></th>
-              @for (division of divisions; track $index) {
-                <th class="px-6 py-1">{{ division }}</th>
-              }
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <tr>
-              <td class="text-center px-6 py-1">Events</td>
-              @for (division of divisions; track $index) {
-                <td class="text-center px-6 py-1">{{ playerStats[division].tournaments }}</td>
-              }
-            </tr>
-            <tr>
-              <td class="text-center px-6 py-1">Wins 🥇</td>
-              @for (division of divisions; track $index) {
-                <td class="text-center px-6 py-1">{{ playerStats[division].wins }}</td>
-              }
-            </tr>
-            <tr>
-              <td class="text-center px-6 py-1">Podiums</td>
-              @for (division of divisions; track $index) {
-                <td class="text-center px-6 py-1">{{ playerStats[division].podiumFinishes }}</td>
-              }
-            </tr>
-            <tr>
-              <td class="text-center px-6 py-1">Top 5s</td>
-              @for (division of divisions; track $index) {
-                <td class="text-center px-6 py-1">{{ playerStats[division].top5Finishes }}</td>
-              }
-            </tr>
-            <tr>
-              <td class="text-center px-6 py-1">Top 10s</td>
-              @for (division of divisions; track $index) {
-                <td class="text-center px-6 py-1">{{ playerStats[division].top10Finishes }}</td>
-              }
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<div class="flex flex-col md:flex-row gap-4">
+  @if (swisstourDivisions && swisstourStats) {
+    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2">
+      <div class="text-center text-lg bg-blue-300 uppercase">Swisstour</div>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th></th>
+            @for (division of swisstourDivisions; track $index) {
+              <th class="px-6 py-1">{{ division }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr>
+            <td class="text-center px-6 py-1">Events</td>
+            @for (division of swisstourDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swisstourStats[division].tournaments }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Wins 🥇</td>
+            @for (division of swisstourDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swisstourStats[division].wins }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Podiums</td>
+            @for (division of swisstourDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swisstourStats[division].podiumFinishes }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Top 5s</td>
+            @for (division of swisstourDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swisstourStats[division].top5Finishes }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Top 10s</td>
+            @for (division of swisstourDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swisstourStats[division].top10Finishes }}</td>
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
   }
+
+  @if (swissChampionshipDivisions && swissChampionshipStats) {
+    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2">
+      <div class="text-center text-lg bg-red-300 uppercase">Swiss Championships</div>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th></th>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <th class="px-6 py-1">{{ division }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr>
+            <td class="text-center px-6 py-1">Events</td>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].tournaments }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Wins 🥇</td>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].wins }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Podiums</td>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].podiumFinishes }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Top 5s</td>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].top5Finishes }}</td>
+            }
+          </tr>
+          <tr>
+            <td class="text-center px-6 py-1">Top 10s</td>
+            @for (division of swissChampionshipDivisions; track $index) {
+              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].top10Finishes }}</td>
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
 
 
