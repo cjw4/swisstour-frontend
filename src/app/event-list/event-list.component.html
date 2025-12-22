@@ -59,19 +59,33 @@
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+        <th></th>
         <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PDGA Event</th>
         <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Display Name</th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
         <th scope="col" class="text-center px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Swisstour</th>
         <th scope="col" class="text-center py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Championship</th>
-        <th></th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
       @for (event of events; track $index) {
       <tr>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
+        <td class="whitespace-nowrap">
+          <span class="text-gray-600 cursor-pointer px-2"
+            (click)="editEvent(event.id)"><span class="sr-only">Edit</span>✏️
+          </span>
+
+          <span class="text-gray-600 cursor-pointer px-2"
+            (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
+          </span>
+
+          <button class="inline-flex items-center md:rounded-md md:bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 md:shadow-sm md:hover:bg-green-500 focus:outline-none"
+          (click)="addResults(event.id)"
+          [disabled]="event.hasResults"
+          [ngClass]="{'disabled-button': event.hasResults}"
+          ><span class="hidden md:flex">Add Results</span><span class="md:hidden">➕</span></button>
+        </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.displayName }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>
@@ -91,21 +105,7 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm items-center justify-center text-gray-500 text-center"></td>
           }
         }
-        <td class="whitespace-nowrap">
-          <span class="text-gray-600 cursor-pointer px-2"
-            (click)="editEvent(event.id)"><span class="sr-only">Edit</span>✏️
-          </span>
-
-          <span class="text-gray-600 cursor-pointer px-2"
-            (click)="deleteEvent(event)"><span class="sr-only">Close</span>🗑️
-          </span>
-
-          <button class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-sm text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
-          (click)="addResults(event.id)"
-          [disabled]="event.hasResults"
-          [ngClass]="{'disabled-button': event.hasResults}"
-          >Add Results</button>
-        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.date }}</td>
       </tr>
       }
     </tbody>
