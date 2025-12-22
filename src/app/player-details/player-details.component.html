@@ -1,12 +1,13 @@
 @let player = (player$ | async)!;
-<div class="flex justify-center items-baseline bg-gray-300 my-3 p-4 rounded-md">
+<div class="md:mx-20 md:my-5">
+<div class="flex justify-center items-baseline bg-gray-300 p-4 rounded-md">
   <h2 class="font-semibold text-3xl">{{ player?.firstname }} {{ player?.lastname}}</h2>
   <span class="font-medium text-xl px-3">SUI.{{ player?.sdaNumber }}</span>
 </div>
 
-<div class="flex flex-col md:flex-row gap-4">
+<div class="flex flex-col md:flex-row md:gap-4">
   @if (swisstourDivisions && swisstourStats) {
-    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2">
+    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
       <div class="text-center text-lg bg-blue-300 uppercase">Swisstour</div>
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -54,7 +55,7 @@
   }
 
   @if (swissChampionshipDivisions && swissChampionshipStats) {
-    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2">
+    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
       <div class="text-center text-lg bg-red-300 uppercase">Swiss Championships</div>
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -101,5 +102,5 @@
     </div>
   }
 </div>
-
+</div>
 
