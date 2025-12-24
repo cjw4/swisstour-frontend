@@ -69,7 +69,7 @@ export class AuthService {
     this.tokenExpirationTimer = setTimeout(() => {
       this.clearStoredToken();
       this.accessToken.set('');
-    }, 300000); // 5 minutes
+    }, 84600000); // 1 day
   }
 
   // Clear stored token

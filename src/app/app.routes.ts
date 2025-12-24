@@ -10,6 +10,8 @@ import { authGuard } from './guards/auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { appSettings } from './app.settings';
 import { PlayerDetailsResolver } from './player-details/player-details.resolver';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FaqComponent } from './faq/faq.component';
 
 export const routes: Routes = [
     {
@@ -59,6 +61,14 @@ export const routes: Routes = [
     {
       path: 'admin/login',
       component: LoginComponent
+    },
+    {
+      path: 'feedback',
+      component: FeedbackComponent
+    },
+    {
+      path: 'faq',
+      component: FaqComponent
     },
     {
       path: '**',

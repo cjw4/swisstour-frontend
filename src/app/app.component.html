@@ -7,14 +7,14 @@
 
 <footer class="fixed bottom-0 left-0 right-0 h-22 font-medium bg-gray-100 text-center py-3 text-sm text-gray-700">
   <div class="flex text-lg space-x-10 justify-center [&>a]:hover:text-gray-900">
-    <a href="#">FAQ</a>
-    <a href="#">Feedback</a>
     @if (!authService.adminLoggedIn()) {
     <a routerLink="/admin/login">Admin</a>
     } @else {
     <a href="#" (click)="authService.logout()">Log Out</a>
     }
-
+    <a [routerLink]="'/faq'">FAQ</a>
+    <a [routerLink]="'/feedback'">Feedback</a>
+    <a href="#">Tools</a>
   </div>
   <div class="text-sm pt-1">
     {{ settings.title }} v{{ settings.version }}
