@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { filter, map, Observable, switchMap, tap } from 'rxjs';
+import { filter, map, Observable, switchMap, tap, toArray } from 'rxjs';
 import { Player } from '../interfaces/player';
 import { PlayerService } from '../services/player.service';
 import { AsyncPipe } from '@angular/common';
@@ -35,9 +35,20 @@ export class PlayerListComponent implements OnInit {
 
   getPlayers() {
     if (this.authService.adminLoggedIn()) {
-      this.players$ = this.playerService.getPlayers();
+      this.players$ = this.playerService.getPlayers().pipe(
+        map((arr) =>
+          arr.sort((a, b) => {
+            // Sort using a comparator that handles null values
+            if (a.sdaNumber === null && b.sdaNumber === null) return 0; // Both are null, keep their order
+            if (a.sdaNumber === null) return 1; // Place nulls at the bottom
+            if (b.sdaNumber === null) return -1; // Place nulls at the bottom
+            return a.sdaNumber - b.sdaNumber; // Regular ascending sort for non-null values
+          })
+        )
+      );
     } else {
       this.players$ = this.playerService.getPlayers().pipe(
+        map((arr) => arr.sort((a, b) => a.sdaNumber - b.sdaNumber)), // Sort by 'id' in ascending order
         map(players => players.filter(player => player.swisstourLicense))
       );
     }
