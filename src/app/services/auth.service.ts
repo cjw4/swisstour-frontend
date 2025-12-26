@@ -39,8 +39,8 @@ export class AuthService {
       .pipe(
         tap({
           next: (token) => {
-            // Set token with expiration (5 minutes from now)
-            const expiryTime = Date.now() + 300000; // 5 minutes in milliseconds
+            // Set token with expiration (24 hrs from now)
+            const expiryTime = Date.now() + 84600000; // 24 hrs in milliseconds
 
             localStorage.setItem('authToken', token);
             localStorage.setItem('authTokenExpiry', expiryTime.toString());
