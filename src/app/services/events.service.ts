@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
 import { APP_SETTINGS } from '../app.settings';
@@ -39,7 +39,7 @@ export class EventsService {
     return this.http.get<PdgaEvent>(this.eventsUrl + '/' + id);
   }
 
-  deleteEvent(event: PdgaEvent): Observable<PdgaEvent[]> {
+  deleteEvent(event: PdgaEvent, year: any): Observable<PdgaEvent[]> {
     const url = `${this.eventsUrl}/${event.id}`;
     return this.http.delete(url).pipe(
       tap(() => {
@@ -48,7 +48,7 @@ export class EventsService {
           BannerType.SUCCESS
         );
       }),
-      switchMap(() => this.getEvents(inject(APP_SETTINGS).currentYear))
+      switchMap(() => this.getEvents(Number(year)))
     );
   }
 }

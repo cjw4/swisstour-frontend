@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output, Signal, signal } from '@angular/core';
 import { EventsService } from '../services/events.service';
 import { map, Observable } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
@@ -8,7 +8,6 @@ import { ResultsService } from '../services/results.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
-import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
@@ -84,10 +83,10 @@ export class EventListComponent implements OnInit {
     this.resultsService.addResults(id).subscribe({
       next: (res) => {
         this.bannerService.updateBanner(
-          `Result ${res} was saved`,
+          res.message,
           BannerType.SUCCESS
         );
-        this.events$ = this.eventService.getEvents(appSettings.currentYear);
+        this.events$ = this.eventService.getEvents(this.year());
         this.loadingService.loadingOff();
       },
       error: (err) => {
@@ -102,13 +101,14 @@ export class EventListComponent implements OnInit {
 
   public deleteEvent(event: PdgaEvent) {
     if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
-      this.events$ = this.eventService.deleteEvent(event);
+      this.events$ = this.eventService.deleteEvent(event, this.year());
     }
   }
 
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.year.set(Number(selectElement.value));
+    this.router.navigate(['/events', this.year()]);
     this.events$ = this.eventService.getEvents(this.year());
   }
 }
