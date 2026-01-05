@@ -43,7 +43,7 @@ export class EventListComponent implements OnInit {
   // lifecycle hooks
   ngOnInit(): void {
     // Get unique event years first
-    this.eventService.getEvents(undefined).pipe(
+    this.eventService.getEvents(undefined, null).pipe(
       map((response) => {
         const years = response.map(e => e.year);
         return Array.from(new Set(years));
@@ -55,11 +55,11 @@ export class EventListComponent implements OnInit {
       const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
       if (yearParam) {
         this.year.set(Number(yearParam));
-        this.events$ = this.eventService.getEvents(this.year());
+        this.events$ = this.eventService.getEvents(this.year(), null);
       } else {
         // Set to the latest year from allYears (assuming that's your intent)
         this.year.set(this.appSettings.currentYear);
-        this.events$ = this.eventService.getEvents(this.year());
+        this.events$ = this.eventService.getEvents(this.year(), null);
       }
     });
   }
@@ -86,7 +86,7 @@ export class EventListComponent implements OnInit {
           res.message,
           BannerType.SUCCESS
         );
-        this.events$ = this.eventService.getEvents(this.year());
+        this.events$ = this.eventService.getEvents(this.year(), null);
         this.loadingService.loadingOff();
       },
       error: (err) => {
@@ -109,6 +109,6 @@ export class EventListComponent implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     this.year.set(Number(selectElement.value));
     this.router.navigate(['/events', this.year()]);
-    this.events$ = this.eventService.getEvents(this.year());
+    this.events$ = this.eventService.getEvents(this.year(), null);
   }
 }

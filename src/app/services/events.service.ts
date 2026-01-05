@@ -27,8 +27,10 @@ export class EventsService {
     type: 'info',
   };
 
-  getEvents(year: number | undefined): Observable<PdgaEvent[]> {
-    if (year) {
+  getEvents(year: number | undefined, division: string | null): Observable<PdgaEvent[]> {
+    if (division) {
+      return this.http.get<PdgaEvent[]>(this.eventsUrl + '/year/' + year + '?division=' + division);
+    } else if (year) {
       return this.http.get<PdgaEvent[]>(this.eventsUrl + '/year/' + year);
     } else {
       return this.http.get<PdgaEvent[]>(this.eventsUrl);
@@ -48,7 +50,7 @@ export class EventsService {
           BannerType.SUCCESS
         );
       }),
-      switchMap(() => this.getEvents(Number(year)))
+      switchMap(() => this.getEvents(Number(year), null))
     );
   }
 }

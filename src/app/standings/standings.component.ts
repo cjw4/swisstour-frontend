@@ -61,7 +61,7 @@ export class StandingsComponent {
   }
 
   public getEvents() {
-    this.events$ = this.eventsService.getEvents(this.year).pipe(
+    this.events$ = this.eventsService.getEvents(this.year, this.category).pipe(
       map((events) => events.filter((event) => event.isSwisstour)),
       map((events) => events.filter((event) => event.hasResults)),
       map((events) =>
