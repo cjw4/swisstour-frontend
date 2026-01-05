@@ -49,8 +49,8 @@
             md:w-auto
             w-2/3
             text-center">
-      @for(y of this.allYears; track $index) {
-        <option value="{{y}}" [selected]="y === appSettings.currentYear">{{y}}</option>
+      @for(y of allYears(); track $index) {
+        <option value="{{y}}" [selected]="y === year()">{{y}}</option>
       }
     </select>
   </div>

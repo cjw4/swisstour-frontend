@@ -19,6 +19,11 @@ export const routes: Routes = [
       component: LandingPageComponent,
     },
     {
+      path: 'events',
+      component: EventListComponent,
+      canActivate: [authGuard]
+    },
+    {
       path: 'events/:year',
       component: EventListComponent,
       canActivate: [authGuard]

@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { EventsService } from '../services/events.service';
 import { map, Observable } from 'rxjs';
 import { PdgaEvent } from '../interfaces/pdga-event';
@@ -34,31 +34,35 @@ export class EventListComponent implements OnInit {
   selectedEvent = output<number>();
 
   // variables
-  year: number | undefined;
+  year = signal<number | undefined>(undefined);
 
   // observables
-  allYears: number[] = [];
+  allYears = signal<number[]>([]);
   event$: Observable<PdgaEvent> | undefined;
   events$: Observable<PdgaEvent[]> | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
-    // get unique event years
+    // Get unique event years first
     this.eventService.getEvents(undefined).pipe(
       map((response) => {
         const years = response.map(e => e.year);
-        return Array.from(new Set(years))
+        return Array.from(new Set(years));
       })
-    ).subscribe(years => { this.allYears = years });
+    ).subscribe(years => {
+      this.allYears.set(years);
 
-    // get the parameter using snapshot
-    const year = this.activatedRoute.snapshot.paramMap.get('year');
-    if (year) {
-      this.year = Number(year);
-      this.events$ = this.eventService.getEvents(this.year);
-    } else {
-      this.events$ = this.eventService.getEvents(appSettings.currentYear);
-    }
+      // Now that allYears is set, handle the year logic
+      const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
+      if (yearParam) {
+        this.year.set(Number(yearParam));
+        this.events$ = this.eventService.getEvents(this.year());
+      } else {
+        // Set to the latest year from allYears (assuming that's your intent)
+        this.year.set(this.appSettings.currentYear);
+        this.events$ = this.eventService.getEvents(this.year());
+      }
+    });
   }
 
   // functions
@@ -104,7 +108,7 @@ export class EventListComponent implements OnInit {
 
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
-    this.year = Number(selectElement.value);
-    this.events$ = this.eventService.getEvents(this.year);
+    this.year.set(Number(selectElement.value));
+    this.events$ = this.eventService.getEvents(this.year());
   }
 }
