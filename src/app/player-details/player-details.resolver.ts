@@ -3,12 +3,12 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
-import { DivisionStats } from '../interfaces/division-stats';
+import { PlayerStatistics } from '../interfaces/player-stats';
 
 export interface PlayerDetailsData {
   player: Player;
-  swisstourStats: DivisionStats;
-  swissChampionshipStats: DivisionStats;
+  swisstourStats: PlayerStatistics;
+  swissChampionshipStats: PlayerStatistics;
 }
 
 @Injectable({
@@ -22,7 +22,7 @@ export class PlayerDetailsResolver implements Resolve<PlayerDetailsData> {
     return forkJoin({
       player: this.playerService.getPlayer(id),
       swisstourStats: this.playerService.getSwisstourStats(id),
-      swissChampionshipStats: this.playerService.getSwissChampionshipStats(id)
+      swissChampionshipStats: this.playerService.getSwisstourStats(id, true)
     });
   }
 }

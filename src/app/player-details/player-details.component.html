@@ -12,43 +12,117 @@
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th></th>
+            <th class="w-[200px]"></th>
             @for (division of swisstourDivisions; track $index) {
-              <th class="px-6 py-1">{{ division }}</th>
+              <th class="w-[200px] px-6 py-1">{{ division }}</th>
             }
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr>
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('tournaments')">
             <td class="text-center px-6 py-1">Events</td>
             @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swisstourStats[division].tournaments }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].tournaments.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedSwisstour()) {
+            <tr>
+              <td></td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swisstourStats![division].tournaments.events; track $index) {
+                    <p>{{ event.year + " " + event.name }}</p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('wins')">
             <td class="text-center px-6 py-1">Wins 🥇</td>
             @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swisstourStats[division].wins }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].wins.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedSwisstourWins()) {
+            <tr>
+              <td></td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swisstourStats![division].wins.events; track $index) {
+                    <p>{{ event.year + " " + event.name }}</p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('podiums')">
             <td class="text-center px-6 py-1">Podiums</td>
             @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swisstourStats[division].podiumFinishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].podiumFinishes.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedSwisstourPodiums()) {
+            <tr>
+              <td></td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swisstourStats![division].podiumFinishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top5s')">
             <td class="text-center px-6 py-1">Top 5s</td>
             @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swisstourStats[division].top5Finishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top5Finishes.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedSwisstourTop5s()) {
+            <tr>
+              <td></td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swisstourStats![division].top5Finishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top10s')">
             <td class="text-center px-6 py-1">Top 10s</td>
             @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swisstourStats[division].top10Finishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top10Finishes.count }}</td>
             }
           </tr>
+          @if (expandedSwisstourTop10s()) {
+            <tr>
+              <td></td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swisstourStats![division].top10Finishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -60,43 +134,119 @@
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th></th>
+            <th class="w-[200px]"></th>
             @for (division of swissChampionshipDivisions; track $index) {
-              <th class="px-6 py-1">{{ division }}</th>
+              <th class="px-6 py-1 w-[200px]">{{ division }}</th>
             }
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <tr>
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('tournaments')">
             <td class="text-center px-6 py-1">Events</td>
             @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].tournaments }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].tournaments.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedChampionship()) {
+            <tr>
+              <td></td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swissChampionshipStats![division].tournaments.events; track $index) {
+                    <p>{{ event.year + " " + event.name }}</p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('wins')">
             <td class="text-center px-6 py-1">Wins 🥇</td>
             @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].wins }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].wins.count }}</td>
             }
           </tr>
-          <tr>
+
+          @if (expandedChampionshipWins()) {
+            <tr>
+              <td></td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swissChampionshipStats![division].wins.events; track $index) {
+                    <p>{{ event.year + " " + event.name }}</p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('podiums')">
             <td class="text-center px-6 py-1">Podiums</td>
             @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].podiumFinishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].podiumFinishes.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedChampionshipPodiums()) {
+            <tr>
+              <td></td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swissChampionshipStats![division].podiumFinishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top5s')">
             <td class="text-center px-6 py-1">Top 5s</td>
             @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].top5Finishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].top5Finishes.count }}</td>
             }
           </tr>
-          <tr>
+          @if (expandedChampionshipTop5s()) {
+            <tr>
+              <td></td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swissChampionshipStats![division].top5Finishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+
+          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top10s')">
             <td class="text-center px-6 py-1">Top 10s</td>
             @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1">{{ swissChampionshipStats[division].top10Finishes }}</td>
+              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].top10Finishes.count }}</td>
             }
           </tr>
+          @if (expandedChampionshipTop10s()) {
+            <tr>
+              <td></td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center align-top">
+                  <div class="inline-block text-left">
+                  @for (event of swissChampionshipStats![division].top10Finishes.events; track $index) {
+                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                  }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
         </tbody>
       </table>
     </div>
