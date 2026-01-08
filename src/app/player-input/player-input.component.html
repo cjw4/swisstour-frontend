@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center h-full bg-cover bg-center bg-white rounded-lg shadow px-3 py-4">
+<div class="flex flex-col justify-center items-center h-full bg-cover bg-center bg-white rounded-lg shadow px-3 py-4 text-lg">
   <h1 class="flex justify-center text-gray-700 mb-5 font-medium text-2xl">Player Info</h1>
   <form
     [formGroup]="playerForm"
@@ -10,7 +10,7 @@
         type="number"
         formControlName="pdgaNumber"
         placeholder="PDGA Number"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center items-center">
@@ -21,7 +21,7 @@
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
         [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center items-center">
@@ -32,7 +32,7 @@
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
         [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center">
@@ -42,7 +42,7 @@
           formControlName="swisstourLicense"
           class="form-checkbox h-4 w-4 text-indigo-600 rounded"
         />
-        <span class="text-sm text-gray-700">Swisstour License</span>
+        <span class=" text-gray-700">Swisstour License</span>
       </label>
     </div>
     <div class="flex justify-center items-center">
@@ -53,20 +53,20 @@
         [readOnly]="!playerForm.get('swisstourLicense')?.value"
         [class.opacity-50]="!playerForm.get('swisstourLicense')?.value"
         [class.bg-gray-100]="!playerForm.get('swisstourLicense')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
         (active)="(playerForm.value.swisstourLicense)"
       />
     </div>
     <div class="flex justify-center">
       <button
         type="submit"
-        class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
+        class="cursor-pointer inline-flex items-center rounded-md bg-green-600 px-3 py-1 font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
       >
         Save Player
       </button>
       <button
         type="button"
-        class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 text-sm font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
+        class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
         (click)="this.router.navigate(['/players'])"
       >
         Cancel
