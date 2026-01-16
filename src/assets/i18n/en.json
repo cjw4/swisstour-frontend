@@ -35,6 +35,13 @@
     "total": "Total",
     "dnf": "DNF"
   },
+  "admin": {
+    "title": "Admin Login",
+    "username": "Username",
+    "password": "Password",
+    "required": "* required",
+    "login": "Login"
+  },
   "eventInput": {
     "title": "Event Info",
     "pdgaEventNumber": "PDGA Event Number",

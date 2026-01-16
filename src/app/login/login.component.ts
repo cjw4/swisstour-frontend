@@ -7,11 +7,11 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

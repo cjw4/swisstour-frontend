@@ -9,6 +9,7 @@
       <input
         type="number"
         formControlName="pdgaNumber"
+        title="PDGA Number"
         [placeholder]="'playerInput.pdgaNumber' | translate"
         class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
       />
@@ -17,6 +18,7 @@
       <input
         type="text"
         formControlName="firstname"
+        title="First Name"
         [placeholder]="'playerInput.firstName' | translate"
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
@@ -28,6 +30,7 @@
       <input
         type="text"
         formControlName="lastname"
+        title="Last Name"
         [placeholder]="'playerInput.lastName' | translate"
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
@@ -49,6 +52,7 @@
       <input
         type="number"
         formControlName="sdaNumber"
+        title="License Number"
         [placeholder]="'playerInput.licenseNumber' | translate"
         [readOnly]="!playerForm.get('swisstourLicense')?.value"
         [class.opacity-50]="!playerForm.get('swisstourLicense')?.value"

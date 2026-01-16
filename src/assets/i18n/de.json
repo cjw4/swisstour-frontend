@@ -35,6 +35,13 @@
     "total": "Gesamt",
     "dnf": "DNF"
   },
+  "admin": {
+    "title": "Admin Anmeldung",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "required": "* erforderlich",
+    "login": "Anmelden"
+  },
   "eventInput": {
     "title": "Turnierinfo",
     "pdgaEventNumber": "PDGA Turniernummer",
