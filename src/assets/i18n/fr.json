@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "title": "Swisstour Discgolf",
+    "admin": "Admin",
+    "standings": "Classements",
+    "players": "Joueurs",
+    "events": "Tournois",
+    "logout": "Se déconnecter"
+  },
+  "landing": {
+    "events": "Tournois",
+    "locations": "Lieux",
+    "unique-players": "Joueurs Uniques",
+    "message": "Jusqu'en 2026!"
+  },
+  "footer": {
+    "logout": "Se déconnecter",
+    "faq": "FAQ",
+    "feedback": "Feedback"
+  },
+  "divisions": {
+    "MPO": "MPO",
+    "FPO": "FPO",
+    "MP40": "MP40",
+    "FP40": "FP40",
+    "MP50": "MP50",
+    "MP60": "MP60",
+    "MJ18": "MJ18"
+  },
+  "standings": {
+    "title": "Classement",
+    "place": "Place",
+    "player": "Joueur",
+    "license": "Licence",
+    "total": "Total",
+    "dnf": "DNF"
+  },
+  "eventInput": {
+    "title": "Info Tournoi",
+    "pdgaEventNumber": "Numéro de Tournoi PDGA",
+    "displayName": "Nom d'Affichage",
+    "swisstourPoints": "Points Swisstour",
+    "year": "Année",
+    "chChampionship": "Championnat CH",
+    "swisstourEvent": "Tournoi Swisstour",
+    "saveEvent": "Enregistrer le Tournoi",
+    "cancel": "Annuler",
+    "required": "* requis",
+    "minLength": "* minimum de 3 caractères",
+    "mustBeNumber": "* doit être un nombre"
+  },
+  "eventList": {
+    "addEvent": "Ajouter un Tournoi",
+    "showYear": "Afficher l'année:",
+    "pdgaEvent": "Tournoi PDGA",
+    "displayName": "Nom d'Affichage",
+    "points": "Points",
+    "swisstour": "Swisstour",
+    "championship": "Championnat",
+    "date": "Date",
+    "addResults": "Ajouter des Résultats",
+    "loading": "Chargement...",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer le tournoi pdga"
+  },
+  "playerList": {
+    "addPlayer": "Ajouter un Joueur",
+    "searchPlayer": "Rechercher un Joueur",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "pdgaNumber": "Numéro PDGA",
+    "suiNumber": "Numéro SUI",
+    "suiLicense": "Licence SUI",
+    "professional": "Professionnel",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer le joueur"
+  },
+  "playerDetails": {
+    "swisstour": "Swisstour",
+    "swissChampionships": "Championnats Suisses",
+    "events": "Tournois",
+    "wins": "Victoires",
+    "podiums": "Podiums",
+    "top5s": "Top 5",
+    "top10s": "Top 10"
+  },
+  "playerInput": {
+    "title": "Info Joueur",
+    "pdgaNumber": "Numéro PDGA",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "swisstourLicense": "Licence Swisstour",
+    "licenseNumber": "Numéro de Licence",
+    "savePlayer": "Enregistrer le Joueur",
+    "cancel": "Annuler"
+  },
+  "copyright": {
+    "text": "Copyright © {{year}} Tous droits réservés"
+  },
+  "banners": {
+    "eventSaved": "Tournoi {{id}}: {{name}} a été enregistré avec succès",
+    "eventSaveError": "Le tournoi n'a pas pu être enregistré: {{error}}",
+    "resultsSaveError": "Erreur lors de l'ajout des résultats: {{error}}",
+    "playerSaved": "Joueur {{name}} a été enregistré",
+    "playerSaveError": "Le joueur n'a pas pu être enregistré: {{error}}",
+    "playerDeleted": "Le joueur a été supprimé",
+    "eventDeleted": "Le tournoi PDGA a été supprimé",
+    "loginRequired": "Veuillez vous connecter pour accéder à cette page",
+    "loginSuccess": "Connexion réussie",
+    "loginError": "Échec de la connexion: {{error}}",
+    "invalidCredentials": "Identifiants invalides"
+  }
+}

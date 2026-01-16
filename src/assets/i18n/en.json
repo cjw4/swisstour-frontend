@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "title": "Swisstour Disc Golf",
+    "admin": "Admin",
+    "standings": "Standings",
+    "players": "Players",
+    "events": "Events",
+    "logout": "Log Out"
+  },
+  "landing": {
+    "events": "Events",
+    "locations": "Locations",
+    "unique-players": "Unique Players",
+    "message": "See you in 2026!"
+  },
+  "footer": {
+    "logout": "Abmelden",
+    "faq": "FAQ",
+    "feedback": "Feedback"
+  },
+  "divisions": {
+    "MPO": "MPO",
+    "FPO": "FPO",
+    "MP40": "MP40",
+    "FP40": "FP40",
+    "MP50": "MP50",
+    "MP60": "MP60",
+    "MJ18": "MJ18"
+  },
+  "standings": {
+    "title": "Standings",
+    "place": "Place",
+    "player": "Player",
+    "license": "License",
+    "total": "Total",
+    "dnf": "DNF"
+  },
+  "eventInput": {
+    "title": "Event Info",
+    "pdgaEventNumber": "PDGA Event Number",
+    "displayName": "Display Name",
+    "swisstourPoints": "Swisstour Points",
+    "year": "Year",
+    "chChampionship": "CH Championship",
+    "swisstourEvent": "Swisstour Event",
+    "saveEvent": "Save Event",
+    "cancel": "Cancel",
+    "required": "* required",
+    "minLength": "* minimum of 3 characters",
+    "mustBeNumber": "* must be a number"
+  },
+  "eventList": {
+    "addEvent": "Add Event",
+    "showYear": "Show Year:",
+    "pdgaEvent": "PDGA Event",
+    "displayName": "Display Name",
+    "points": "Points",
+    "swisstour": "Swisstour",
+    "championship": "Championship",
+    "date": "Date",
+    "addResults": "Add Results",
+    "loading": "Loading...",
+    "deleteConfirm": "Are you sure you want to delete pdga event"
+  },
+  "playerList": {
+    "addPlayer": "Add Player",
+    "searchPlayer": "Search Player",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "pdgaNumber": "PDGA Number",
+    "suiNumber": "SUI Number",
+    "suiLicense": "SUI License",
+    "professional": "Professional",
+    "deleteConfirm": "Are you sure you want to delete the player"
+  },
+  "playerDetails": {
+    "swisstour": "Swisstour",
+    "swissChampionships": "Swiss Championships",
+    "events": "Events",
+    "wins": "Wins",
+    "podiums": "Podiums",
+    "top5s": "Top 5s",
+    "top10s": "Top 10s"
+  },
+  "playerInput": {
+    "title": "Player Info",
+    "pdgaNumber": "PDGA Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "swisstourLicense": "Swisstour License",
+    "licenseNumber": "License Number",
+    "savePlayer": "Save Player",
+    "cancel": "Cancel"
+  },
+  "copyright": {
+    "text": "Copyright © {{year}} All rights reserved"
+  },
+  "banners": {
+    "eventSaved": "Event {{id}}: {{name}} was successfully saved",
+    "eventSaveError": "Event could not be saved: {{error}}",
+    "resultsSaveError": "There was an error adding the results: {{error}}",
+    "playerSaved": "Player {{name}} was saved",
+    "playerSaveError": "Player could not be saved: {{error}}",
+    "playerDeleted": "Player was deleted",
+    "eventDeleted": "PDGA event was deleted",
+    "loginRequired": "Please log in to access that page",
+    "loginSuccess": "Login successful",
+    "loginError": "Login failed: {{error}}",
+    "invalidCredentials": "Invalid credentials"
+  }
+}

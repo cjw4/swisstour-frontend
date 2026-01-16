@@ -6,6 +6,7 @@ import { Player } from '../interfaces/player';
 import { BannerService, BannerType } from './banner.service';
 import { environment } from '../../environments/environment';
 import { PlayerStatistics } from '../interfaces/player-stats';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class PlayerService {
   private playersUrl: string = environment.apiUrl + '/players'
   http = inject(HttpClient)
   bannerService = inject(BannerService)
+  translateService = inject(TranslateService)
 
   getPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(this.playersUrl);
@@ -35,10 +37,8 @@ export class PlayerService {
     const url = `${this.playersUrl}/${player.id}`;
     return this.http.delete(url).pipe(
       tap(() => {
-        this.bannerService.updateBanner(
-          `Player was deleted.`,
-          BannerType.SUCCESS
-        );
+        const message = this.translateService.instant('banners.playerDeleted');
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
       }),
       switchMap(() => this.getPlayers())
     );

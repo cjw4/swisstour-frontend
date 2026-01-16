@@ -8,10 +8,11 @@ import { ResultsService } from '../services/results.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-event-list',
-  imports: [NgClass, AsyncPipe],
+  imports: [NgClass, AsyncPipe, TranslateModule],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -24,6 +25,7 @@ export class EventListComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
+  private translateService = inject(TranslateService);
   appSettings = inject(APP_SETTINGS)
 
   // inputs and outputs
@@ -82,6 +84,7 @@ export class EventListComponent implements OnInit {
     this.loadingService.loadingOn();
     this.resultsService.addResults(id).subscribe({
       next: (res) => {
+        // res.message comes from the server, so we use it directly
         this.bannerService.updateBanner(
           res.message,
           BannerType.SUCCESS
@@ -90,17 +93,16 @@ export class EventListComponent implements OnInit {
         this.loadingService.loadingOff();
       },
       error: (err) => {
-        this.bannerService.updateBanner(
-          `There was an error adding the results: ${err}`,
-          BannerType.ERROR
-        );
+        const message = this.translateService.instant('banners.resultsSaveError', { error: err });
+        this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
       },
     });
   }
 
   public deleteEvent(event: PdgaEvent) {
-    if (confirm(`Are you sure you want to delete pdga event ${event.id}?`)) {
+    const confirmMessage = `${this.translateService.instant('eventList.deleteConfirm')} ${event.id}?`;
+    if (confirm(confirmMessage)) {
       this.events$ = this.eventService.deleteEvent(event, this.year());
     }
   }

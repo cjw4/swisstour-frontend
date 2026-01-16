@@ -11,10 +11,11 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-event-create',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './event-input.component.html',
   styleUrl: './event-input.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +29,7 @@ export class EventInputComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   loadingService = inject(LoadingService);
   authService = inject(AuthService);
+  translateService = inject(TranslateService);
 
   //variables
   event = input<PdgaEvent>();
@@ -107,15 +109,14 @@ export class EventInputComponent implements OnInit {
 
     request.subscribe({
       next: (res) => {
-        this.bannerService.updateBanner(
-          `Event ${res.id}: ${res.name} was successfully saved.`,
-          BannerType.SUCCESS
-        );
+        const message = this.translateService.instant('banners.eventSaved', { id: res.id, name: res.name });
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.router.navigate(['/events', res.year]);
         this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {
-        this.bannerService.updateBanner(`Event could not be saved: ${err.error?.message}`, BannerType.ERROR);
+        const message = this.translateService.instant('banners.eventSaveError', { error: err.error?.message });
+        this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
       },
     });

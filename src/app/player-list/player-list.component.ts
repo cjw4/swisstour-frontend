@@ -7,10 +7,11 @@ import { AsyncPipe } from '@angular/common';
 import { BannerService, BannerType } from '../services/banner.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-player-list',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, TranslateModule],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -22,6 +23,7 @@ export class PlayerListComponent implements OnInit {
   bannerService = inject(BannerService);
   authService = inject(AuthService);
   router = inject(Router);
+  translateService = inject(TranslateService);
 
   // variables
   players$: Observable<Player[]> | undefined;
@@ -84,11 +86,8 @@ export class PlayerListComponent implements OnInit {
   }
 
   deletePlayer(player: Player) {
-    if (
-      confirm(
-        `Are you sure you want to delete the player ${player.firstname} ${player.lastname}?`
-      )
-    ) {
+    const confirmMessage = `${this.translateService.instant('playerList.deleteConfirm')} ${player.firstname} ${player.lastname}?`;
+    if (confirm(confirmMessage)) {
       this.players$ = this.playerService.deletePlayer(player);
     }
   }

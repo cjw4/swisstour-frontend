@@ -6,10 +6,11 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '../services/loading.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-player-input',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './player-input.component.html',
   styleUrl: './player-input.component.css',
 })
@@ -20,6 +21,7 @@ export class PlayerInputComponent implements OnInit {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   loadingService = inject(LoadingService);
+  translateService = inject(TranslateService);
 
   // variables
   playerId: number | null = null;
@@ -84,12 +86,14 @@ export class PlayerInputComponent implements OnInit {
     this.loadingService.loadingOn();
     request.subscribe({
       next: (res) => {
-        this.bannerService.updateBanner(`Player ${res} was saved`, BannerType.SUCCESS);
+        const message = this.translateService.instant('banners.playerSaved', { name: res });
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.router.navigate(['/players']);
         this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {
-        this.bannerService.updateBanner(`Player could not be saved: ${err.error?.message}`, BannerType.ERROR);
+        const message = this.translateService.instant('banners.playerSaveError', { error: err.error?.message });
+        this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
       }
     });

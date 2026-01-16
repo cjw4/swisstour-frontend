@@ -10,10 +10,11 @@ import { PlayerService } from '../services/player.service';
 import { Player } from '../interfaces/player';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StandingsService } from '../services/standings.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-standings',
-  imports: [AsyncPipe, CommonModule],
+  imports: [AsyncPipe, CommonModule, TranslateModule],
   templateUrl: './standings.component.html',
   styleUrl: './standings.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],

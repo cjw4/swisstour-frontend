@@ -7,6 +7,7 @@ import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerType } from './banner.service';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class EventsService {
   http = inject(HttpClient);
   bannerService = inject(BannerService);
   authService = inject(AuthService);
+  translateService = inject(TranslateService);
 
   // variables
   private apiUrl = environment.apiUrl;
@@ -45,10 +47,8 @@ export class EventsService {
     const url = `${this.eventsUrl}/${event.id}`;
     return this.http.delete(url).pipe(
       tap(() => {
-        this.bannerService.updateBanner(
-          'PDGA event was deleted.',
-          BannerType.SUCCESS
-        );
+        const message = this.translateService.instant('banners.eventDeleted');
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
       }),
       switchMap(() => this.getEvents(Number(year), null))
     );

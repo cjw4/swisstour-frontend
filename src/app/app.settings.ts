@@ -9,7 +9,7 @@ export interface AppSettings {
 }
 
 export const appSettings: AppSettings = {
-  title: 'Disc Golf Database',
+  title: 'Swisstour Discgolf',
   version: '0.0.0',
   baseUrl: 'http://localhost:8080',
   apiUrl: 'http://localhost:8080/api',

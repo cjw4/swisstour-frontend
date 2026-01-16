@@ -7,6 +7,7 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent {
   router = inject(Router);
   loadingService = inject(LoadingService);
   http = inject(HttpClient);
+  translateService = inject(TranslateService);
   settings = inject(APP_SETTINGS);
 
   private loginUrl = environment.apiUrl + '/auth/login';
@@ -51,14 +53,14 @@ export class LoginComponent {
     this.authService.login(formValue).subscribe({
       next: () => {
         this.router.navigate(['/']);
-        this.bannerService.updateBanner('Login successful', BannerType.SUCCESS);
+        const message = this.translateService.instant('banners.loginSuccess');
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.loadingService.loadingOff();
       },
       error: (err: HttpErrorResponse) => {
-        this.bannerService.updateBanner(
-          `Login failed: ${err.error?.message || 'Invalid credentials'}`,
-          BannerType.ERROR
-        );
+        const errorText = err.error?.message || this.translateService.instant('banners.invalidCredentials');
+        const message = this.translateService.instant('banners.loginError', { error: errorText });
+        this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
       },
     });

@@ -6,6 +6,7 @@ import { CopyrightDirective } from './directives/copyright.directive';
 import { APP_SETTINGS, appSettings } from './app.settings';
 import { AuthService } from './services/auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     BannerComponent,
     NavbarComponent,
     LoadingIndicatorComponent,
-    CopyrightDirective
+    CopyrightDirective,
+    TranslateModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

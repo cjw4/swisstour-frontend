@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "title": "Swisstour Discgolf",
+    "admin": "Admin",
+    "standings": "Ranglisten",
+    "players": "Spieler",
+    "events": "Turniere",
+    "logout": "Abmelden"
+  },
+  "landing": {
+    "events": "Turniere",
+    "locations": "Standorte",
+    "unique-players": "Verschiedene Spieler",
+    "message": "Bis ins 2026!"
+  },
+  "footer": {
+    "logout": "Abmelden",
+    "faq": "FAQ",
+    "feedback": "Feedback"
+  },
+  "divisions": {
+    "MPO": "MPO",
+    "FPO": "FPO",
+    "MP40": "MP40",
+    "FP40": "FP40",
+    "MP50": "MP50",
+    "MP60": "MP60",
+    "MJ18": "MJ18"
+  },
+  "standings": {
+    "title": "Rangliste",
+    "place": "Platz",
+    "player": "Spieler",
+    "license": "Lizenz",
+    "total": "Gesamt",
+    "dnf": "DNF"
+  },
+  "eventInput": {
+    "title": "Turnierinfo",
+    "pdgaEventNumber": "PDGA Turniernummer",
+    "displayName": "Anzeigename",
+    "swisstourPoints": "Swisstour Punkte",
+    "year": "Jahr",
+    "chChampionship": "CH Meisterschaft",
+    "swisstourEvent": "Swisstour Turnier",
+    "saveEvent": "Turnier speichern",
+    "cancel": "Abbrechen",
+    "required": "* erforderlich",
+    "minLength": "* mindestens 3 Zeichen",
+    "mustBeNumber": "* muss eine Zahl sein"
+  },
+  "eventList": {
+    "addEvent": "Turnier hinzufügen",
+    "showYear": "Jahr anzeigen:",
+    "pdgaEvent": "PDGA Turnier",
+    "displayName": "Anzeigename",
+    "points": "Punkte",
+    "swisstour": "Swisstour",
+    "championship": "Meisterschaft",
+    "date": "Datum",
+    "addResults": "Ergebnisse hinzufügen",
+    "loading": "Wird geladen...",
+    "deleteConfirm": "Möchten Sie das PDGA-Turnier wirklich löschen"
+  },
+  "playerList": {
+    "addPlayer": "Spieler hinzufügen",
+    "searchPlayer": "Spieler suchen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "pdgaNumber": "PDGA Nummer",
+    "suiNumber": "SUI Nummer",
+    "suiLicense": "SUI Lizenz",
+    "professional": "Professionell",
+    "deleteConfirm": "Möchten Sie den Spieler wirklich löschen"
+  },
+  "playerDetails": {
+    "swisstour": "Swisstour",
+    "swissChampionships": "Schweizer Meisterschaften",
+    "events": "Turniere",
+    "wins": "Siege",
+    "podiums": "Podien",
+    "top5s": "Top 5",
+    "top10s": "Top 10"
+  },
+  "playerInput": {
+    "title": "Spielerinfo",
+    "pdgaNumber": "PDGA Nummer",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "swisstourLicense": "Swisstour Lizenz",
+    "licenseNumber": "Lizenznummer",
+    "savePlayer": "Spieler speichern",
+    "cancel": "Abbrechen"
+  },
+  "copyright": {
+    "text": "Copyright © {{year}} Alle Rechte vorbehalten"
+  },
+  "banners": {
+    "eventSaved": "Turnier {{id}}: {{name}} wurde erfolgreich gespeichert",
+    "eventSaveError": "Turnier konnte nicht gespeichert werden: {{error}}",
+    "resultsSaveError": "Fehler beim Hinzufügen der Ergebnisse: {{error}}",
+    "playerSaved": "Spieler {{name}} wurde gespeichert",
+    "playerSaveError": "Spieler konnte nicht gespeichert werden: {{error}}",
+    "playerDeleted": "Spieler wurde gelöscht",
+    "eventDeleted": "PDGA Turnier wurde gelöscht",
+    "loginRequired": "Bitte melden Sie sich an, um auf diese Seite zuzugreifen",
+    "loginSuccess": "Anmeldung erfolgreich",
+    "loginError": "Anmeldung fehlgeschlagen: {{error}}",
+    "invalidCredentials": "Ungültige Anmeldedaten"
+  }
+}

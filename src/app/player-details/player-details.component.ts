@@ -6,10 +6,11 @@ import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { PlayerDetailsData } from './player-details.resolver';
 import { OrdinalPipe } from "../pipes/ordinal.pipe";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-player-details',
-  imports: [AsyncPipe, OrdinalPipe],
+  imports: [AsyncPipe, OrdinalPipe, TranslateModule],
   templateUrl: './player-details.component.html',
   styleUrl: './player-details.component.css',
 })
