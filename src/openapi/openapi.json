@@ -1,0 +1,673 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Documentation for Swisstour Disc Golf",
+    "description": "Open API documentation for application to manage Swisstour.",
+    "contact": { "name": "Christopher Walker" }
+  },
+  "servers": [
+    { "url": "http://localhost:8080", "description": "Local ENV" },
+    {
+      "url": "https://swiss-dg-db.onrender.com",
+      "description": "Production ENV"
+    }
+  ],
+  "paths": {
+    "/api/tournaments/{id}": {
+      "get": {
+        "tags": ["tournament-resource"],
+        "operationId": "getTournament",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TournamentDTO" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["tournament-resource"],
+        "operationId": "updateTournament",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TournamentDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "format": "int64" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["tournament-resource"],
+        "operationId": "deleteTournament",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/players/{id}": {
+      "get": {
+        "tags": ["Players"],
+        "description": "Get player by id",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PlayerDTO" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Players"],
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PlayerDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "format": "int64" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Players"],
+        "operationId": "deletePlayer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/events/{id}": {
+      "get": {
+        "tags": ["event-resource"],
+        "operationId": "getEvent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EventDTO" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["event-resource"],
+        "operationId": "updateEvent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EventDTO" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["event-resource"],
+        "operationId": "deleteEvent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["login-controller"],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CustomUser" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/create-user": {
+      "post": {
+        "tags": ["create-new-user-controller"],
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CustomUser" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "/api/tournaments": {
+      "get": {
+        "tags": ["tournament-resource"],
+        "operationId": "getAllTournaments",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/TournamentDTO" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["tournament-resource"],
+        "operationId": "createTournament",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TournamentDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "format": "int64" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/players": {
+      "get": {
+        "tags": ["Players"],
+        "operationId": "getAllPlayers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PlayerDTO" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }]
+      },
+      "post": {
+        "tags": ["Players"],
+        "operationId": "createPlayer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PlayerDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "format": "int64" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events": {
+      "get": {
+        "tags": ["event-resource"],
+        "operationId": "getEvents",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32" }
+          },
+          {
+            "name": "division",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/EventDTO" }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }]
+      },
+      "post": {
+        "tags": ["event-resource"],
+        "operationId": "createEvent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventDTO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EventDTO" }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/api/events/results/{id}": {
+      "post": {
+        "tags": ["event-resource"],
+        "operationId": "getEventResults",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "format": "int64" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/standings/{year}/{division}": {
+      "get": {
+        "tags": ["standings-resource"],
+        "operationId": "getStandings",
+        "parameters": [
+          {
+            "name": "division",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/StandingDTO" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/players/events/{id}": {
+      "get": {
+        "tags": ["Players"],
+        "operationId": "getPlayerEvents",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int64" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PlayerEventsDTO" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/year/{year}": {
+      "get": {
+        "tags": ["event-resource"],
+        "operationId": "getEventsByYear",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          },
+          {
+            "name": "division",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/EventDTO" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["home-resource"],
+        "operationId": "index",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TournamentDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "division": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "place": { "type": "integer", "format": "int32" },
+          "rating": { "type": "integer", "format": "int32" },
+          "prize": { "type": "number", "format": "double" },
+          "score": { "type": "integer", "format": "int32" },
+          "points": { "type": "number", "format": "double" },
+          "event": { "type": "integer", "format": "int64" },
+          "player": { "type": "integer", "format": "int64" }
+        },
+        "required": ["division", "event", "place", "player"]
+      },
+      "PlayerDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "firstname": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "lastname": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "pdgaNumber": { "type": "integer", "format": "int64" },
+          "sdaNumber": { "type": "integer", "format": "int64" },
+          "swisstourLicense": { "type": "boolean" },
+          "isPro": { "type": "boolean" }
+        },
+        "required": ["swisstourLicense"]
+      },
+      "EventDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "eventId": { "type": "integer", "format": "int64" },
+          "name": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "displayName": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "tier": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "year": { "type": "integer", "format": "int32" },
+          "city": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "country": { "type": "string", "maxLength": 255, "minLength": 0 },
+          "numberPlayers": { "type": "integer", "format": "int32" },
+          "points": { "type": "integer", "format": "int32" },
+          "purse": { "type": "number", "format": "double" },
+          "infoLink": { "type": "string", "maxLength": 500, "minLength": 0 },
+          "registrationLink": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 0
+          },
+          "registrationStart": { "type": "string", "format": "date" },
+          "swisstourType": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "isChampionship": { "type": "boolean" },
+          "isSwisstour": { "type": "boolean" },
+          "hasResults": { "type": "boolean" }
+        },
+        "required": ["isChampionship", "isSwisstour", "points"]
+      },
+      "CustomUser": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "EventPointsDTO": {
+        "type": "object",
+        "properties": {
+          "eventId": { "type": "integer", "format": "int64" },
+          "points": { "type": "number", "format": "double" },
+          "included": { "type": "boolean" }
+        }
+      },
+      "StandingDTO": {
+        "type": "object",
+        "properties": {
+          "playerId": { "type": "integer", "format": "int64" },
+          "eventPoints": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/EventPointsDTO" }
+          },
+          "totalPoints": { "type": "number", "format": "double" },
+          "rank": { "type": "integer", "format": "int32" }
+        }
+      },
+      "PlayerEventsDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64" },
+          "eventId": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "displayName": { "type": "string" },
+          "tier": { "type": "string" },
+          "year": { "type": "integer", "format": "int32" },
+          "city": { "type": "string" },
+          "country": { "type": "string" },
+          "numberPlayers": { "type": "integer", "format": "int32" },
+          "points": { "type": "integer", "format": "int32" },
+          "purse": { "type": "number", "format": "double" },
+          "isChampionship": { "type": "boolean" },
+          "isSwisstour": { "type": "boolean" },
+          "hasResults": { "type": "boolean" },
+          "infoLink": { "type": "string" },
+          "registrationLink": { "type": "string" },
+          "registrationStart": { "type": "string", "format": "date" },
+          "swisstourType": { "type": "string" },
+          "startDate": { "type": "string", "format": "date" },
+          "endDate": { "type": "string", "format": "date" },
+          "division": { "type": "string" },
+          "tournamentPlace": { "type": "integer", "format": "int32" },
+          "tournamentRating": { "type": "integer", "format": "int32" },
+          "tournamentPrize": { "type": "number", "format": "double" },
+          "tournamentScore": { "type": "integer", "format": "int32" },
+          "tournamentPoints": { "type": "number", "format": "double" },
+          "rounds": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RoundDTOsmall" }
+          }
+        }
+      },
+      "RoundDTOsmall": {
+        "type": "object",
+        "properties": {
+          "roundNumber": { "type": "integer", "format": "int32" },
+          "roundRating": { "type": "integer", "format": "int32" },
+          "roundScore": { "type": "integer", "format": "int32" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "Login using JWT token",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
