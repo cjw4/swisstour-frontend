@@ -8,6 +8,8 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { importProvidersFrom } from '@angular/core';
+import { provideApiConfiguration } from './api/api-configuration';
+import { environment } from '../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -18,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
+    provideApiConfiguration(environment.baseUrl),
     { provide: APP_SETTINGS, useValue: appSettings },
     importProvidersFrom(
       TranslateModule.forRoot({

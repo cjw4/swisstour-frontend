@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { filter, map, Observable, switchMap, tap, toArray } from 'rxjs';
-import { Player } from '../interfaces/player';
-import { PlayerService } from '../services/player.service';
+import { PlayerDto } from '../api/models/player-dto';
+import { PlayersService } from '../api/services/players.service';
 import { AsyncPipe } from '@angular/common';
 import { BannerService, BannerType } from '../services/banner.service';
 import { Router } from '@angular/router';
@@ -19,15 +19,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class PlayerListComponent implements OnInit {
   [x: string]: any;
   // inject services
-  playerService = inject(PlayerService);
+  playersService = inject(PlayersService);
   bannerService = inject(BannerService);
   authService = inject(AuthService);
   router = inject(Router);
   translateService = inject(TranslateService);
 
   // variables
-  players$: Observable<Player[]> | undefined;
-  player$: Observable<Player> | undefined;
+  players$: Observable<PlayerDto[]> | undefined;
+  player$: Observable<PlayerDto> | undefined;
   searchTerm = signal('');
 
   updateSearchTerm(event: Event) {
@@ -46,21 +46,21 @@ export class PlayerListComponent implements OnInit {
 
   getPlayers() {
     if (this.authService.adminLoggedIn()) {
-      this.players$ = this.playerService.getPlayers().pipe(
+      this.players$ = this.playersService.getAllPlayers().pipe(
         map((arr) =>
           arr.sort((a, b) => {
-            // Sort using a comparator that handles null values
-            if (a.sdaNumber === null && b.sdaNumber === null) return 0; // Both are null, keep their order
-            if (a.sdaNumber === null) return 1; // Place nulls at the bottom
-            if (b.sdaNumber === null) return -1; // Place nulls at the bottom
+            // Sort using a comparator that handles null/undefined values
+            if (a.sdaNumber == null && b.sdaNumber == null) return 0; // Both are null/undefined, keep their order
+            if (a.sdaNumber == null) return 1; // Place nulls at the bottom
+            if (b.sdaNumber == null) return -1; // Place nulls at the bottom
             return a.sdaNumber - b.sdaNumber; // Regular ascending sort for non-null values
           })
         ),
         map((players) => this.filterPlayers(players)) // Filter players based on searchTerm
       );
     } else {
-      this.players$ = this.playerService.getPlayers().pipe(
-        map((arr) => arr.sort((a, b) => a.sdaNumber - b.sdaNumber)), // Sort by 'id' in ascending order
+      this.players$ = this.playersService.getAllPlayers().pipe(
+        map((arr) => arr.sort((a, b) => (a.sdaNumber ?? 0) - (b.sdaNumber ?? 0))), // Sort by 'sdaNumber' in ascending order
         map((players) => players.filter((player) => player.swisstourLicense)),
         map((players) => this.filterPlayers(players)) // Filter players based on searchTerm
       );
@@ -68,27 +68,31 @@ export class PlayerListComponent implements OnInit {
   }
 
   // Helper method to filter players based on search term
-  private filterPlayers(players: Player[]) {
+  private filterPlayers(players: PlayerDto[]) {
     const term = this.searchTerm().toLowerCase();
     return players.filter(
       (player) =>
-        player.firstname.toLowerCase().includes(term) ||
-        player.lastname.toLowerCase().includes(term) ||
-        (player.sdaNumber !== null &&
+        player.firstname?.toLowerCase().includes(term) ||
+        player.lastname?.toLowerCase().includes(term) ||
+        (player.sdaNumber != null &&
           player.sdaNumber.toString().includes(term)) ||
-        (player.pdgaNumber !== null &&
+        (player.pdgaNumber != null &&
           player.pdgaNumber.toString().includes(term))
     );
   }
 
   getPlayer(id: number) {
-    this.player$ = this.playerService.getPlayer(id);
+    this.player$ = this.playersService.getPlayer({ id });
   }
 
-  deletePlayer(player: Player) {
+  deletePlayer(player: PlayerDto) {
     const confirmMessage = `${this.translateService.instant('playerList.deleteConfirm')} ${player.firstname} ${player.lastname}?`;
     if (confirm(confirmMessage)) {
-      this.players$ = this.playerService.deletePlayer(player);
+      this.playersService.deletePlayer({ id: player.id! }).subscribe(() => {
+        const message = this.translateService.instant('banners.playerDeleted');
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
+        this.getPlayers();
+      });
     }
   }
 
