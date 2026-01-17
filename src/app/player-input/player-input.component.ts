@@ -1,7 +1,7 @@
 import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Player } from '../interfaces/player';
-import { PlayerService } from '../services/player.service';
+import { PlayerDto } from '../api/models/player-dto';
+import { PlayersService } from '../api/services/players.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class PlayerInputComponent implements OnInit {
   // inject services
-  playerService = inject(PlayerService);
+  playersService = inject(PlayersService);
   bannerService = inject(BannerService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
@@ -39,7 +39,7 @@ export class PlayerInputComponent implements OnInit {
       // patch the form with existing player data if we are editing
       if (this.playerId) {
         this.editMode = true;
-        this.playerService.getPlayer(this.playerId).subscribe(player => {
+        this.playersService.getPlayer({ id: this.playerId }).subscribe(player => {
           this.playerForm.patchValue({
             pdgaNumber: player.pdgaNumber?.toString(),
             firstname: player.firstname,
@@ -77,11 +77,11 @@ export class PlayerInputComponent implements OnInit {
   });
 
   onSubmit() {
-    const formValue = this.playerForm.value;
+    const formValue = this.playerForm.value as PlayerDto;
     const isEdit = this.editMode;
     const request = isEdit
-      ? this.playerService.updatePlayer(formValue, this.playerId)
-      : this.playerService.addPlayer(formValue);
+      ? this.playersService.updatePlayer({ id: this.playerId!, body: formValue })
+      : this.playersService.createPlayer({ body: formValue });
 
     this.loadingService.loadingOn();
     request.subscribe({

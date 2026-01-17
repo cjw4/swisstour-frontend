@@ -40,7 +40,7 @@ export class PlayerListComponent implements OnInit {
     this.router.navigate(['/player/input']);
   }
 
-  editPlayer(id: number) {
+  editPlayer(id: number | undefined) {
     this.router.navigate(['/player/input', id]);
   }
 
