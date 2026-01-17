@@ -51,7 +51,7 @@ export class EventInputComponent implements OnInit {
         this.editMode = true;
         this.eventService.getEvent(this.eventId).subscribe((event) => {
           this.eventForm.patchValue({
-            id: event.id?.toString(),
+            id: event.eventId?.toString(),
             displayName: event.displayName,
             points: event.points.toString(),
             year: event.year.toString(),
@@ -65,7 +65,7 @@ export class EventInputComponent implements OnInit {
 
   // create form
   eventForm = new FormGroup({
-    id: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+    id: new FormControl(''),
     displayName: new FormControl('', [
       Validators.required,
       Validators.minLength(3),

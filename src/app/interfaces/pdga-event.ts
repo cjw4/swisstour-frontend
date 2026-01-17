@@ -1,5 +1,6 @@
 export interface PdgaEvent {
     id: number;
+    eventId: number;
     name: string;
     displayName: string;
     tier: string;
