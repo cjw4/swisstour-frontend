@@ -10,11 +10,11 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { createUser } from '../fn/create-new-user-controller/create-user';
-import { CreateUser$Params } from '../fn/create-new-user-controller/create-user';
+import { createUser } from '../fn/create-user/create-user';
+import { CreateUser$Params } from '../fn/create-user/create-user';
 
 @Injectable({ providedIn: 'root' })
-export class CreateNewUserControllerService extends BaseService {
+export class CreateUserService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }

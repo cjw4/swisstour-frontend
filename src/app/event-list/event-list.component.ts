@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit, output, Signal, signal } from '@angular/core';
-import { EventsService } from '../services/events.service';
+import { EventsService } from '../api/services/events.service';
 import { map, Observable } from 'rxjs';
-import { PdgaEvent } from '../interfaces/pdga-event';
+import { EventDto } from '../api/models/event-dto';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { ResultsService } from '../services/results.service';
@@ -29,9 +29,9 @@ export class EventListComponent implements OnInit {
   appSettings = inject(APP_SETTINGS)
 
   // inputs and outputs
-  events = input<PdgaEvent[]>();
+  events = input<EventDto[]>();
   addedResults = output<number | null>();
-  deletedEvent = output<PdgaEvent>();
+  deletedEvent = output<EventDto>();
   selectedEvent = output<number>();
 
   // variables
@@ -39,15 +39,15 @@ export class EventListComponent implements OnInit {
 
   // observables
   allYears = signal<number[]>([]);
-  event$: Observable<PdgaEvent> | undefined;
-  events$: Observable<PdgaEvent[]> | undefined;
+  event$: Observable<EventDto> | undefined;
+  events$: Observable<EventDto[]> | undefined;
 
   // lifecycle hooks
   ngOnInit(): void {
     // Get unique event years first
-    this.eventService.getEvents(undefined, null).pipe(
+    this.eventService.getEvents().pipe(
       map((response) => {
-        const years = response.map(e => e.year);
+        const years = response.map(e => e.year!);
         return Array.from(new Set(years));
       })
     ).subscribe(years => {
@@ -57,11 +57,11 @@ export class EventListComponent implements OnInit {
       const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
       if (yearParam) {
         this.year.set(Number(yearParam));
-        this.events$ = this.eventService.getEvents(this.year(), null);
+        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
       } else {
         // Set to the latest year from allYears (assuming that's your intent)
         this.year.set(this.appSettings.currentYear);
-        this.events$ = this.eventService.getEvents(this.year(), null);
+        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
       }
     });
   }
@@ -89,7 +89,7 @@ export class EventListComponent implements OnInit {
           res.message,
           BannerType.SUCCESS
         );
-        this.events$ = this.eventService.getEvents(this.year(), null);
+        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
         this.loadingService.loadingOff();
       },
       error: (err) => {
@@ -100,10 +100,14 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  public deleteEvent(event: PdgaEvent) {
+  public deleteEvent(event: EventDto) {
     const confirmMessage = `${this.translateService.instant('eventList.deleteConfirm')} ${event.id}?`;
     if (confirm(confirmMessage)) {
-      this.events$ = this.eventService.deleteEvent(event, this.year());
+      this.eventService.deleteEvent({ id: event.id! }).subscribe(() => {
+        const message = this.translateService.instant('banners.eventDeleted');
+        this.bannerService.updateBanner(message, BannerType.SUCCESS);
+        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+      });
     }
   }
 
@@ -111,6 +115,6 @@ export class EventListComponent implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     this.year.set(Number(selectElement.value));
     this.router.navigate(['/events', this.year()]);
-    this.events$ = this.eventService.getEvents(this.year(), null);
+    this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
   }
 }

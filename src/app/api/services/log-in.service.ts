@@ -10,11 +10,11 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { login } from '../fn/login-controller/login';
-import { Login$Params } from '../fn/login-controller/login';
+import { login } from '../fn/log-in/login';
+import { Login$Params } from '../fn/log-in/login';
 
 @Injectable({ providedIn: 'root' })
-export class LoginControllerService extends BaseService {
+export class LogInService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }

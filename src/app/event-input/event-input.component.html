@@ -8,13 +8,10 @@
     <div class="flex justify-center items-center">
       <input
         type="number"
-        formControlName="id"
+        formControlName="eventId"
         title="PDGA Event Number"
         [placeholder]="'eventInput.pdgaEventNumber' | translate"
         class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
-        [class.opacity-50]="editMode"
-        [class.bg-gray-100]="editMode"
-        [readOnly]="editMode"
       />
     </div>
     <div class="flex justify-center items-center">
@@ -35,6 +32,24 @@
         }
       </span>
       }
+    </div>
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        formControlName="registrationLink"
+        title="Registration Link"
+        placeholder="Registration Link"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
+      />
+    </div>
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        formControlName="infoLink"
+        title="Info Link"
+        placeholder="Info Link"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
+      />
     </div>
     <div class="flex justify-center items-center">
       <input

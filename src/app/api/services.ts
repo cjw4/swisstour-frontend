@@ -3,8 +3,8 @@
 
 export { TournamentResourceService } from './services/tournament-resource.service';
 export { PlayersService } from './services/players.service';
-export { EventResourceService } from './services/event-resource.service';
-export { LoginControllerService } from './services/login-controller.service';
-export { CreateNewUserControllerService } from './services/create-new-user-controller.service';
-export { StandingsResourceService } from './services/standings-resource.service';
+export { EventsService } from './services/events.service';
+export { LogInService } from './services/log-in.service';
+export { CreateUserService } from './services/create-user.service';
+export { StandingsService } from './services/standings.service';
 export { HomeResourceService } from './services/home-resource.service';

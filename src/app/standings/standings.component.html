@@ -19,7 +19,7 @@
             scope="col"
             class="whitespace-nowrap px-2 py-3 justify-center text-xs font-medium text-gray-400 uppercase tracking-wider hover:underline">
               <a
-                [href]="'https://www.pdga.com/tour/event/' + event.id + '#' + category"
+                [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + category"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -35,15 +35,15 @@
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-900 text-center sticky left-0 bg-white z-10">{{ standing.rank }}</td>
           <td
             class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 hover:text-blue-700 cursor-pointer sticky left-14.5 bg-white z-10"
-            (click)="this.router.navigate(['/player', standing.playerId])"
-            >{{ findPlayer(standing.playerId).firstname }} {{ findPlayer(standing.playerId).lastname }}</td>
-          <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">SUI.{{ findPlayer(standing.playerId).sdaNumber }}</td>
+            (click)="this.router.navigate(['/player', standing.playerId!])"
+            >{{ findPlayer(standing.playerId!).firstname }} {{ findPlayer(standing.playerId!).lastname }}</td>
+          <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">SUI.{{ findPlayer(standing.playerId!).sdaNumber }}</td>
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 flex justify-center">{{ standing.totalPoints | number:'1.0-0'}}</td>
-          @for (event of events; track event.id) {
-            @if (hasEventId(standing, event.id)) {
+          @for (event of events; track event.id!) {
+            @if (hasEventId(standing, event.id!)) {
               <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400 text-center"
-                [style.text-decoration]="isEventIncluded(standing, event.id) ? '' : 'line-through'">
-                {{ getEventPoints(standing, event.eventId) != 0 ?  (getEventPoints(standing, event.eventId) | number:'1.0-0') : ('standings.dnf' | translate) }}
+                [style.text-decoration]="isEventIncluded(standing, event.id!) ? '' : 'line-through'">
+                {{ getEventPoints(standing, event.eventId!) != 0 ?  (getEventPoints(standing, event.eventId!) | number:'1.0-0') : ('standings.dnf' | translate) }}
               </td>
             } @else {
               <td></td>

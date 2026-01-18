@@ -150,7 +150,7 @@
     },
     "/api/events/{id}": {
       "get": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "getEvent",
         "parameters": [
           {
@@ -172,7 +172,7 @@
         }
       },
       "put": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "updateEvent",
         "parameters": [
           {
@@ -202,7 +202,7 @@
         }
       },
       "delete": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "deleteEvent",
         "parameters": [
           {
@@ -217,7 +217,7 @@
     },
     "/login": {
       "post": {
-        "tags": ["login-controller"],
+        "tags": ["Log In"],
         "operationId": "login",
         "requestBody": {
           "content": {
@@ -237,7 +237,7 @@
     },
     "/create-user": {
       "post": {
-        "tags": ["create-new-user-controller"],
+        "tags": ["Create User"],
         "operationId": "createUser",
         "requestBody": {
           "content": {
@@ -340,7 +340,7 @@
     },
     "/api/events": {
       "get": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "getEvents",
         "parameters": [
           {
@@ -372,7 +372,7 @@
         "security": [{ "bearerAuth": [] }]
       },
       "post": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "createEvent",
         "requestBody": {
           "content": {
@@ -397,7 +397,7 @@
     },
     "/api/events/results/{id}": {
       "post": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "getEventResults",
         "parameters": [
           {
@@ -421,7 +421,7 @@
     },
     "/api/standings/{year}/{division}": {
       "get": {
-        "tags": ["standings-resource"],
+        "tags": ["Standings"],
         "operationId": "getStandings",
         "parameters": [
           {
@@ -481,7 +481,7 @@
     },
     "/api/events/year/{year}": {
       "get": {
-        "tags": ["event-resource"],
+        "tags": ["Events"],
         "operationId": "getEventsByYear",
         "parameters": [
           {

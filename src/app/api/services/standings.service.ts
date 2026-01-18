@@ -10,12 +10,12 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { getStandings } from '../fn/standings-resource/get-standings';
-import { GetStandings$Params } from '../fn/standings-resource/get-standings';
+import { getStandings } from '../fn/standings/get-standings';
+import { GetStandings$Params } from '../fn/standings/get-standings';
 import { StandingDto } from '../models/standing-dto';
 
 @Injectable({ providedIn: 'root' })
-export class StandingsResourceService extends BaseService {
+export class StandingsService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }

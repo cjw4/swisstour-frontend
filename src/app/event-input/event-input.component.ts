@@ -1,16 +1,15 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { BannerInfo } from '../interfaces/banner-info';
-import { PdgaEvent } from '../interfaces/pdga-event';
+import { EventDto } from '../api/models/event-dto';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventsService } from '../services/events.service';
+import { EventsService } from '../api/services/events.service';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
-import { environment } from '../../environments/environment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -32,7 +31,7 @@ export class EventInputComponent implements OnInit {
   translateService = inject(TranslateService);
 
   //variables
-  event = input<PdgaEvent>();
+  event = input<EventDto>();
   isEvent = signal(false);
   eventId: number | null = null;
   editMode: boolean = false;
@@ -49,12 +48,17 @@ export class EventInputComponent implements OnInit {
       // patch the form with existing event data if we are editing
       if (this.eventId) {
         this.editMode = true;
-        this.eventService.getEvent(this.eventId).subscribe((event) => {
+        this.eventService.getEvent({ id: this.eventId }).subscribe((event) => {
           this.eventForm.patchValue({
-            id: event.eventId?.toString(),
+            eventId: event.eventId,
             displayName: event.displayName,
-            points: event.points.toString(),
-            year: event.year.toString(),
+            city: event.city,
+            points: event.points,
+            year: event.year,
+            infoLink: event.infoLink,
+            registrationLink: event.registrationLink,
+            registrationStart: event.registrationStart,
+            swisstourType: event.swisstourType,
             isChampionship: event.isChampionship,
             isSwisstour: event.isSwisstour,
           });
@@ -65,25 +69,28 @@ export class EventInputComponent implements OnInit {
 
   // create form
   eventForm = new FormGroup({
-    id: new FormControl(''),
+    eventId: new FormControl<number | null>(null),
     displayName: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
     ]),
-    points: new FormControl('', [
+    city: new FormControl(''),
+    points: new FormControl<number | null>(null, [
       Validators.required,
       Validators.pattern(/^\d+$/),
     ]),
-    year: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+    year: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d+$/)]),
+    infoLink: new FormControl(''),
+    registrationLink: new FormControl(''),
+    registrationStart: new FormControl(''),
+    swisstourType: new FormControl(''),
     isChampionship: new FormControl(false),
     isSwisstour: new FormControl(false),
   });
   isFormInvalid = this.eventForm.invalid;
 
-  http = inject(HttpClient);
   refreshEvents = output();
   settings = inject(APP_SETTINGS);
-  eventUrl = environment.apiUrl + '/events';
 
   bannerInfoOutput = output<BannerInfo>();
   bannerInfo: BannerInfo | undefined;
@@ -98,18 +105,32 @@ export class EventInputComponent implements OnInit {
       return;
     }
 
-    const formValue = this.eventForm.value;
+    const rawValue = this.eventForm.getRawValue();
+    const formValue: EventDto = {
+      ...rawValue,
+      displayName: rawValue.displayName ?? undefined,
+      infoLink: rawValue.infoLink ?? undefined,
+      registrationLink: rawValue.registrationLink ?? undefined,
+      registrationStart: rawValue.registrationStart ?? undefined,
+      swisstourType: rawValue.swisstourType ?? undefined,
+      eventId: rawValue.eventId ?? undefined,
+      points: rawValue.points ?? 0,
+      year: rawValue.year ?? undefined,
+      city: rawValue.city ?? undefined,
+      isChampionship: rawValue.isChampionship ?? false,
+      isSwisstour: rawValue.isSwisstour ?? false,
+    };
     const isEdit = this.editMode;
     const request = isEdit
-      ? this.http.put<PdgaEvent>(this.eventUrl + '/' + formValue.id, formValue)
-      : this.http.post<PdgaEvent>(this.eventUrl, formValue);
+      ? this.eventService.updateEvent({ id: this.eventId!, body: formValue })
+      : this.eventService.createEvent({ body: formValue });
 
     // enable loader
     this.loadingService.loadingOn();
 
     request.subscribe({
       next: (res) => {
-        const message = this.translateService.instant('banners.eventSaved', { id: res.id, name: res.name });
+        const message = this.translateService.instant('banners.eventSaved', { id: res.eventId, name: res.name });
         this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.router.navigate(['/events', res.year]);
         this.loadingService.loadingOff();
@@ -123,8 +144,8 @@ export class EventInputComponent implements OnInit {
 
   }
 
-  get id() {
-    return this.eventForm.get('id');
+  get eventIdControl() {
+    return this.eventForm.get('eventId');
   }
 
   get displayName() {

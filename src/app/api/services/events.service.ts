@@ -10,24 +10,24 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { createEvent } from '../fn/event-resource/create-event';
-import { CreateEvent$Params } from '../fn/event-resource/create-event';
-import { deleteEvent } from '../fn/event-resource/delete-event';
-import { DeleteEvent$Params } from '../fn/event-resource/delete-event';
+import { createEvent } from '../fn/events/create-event';
+import { CreateEvent$Params } from '../fn/events/create-event';
+import { deleteEvent } from '../fn/events/delete-event';
+import { DeleteEvent$Params } from '../fn/events/delete-event';
 import { EventDto } from '../models/event-dto';
-import { getEvent } from '../fn/event-resource/get-event';
-import { GetEvent$Params } from '../fn/event-resource/get-event';
-import { getEventResults } from '../fn/event-resource/get-event-results';
-import { GetEventResults$Params } from '../fn/event-resource/get-event-results';
-import { getEvents } from '../fn/event-resource/get-events';
-import { GetEvents$Params } from '../fn/event-resource/get-events';
-import { getEventsByYear } from '../fn/event-resource/get-events-by-year';
-import { GetEventsByYear$Params } from '../fn/event-resource/get-events-by-year';
-import { updateEvent } from '../fn/event-resource/update-event';
-import { UpdateEvent$Params } from '../fn/event-resource/update-event';
+import { getEvent } from '../fn/events/get-event';
+import { GetEvent$Params } from '../fn/events/get-event';
+import { getEventResults } from '../fn/events/get-event-results';
+import { GetEventResults$Params } from '../fn/events/get-event-results';
+import { getEvents } from '../fn/events/get-events';
+import { GetEvents$Params } from '../fn/events/get-events';
+import { getEventsByYear } from '../fn/events/get-events-by-year';
+import { GetEventsByYear$Params } from '../fn/events/get-events-by-year';
+import { updateEvent } from '../fn/events/update-event';
+import { UpdateEvent$Params } from '../fn/events/update-event';
 
 @Injectable({ providedIn: 'root' })
-export class EventResourceService extends BaseService {
+export class EventsService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }
