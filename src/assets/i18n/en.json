@@ -56,6 +56,16 @@
     "minLength": "* minimum of 3 characters",
     "mustBeNumber": "* must be a number"
   },
+  "eventListPublic": {
+    "title": "Swisstour Events",
+    "date": "Date",
+    "displayName": "Event",
+    "location": "Location",
+    "swisstourType": "Type",
+    "points": "Points",
+    "info": "Info",
+    "registration": "Registration"
+  },
   "eventList": {
     "addEvent": "Add Event",
     "showYear": "Show Year:",
@@ -64,7 +74,7 @@
     "points": "Points",
     "swisstour": "Swisstour",
     "championship": "Championship",
-    "date": "Start Date",
+    "date": "Date",
     "addResults": "Add Results",
     "loading": "Loading...",
     "deleteConfirm": "Are you sure you want to delete pdga event"

@@ -5,7 +5,8 @@ export interface AppSettings {
   version: string;
   baseUrl: string;
   apiUrl: string;
-  currentYear: number
+  currentYear: number,
+  eventYear: number
 }
 
 export const appSettings: AppSettings = {
@@ -13,7 +14,8 @@ export const appSettings: AppSettings = {
   version: '0.0.0',
   baseUrl: 'http://localhost:8080',
   apiUrl: 'http://localhost:8080/api',
-  currentYear: 2025
+  currentYear: 2025,
+  eventYear: 2026
 };
 
 export const APP_SETTINGS = new InjectionToken<AppSettings>('app.settings');

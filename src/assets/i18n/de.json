@@ -56,6 +56,16 @@
     "minLength": "* mindestens 3 Zeichen",
     "mustBeNumber": "* muss eine Zahl sein"
   },
+  "eventListPublic": {
+    "title": "Swisstour Turniere",
+    "date": "Datum",
+    "displayName": "Turnier",
+    "location": "Ort",
+    "swisstourType": "Typ",
+    "points": "Punkte",
+    "info": "Info",
+    "registration": "Registration"
+  },
   "eventList": {
     "addEvent": "Turnier hinzufügen",
     "showYear": "Jahr anzeigen:",
@@ -64,7 +74,7 @@
     "points": "Punkte",
     "swisstour": "Swisstour",
     "championship": "Meisterschaft",
-    "date": "Beginndatum",
+    "date": "Datum",
     "addResults": "Ergebnisse hinzufügen",
     "loading": "Wird geladen...",
     "deleteConfirm": "Möchten Sie das PDGA-Turnier wirklich löschen"

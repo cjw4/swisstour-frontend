@@ -89,7 +89,7 @@
           [ngClass]="{'disabled-button': event.hasResults}"
           ><span class="hidden md:flex">{{ 'eventList.addResults' | translate }}</span><span class="md:hidden">➕</span></button>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.startDate }}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.startDate | dateRange:event.endDate }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.eventId }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.displayName }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.points }}</td>

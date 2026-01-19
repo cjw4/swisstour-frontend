@@ -3,16 +3,17 @@ import { EventsService } from '../api/services/events.service';
 import { map, Observable } from 'rxjs';
 import { EventDto } from '../api/models/event-dto';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { ResultsService } from '../services/results.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DateRangePipe } from '../pipes/date-range.pipe';
 
 @Component({
   selector: 'app-event-list',
-  imports: [NgClass, AsyncPipe, TranslateModule],
+  imports: [NgClass, AsyncPipe, TranslateModule, DateRangePipe],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],

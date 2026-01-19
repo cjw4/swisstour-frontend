@@ -87,6 +87,11 @@
             class="hover:bg-white text-gray-900 hover:cursor-pointer">
             {{ 'nav.logout' | translate }}
           </a>
+        } @else {
+          <a [routerLink]="'event-list/' + settings.eventYear"
+            class="hover:bg-white text-gray-900">
+            {{ 'nav.events' | translate }}
+          </a>
         }
 
       </div>
@@ -172,6 +177,7 @@
               </a>
             </div>
 
+
             @if (this.authService.adminLoggedIn()) {
               <div>
                 <a [routerLink]="'events/' + settings.currentYear" (click)="mobileMenuOpen.set(false)"
@@ -185,7 +191,13 @@
                 {{ 'nav.logout' | translate }}
                 </a>
               </div>
-
+            } @else {
+              <div>
+                <a [routerLink]="'event-list/' + settings.eventYear" (click)="mobileMenuOpen.set(false)"
+                  class="text-lg -mx-3 px-3 py-2 text-gray-900">
+                  {{ 'nav.events' | translate }}
+                </a>
+              </div>
             }
 
 

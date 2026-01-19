@@ -12,11 +12,16 @@ import { appSettings } from './app.settings';
 import { PlayerDetailsResolver } from './player-details/player-details.resolver';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FaqComponent } from './faq/faq.component';
+import { EventListPublicComponent } from './event-list-public/event-list-public.component';
 
 export const routes: Routes = [
     {
       path:'',
       component: LandingPageComponent,
+    },
+    {
+      path: 'event-list/:year',
+      component: EventListPublicComponent
     },
     {
       path: 'events',

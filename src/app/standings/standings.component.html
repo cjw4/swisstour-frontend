@@ -39,10 +39,10 @@
             >{{ findPlayer(standing.playerId!).firstname }} {{ findPlayer(standing.playerId!).lastname }}</td>
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800">SUI.{{ findPlayer(standing.playerId!).sdaNumber }}</td>
           <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-800 flex justify-center">{{ standing.totalPoints | number:'1.0-0'}}</td>
-          @for (event of events; track event.id!) {
-            @if (hasEventId(standing, event.id!)) {
+          @for (event of events; track event.eventId!) {
+            @if (hasEventId(standing, event.eventId!)) {
               <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-400 text-center"
-                [style.text-decoration]="isEventIncluded(standing, event.id!) ? '' : 'line-through'">
+                [style.text-decoration]="isEventIncluded(standing, event.eventId!) ? '' : 'line-through'">
                 {{ getEventPoints(standing, event.eventId!) != 0 ?  (getEventPoints(standing, event.eventId!) | number:'1.0-0') : ('standings.dnf' | translate) }}
               </td>
             } @else {
