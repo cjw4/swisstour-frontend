@@ -20,11 +20,13 @@ export class EventListPublicComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
 
   // variables
+  year: number | undefined;
   events$: Observable<EventDto[]> | undefined;
   appSettings = inject(APP_SETTINGS);
 
   ngOnInit(): void {
     const yearParam = Number(this.activatedRoute.snapshot.paramMap.get('year'));
+    this.year = yearParam;
     this.events$ = this.eventService.getEvents({year: yearParam})
   }
 

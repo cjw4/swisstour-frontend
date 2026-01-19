@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, OnInit, output, Signal, signal } from '@angular/core';
 import { EventsService } from '../api/services/events.service';
 import { map, Observable } from 'rxjs';
 import { EventDto } from '../api/models/event-dto';
@@ -27,6 +27,7 @@ export class EventListComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
   appSettings = inject(APP_SETTINGS)
 
   // inputs and outputs
@@ -108,6 +109,7 @@ export class EventListComponent implements OnInit {
         const message = this.translateService.instant('banners.eventDeleted');
         this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+        this.cdr.detectChanges();
       });
     }
   }

@@ -86,6 +86,8 @@ export class EventInputComponent implements OnInit {
     swisstourType: new FormControl(''),
     isChampionship: new FormControl(false),
     isSwisstour: new FormControl(false),
+    startDate: new FormControl(''),
+    endDate: new FormControl('')
   });
   isFormInvalid = this.eventForm.invalid;
 
@@ -119,6 +121,8 @@ export class EventInputComponent implements OnInit {
       city: rawValue.city ?? undefined,
       isChampionship: rawValue.isChampionship ?? false,
       isSwisstour: rawValue.isSwisstour ?? false,
+      startDate: rawValue.startDate ?? undefined,
+      endDate: rawValue.endDate ?? undefined
     };
     const isEdit = this.editMode;
     const request = isEdit
