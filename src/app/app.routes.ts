@@ -17,7 +17,7 @@ import { EventListPublicComponent } from './event-list-public/event-list-public.
 export const routes: Routes = [
     {
       path:'',
-      component: LandingPageComponent,
+      component: EventListPublicComponent,
     },
     {
       path: 'event-list/:year',

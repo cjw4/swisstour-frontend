@@ -4,7 +4,7 @@ import { EventsService } from '../api/services';
 import { Observable } from 'rxjs';
 import { EventDto } from '../api/models';
 import { AsyncPipe } from '@angular/common';
-import { APP_SETTINGS } from '../app.settings';
+import { APP_SETTINGS, AppSettings } from '../app.settings';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateRangePipe } from '../pipes/date-range.pipe';
 
@@ -20,14 +20,18 @@ export class EventListPublicComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
 
   // variables
-  year: number | undefined;
   events$: Observable<EventDto[]> | undefined;
   appSettings = inject(APP_SETTINGS);
+  year: number = this.appSettings.eventYear;
 
   ngOnInit(): void {
     const yearParam = Number(this.activatedRoute.snapshot.paramMap.get('year'));
-    this.year = yearParam;
-    this.events$ = this.eventService.getEvents({year: yearParam})
+    if (yearParam) {
+      this.year = yearParam;
+    }
+
+    this.events$ = this.eventService.getEvents({ year: this.year });
+
   }
 
 
