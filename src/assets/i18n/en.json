@@ -64,7 +64,11 @@
     "swisstourType": "Type",
     "points": "Points",
     "info": "Info",
-    "registration": "Registration"
+    "registration": "Registration Start",
+    "links": "Links",
+    "noEvents": "No events listed for",
+    "infoButton": "Info",
+    "registrationButton": "Registration"
   },
   "eventList": {
     "addEvent": "Add Event",

@@ -61,6 +61,8 @@ export class EventInputComponent implements OnInit {
             swisstourType: event.swisstourType,
             isChampionship: event.isChampionship,
             isSwisstour: event.isSwisstour,
+            startDate: event.startDate,
+            endDate: event.endDate
           });
         });
       }

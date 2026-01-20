@@ -61,8 +61,7 @@ export class EventListComponent implements OnInit {
         this.year.set(Number(yearParam));
         this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
       } else {
-        // Set to the latest year from allYears (assuming that's your intent)
-        this.year.set(this.appSettings.currentYear);
+        this.year.set(this.appSettings.eventYear);
         this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
       }
     });

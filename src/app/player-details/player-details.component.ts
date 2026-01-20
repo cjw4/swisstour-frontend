@@ -24,45 +24,35 @@ export class PlayerDetailsComponent implements OnInit {
   swissChampionshipStats: PlayerStatistics | undefined;
   swisstourDivisions: string[] | undefined;
   swissChampionshipDivisions: string[] | undefined;
-  expandedSwisstour = signal<boolean | null>(null);
-  expandedSwisstourWins = signal<boolean | null>(null);
-  expandedSwisstourPodiums = signal<boolean | null>(null);
-  expandedSwisstourTop5s = signal<boolean | null>(null);
-  expandedSwisstourTop10s = signal<boolean | null>(null);
+  expandedSwisstour = signal(false);
+  expandedSwisstourWins = signal(false);
+  expandedSwisstourPodiums = signal(false);
+  expandedSwisstourTop5s = signal(false);
+  expandedSwisstourTop10s = signal(false);
 
-  expandedChampionship = signal<boolean | null>(null);
-  expandedChampionshipWins = signal<boolean | null>(null);
-  expandedChampionshipPodiums = signal<boolean | null>(null);
-  expandedChampionshipTop5s = signal<boolean | null>(null);
-  expandedChampionshipTop10s = signal<boolean | null>(null);
+  expandedChampionship = signal(false);
+  expandedChampionshipWins = signal(false);
+  expandedChampionshipPodiums = signal(false);
+  expandedChampionshipTop5s = signal(false);
+  expandedChampionshipTop10s = signal(false);
 
   // methods
   toggleSwisstour(cat: string) {
     switch (cat) {
       case 'tournaments':
-        this.expandedSwisstour.set(
-          this.expandedSwisstour() === true ? false : true
-        );
+        this.expandedSwisstour.update(v => !v);
         break;
       case 'wins':
-        this.expandedSwisstourWins.set(
-          this.expandedSwisstourWins() === true ? false : true
-        );
+        this.expandedSwisstourWins.update(v => !v);
         break;
       case 'podiums':
-        this.expandedSwisstourPodiums.set(
-          this.expandedSwisstourPodiums() === true ? false : true
-        );
+        this.expandedSwisstourPodiums.update(v => !v);
         break;
       case 'top5s':
-        this.expandedSwisstourTop5s.set(
-          this.expandedSwisstourTop5s() === true ? false : true
-        );
+        this.expandedSwisstourTop5s.update(v => !v);
         break;
       case 'top10s':
-        this.expandedSwisstourTop10s.set(
-          this.expandedSwisstourTop10s() === true ? false : true
-        );
+        this.expandedSwisstourTop10s.update(v => !v);
         break;
     }
   }
@@ -70,29 +60,19 @@ export class PlayerDetailsComponent implements OnInit {
   toggleChampionship(cat: string) {
     switch (cat) {
       case 'tournaments':
-        this.expandedChampionship.set(
-          this.expandedChampionship() === true ? false : true
-        );
+        this.expandedChampionship.update(v => !v);
         break;
       case 'wins':
-        this.expandedChampionshipWins.set(
-          this.expandedChampionshipWins() === true ? false : true
-        );
+        this.expandedChampionshipWins.update(v => !v);
         break;
       case 'podiums':
-        this.expandedChampionshipPodiums.set(
-          this.expandedChampionshipPodiums() === true ? false : true
-        );
+        this.expandedChampionshipPodiums.update(v => !v);
         break;
       case 'top5s':
-        this.expandedChampionshipTop5s.set(
-          this.expandedChampionshipTop5s() === true ? false : true
-        );
+        this.expandedChampionshipTop5s.update(v => !v);
         break;
       case 'top10s':
-        this.expandedChampionshipTop10s.set(
-          this.expandedChampionshipTop10s() === true ? false : true
-        );
+        this.expandedChampionshipTop10s.update(v => !v);
         break;
     }
   }

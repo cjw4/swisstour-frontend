@@ -56,6 +56,20 @@
     "minLength": "* minimum de 3 caractères",
     "mustBeNumber": "* doit être un nombre"
   },
+  "eventListPublic": {
+    "title": "Tournois Swisstour",
+    "date": "Date",
+    "displayName": "Tournoi",
+    "location": "Lieu",
+    "swisstourType": "Type",
+    "points": "Points",
+    "info": "Info",
+    "registration": "Début Inscription",
+    "links": "Liens",
+    "noEvents": "Aucun tournoi prévu pour",
+    "infoButton": "Info",
+    "registrationButton": "Inscription"
+  },
   "eventList": {
     "addEvent": "Ajouter un Tournoi",
     "showYear": "Afficher l'année:",

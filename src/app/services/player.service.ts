@@ -47,7 +47,7 @@ export class PlayerService {
   getPlayersEvents(id: number): Observable<any[]> {
     const url = `${this.playersUrl}/events/${id}`;
     return this.http.get<any[]>(url).pipe(
-      map(events => events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()))
+      map(events => events.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()))
     );
   }
 
@@ -96,6 +96,8 @@ export class PlayerService {
             name: tournament.displayName,
             year: tournament.year,
             place: tournament.tournamentPlace,
+            category: tournament.division,
+            eventId: tournament.eventId
           });
 
           // Do same for wins
@@ -105,6 +107,8 @@ export class PlayerService {
               name: tournament.displayName,
               year: tournament.year,
               place: tournament.tournamentPlace,
+              category: tournament.division,
+              eventId: tournament.eventId,
             });
           }
           // Do same for podium
@@ -114,6 +118,8 @@ export class PlayerService {
               name: tournament.displayName,
               year: tournament.year,
               place: tournament.tournamentPlace,
+              category: tournament.division,
+              eventId: tournament.eventId,
             });
           }
           // Do same for top 5
@@ -123,6 +129,8 @@ export class PlayerService {
               name: tournament.displayName,
               year: tournament.year,
               place: tournament.tournamentPlace,
+              category: tournament.division,
+              eventId: tournament.eventId,
             });
           }
           // Do same for top 10
@@ -132,6 +140,8 @@ export class PlayerService {
               name: tournament.displayName,
               year: tournament.year,
               place: tournament.tournamentPlace,
+              category: tournament.division,
+              eventId: tournament.eventId,
             });
           }
         });

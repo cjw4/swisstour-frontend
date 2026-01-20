@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { filter, map, Observable, switchMap, tap, toArray } from 'rxjs';
 import { PlayerDto } from '../api/models/player-dto';
@@ -24,6 +24,7 @@ export class PlayerListComponent implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
   translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   // variables
   players$: Observable<PlayerDto[]> | undefined;
@@ -92,6 +93,7 @@ export class PlayerListComponent implements OnInit {
         const message = this.translateService.instant('banners.playerDeleted');
         this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.getPlayers();
+        this.cdr.detectChanges();
       });
     }
   }

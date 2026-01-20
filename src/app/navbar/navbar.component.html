@@ -32,7 +32,19 @@
 
       <!-- Links -->
       <div class="hidden md:flex items-center [&>*]:px-4 [&>*]:py-2 mr-3 [&>*]:rounded-xl">
-        <div class="relative group cursor-pointer hover:bg-white text-gray-900"
+        @if(authService.adminLoggedIn()) {
+          <a [routerLink]="'events/' + settings.eventYear"
+            class="hover:bg-white text-gray-900 pr-1">
+            {{ 'nav.events' | translate }}
+          </a>
+        } @else {
+          <a [routerLink]="'event-list/' + settings.eventYear"
+            class="hover:bg-white text-gray-900">
+            {{ 'nav.events' | translate }}
+          </a>
+        }
+
+        <div class="relative group cursor-pointer hover:bg-white text-gray-900 !pr-[0.5em]"
             [class.open]="isStandingsOpen"
             (click)="toggleStandings()">
           <div class="flex items-center">
@@ -78,19 +90,9 @@
         </a>
 
         @if(authService.adminLoggedIn()) {
-          <a [routerLink]="'events/' + settings.currentYear"
-            class="hover:bg-white text-gray-900">
-            {{ 'nav.events' | translate }}
-          </a>
-
           <a (click)="this.authService.logout()"
             class="hover:bg-white text-gray-900 hover:cursor-pointer">
             {{ 'nav.logout' | translate }}
-          </a>
-        } @else {
-          <a [routerLink]="'event-list/' + settings.eventYear"
-            class="hover:bg-white text-gray-900">
-            {{ 'nav.events' | translate }}
           </a>
         }
 
@@ -146,6 +148,22 @@
       <div class="mt-6 flow-root">
         <div class="-my-6 divide-y divide-gray-500/10">
           <div class="space-y-2 py-6 [&>div]:my-8">
+            @if (this.authService.adminLoggedIn()) {
+              <div>
+                <a [routerLink]="'events/' + settings.currentYear" (click)="mobileMenuOpen.set(false)"
+                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
+                {{ 'nav.events' | translate }}
+                </a>
+              </div>
+            } @else {
+              <div>
+                <a [routerLink]="'event-list/' + settings.eventYear" (click)="mobileMenuOpen.set(false)"
+                  class="text-lg -mx-3 px-3 py-2 text-gray-900">
+                  {{ 'nav.events' | translate }}
+                </a>
+              </div>
+            }
+
             <div class="relative group cursor-pointer text-gray-900 flex items-center"
               [class.open]="isStandingsOpen" (click)="toggleStandings()">
               <span>{{ 'nav.standings' | translate }}</span>
@@ -177,25 +195,11 @@
               </a>
             </div>
 
-
             @if (this.authService.adminLoggedIn()) {
-              <div>
-                <a [routerLink]="'events/' + settings.currentYear" (click)="mobileMenuOpen.set(false)"
-                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
-                {{ 'nav.events' | translate }}
-                </a>
-              </div>
               <div class="hover:cursor-pointer">
                 <a (click)="this.authService.logout(); mobileMenuOpen.set(false)"
                 class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
                 {{ 'nav.logout' | translate }}
-                </a>
-              </div>
-            } @else {
-              <div>
-                <a [routerLink]="'event-list/' + settings.eventYear" (click)="mobileMenuOpen.set(false)"
-                  class="text-lg -mx-3 px-3 py-2 text-gray-900">
-                  {{ 'nav.events' | translate }}
                 </a>
               </div>
             }

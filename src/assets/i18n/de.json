@@ -64,7 +64,11 @@
     "swisstourType": "Typ",
     "points": "Punkte",
     "info": "Info",
-    "registration": "Registration"
+    "registration": "Anmeldung ab",
+    "links": "Links",
+    "noEvents": "Keine Turniere geplant für",
+    "infoButton": "Info",
+    "registrationButton": "Anmeldung"
   },
   "eventList": {
     "addEvent": "Turnier hinzufügen",
@@ -95,7 +99,7 @@
     "swissChampionships": "Schweizer Meisterschaften",
     "events": "Turniere",
     "wins": "Siege",
-    "podiums": "Podien",
+    "podiums": "Podest",
     "top5s": "Top 5",
     "top10s": "Top 10"
   },

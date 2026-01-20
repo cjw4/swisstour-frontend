@@ -32,7 +32,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swisstourStats![division].tournaments.events; track $index) {
-                    <p>{{ event.year + " " + event.name }}</p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
                   }
                   </div>
                 </td>
@@ -53,7 +56,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swisstourStats![division].wins.events; track $index) {
-                    <p>{{ event.year + " " + event.name }}</p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
                   }
                   </div>
                 </td>
@@ -74,7 +80,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swisstourStats![division].podiumFinishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>
@@ -95,7 +104,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swisstourStats![division].top5Finishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>
@@ -116,7 +128,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swisstourStats![division].top10Finishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>
@@ -155,7 +170,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swissChampionshipStats![division].tournaments.events; track $index) {
-                    <p>{{ event.year + " " + event.name }}</p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
                   }
                   </div>
                 </td>
@@ -177,7 +195,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swissChampionshipStats![division].wins.events; track $index) {
-                    <p>{{ event.year + " " + event.name }}</p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
                   }
                   </div>
                 </td>
@@ -198,7 +219,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swissChampionshipStats![division].podiumFinishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>
@@ -219,7 +243,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swissChampionshipStats![division].top5Finishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>
@@ -240,7 +267,10 @@
                 <td class="text-center align-top">
                   <div class="inline-block text-left">
                   @for (event of swissChampionshipStats![division].top10Finishes.events; track $index) {
-                    <p>{{ event.year + " " + event.name }} <span class="font-bold">{{ event.place | ordinal }}</span></p>
+                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                        target="_blank"
+                        class="hover:text-blue-600"
+                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
                   }
                   </div>
                 </td>

@@ -19,4 +19,6 @@ export interface EventDetails {
   name: string;
   place: number;
   year: number;
+  category: string;
+  eventId: number;
 }
