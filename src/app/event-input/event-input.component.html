@@ -4,182 +4,134 @@
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="w-full space-y-4">
     <!-- PDGA Event -->
     <div class="flex justify-center items-center">
-      <input
-        type="number"
-        formControlName="eventId"
-        title="PDGA Event Number"
-        [placeholder]="'eventInput.pdgaEventNumber' | translate"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
-      />
-    </div>
-    <!-- Display Name -->
-    <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="displayName"
-        title="Display Name"
-        [placeholder]="'eventInput.displayName' | translate"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-        required
-      />
-      @if (displayName?.invalid && displayName?.touched) {
-      <span class="text-red-600 text-lg ml-1">
-        @if (displayName?.errors?.['required']) {
-        <span>{{ 'eventInput.required' | translate }}</span>
-        } @if (displayName?.errors?.['minlength']) {
-        <span>{{ 'eventInput.minLength' | translate }}</span>
-        }
-      </span>
-      }
-    </div>
-    <!-- Registration Link -->
-    <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="registrationLink"
-        title="Registration Link"
-        placeholder="Registration Link"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
-      />
-    </div>
-    <!-- Registration Start -->
-    <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="registrationStart"
-        title="Registration Start"
-        placeholder="Reg. Start (YYYY-MM-DD)"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
-      />
-    </div>
-    <!-- Info Link -->
-    <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="infoLink"
-        title="Info Link"
-        placeholder="Info Link"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
-      />
-    </div>
-    <!-- Swisstour Points -->
-    <div class="flex justify-center items-center">
-      <input
-        type="number"
-        formControlName="points"
-        title="Swisstour Points"
-        [placeholder]="'eventInput.swisstourPoints' | translate"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-        required
-      />
-      @if (points?.invalid && points?.touched) {
-      <span class="text-red-600 text-lg ml-1">
-        @if (points?.errors?.['required']) {
-        <span>{{ 'eventInput.required' | translate }}</span>
-        } @if (points?.errors?.['pattern']) {
-        <span>{{ 'eventInput.mustBeNumber' | translate }}</span>
-        }
-      </span>
-      }
-    </div>
-    <!-- Swisstour Type -->
-    <div class="flex justify-center items-center">
-      <select
-        formControlName="swisstourType"
-        title="Swisstour Type"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-      >
-        <option value="" disabled selected>Swisstour Type</option>
-        <option value="Challenger">Challenger</option>
-        <option value="Pro">Pro</option>
-        <option value="Championship">Championship</option>
-        <option value="Finals">Finals</option>
-      </select>
-    </div>
-    <!-- Year -->
-    <div class="flex justify-center items-center">
-      <input
-        type="number"
-        formControlName="year"
-        title="Year"
-        [placeholder]="'eventInput.year' | translate"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-        required
-      />
-      @if (points?.invalid && points?.touched) {
-      <span class="text-red-600 text-lg ml-1">
-        @if (points?.errors?.['required']) {
-        <span>{{ 'eventInput.required' | translate }}</span>
-        } @if (points?.errors?.['pattern']) {
-        <span>{{ 'eventInput.mustBeNumber' | translate }}</span>
-        }
-      </span>
-      }
-    </div>
-    <!-- CH Championship Boolean -->
-    <div class="flex justify-center items-center">
-      <label class="inline-flex items-center space-x-2">
-        <input
-          type="checkbox"
-          formControlName="isChampionship"
-          class="form-checkbox h-4 w-4 text-indigo-600 rounded"
-        />
-        <span class="text-lg text-gray-700">{{ 'eventInput.chChampionship' | translate }}</span>
-      </label>
-    </div>
-    <!-- Swisstour Boolean -->
-    <div class="flex justify-center items-center">
-      <label class="inline-flex items-center space-x-2">
-        <input
-          type="checkbox"
-          formControlName="isSwisstour"
-          class="form-checkbox h-4 w-4 text-indigo-600 rounded"
-        />
-        <span class="text-lg text-gray-700">{{ 'eventInput.swisstourEvent' | translate }}</span>
-      </label>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.pdgaEventNumber' | translate }}</mat-label>
+        <input matInput type="number" formControlName="eventId" title="PDGA Event Number">
+      </mat-form-field>
     </div>
     <!-- Start Date -->
     <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="startDate"
-        title="Start Date"
-        placeholder="Start Date (YYYY-MM-DD)"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-      />
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+        <mat-label>{{ 'eventInput.startDate' | translate }}</mat-label>
+        <input matInput title="Start Date" [matDatepicker]="startPicker" formControlName="startDate">
+        <mat-datepicker-toggle matIconSuffix [for]="startPicker" [disabled]="eventForm.get('eventId')?.value"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
     </div>
     <!-- End Date -->
-   <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="endDate"
-        title="End Date"
-        placeholder="End Date (YYYY-MM-DD)"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-      />
-   </div>
-   <!-- City -->
-   <div class="flex justify-center items-center">
-      <input
-        type="text"
-        formControlName="city"
-        title="City"
-        placeholder="City"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg text-gray-900 py-2 px-3"
-      />
-   </div>
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+        <mat-label>{{ 'eventInput.endDate' | translate }}</mat-label>
+        <input matInput title="End Date" [matDatepicker]="endPicker" formControlName="endDate">
+        <mat-datepicker-toggle matIconSuffix [for]="endPicker" [disabled]="eventForm.get('eventId')?.value"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- City -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+        <mat-label>{{ 'eventInput.city' | translate }}</mat-label>
+        <input matInput type="text" formControlName="city" title="City">
+      </mat-form-field>
+    </div>
+    <!-- Display Name -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.displayName' | translate }}</mat-label>
+        <input matInput type="text" formControlName="displayName" title="Display Name">
+        @if (displayName?.errors?.['required'] && displayName?.touched) {
+          <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
+        }
+        @if (displayName?.errors?.['minlength'] && displayName?.touched) {
+          <mat-error>{{ 'eventInput.minLength' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <!-- Registration Link -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.registrationLink' | translate }}</mat-label>
+        <input matInput type="text" formControlName="registrationLink" title="Registration Link">
+      </mat-form-field>
+    </div>
+    <!-- Registration Start -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.registrationStart' | translate }}</mat-label>
+        <input matInput title="Registration Start" [matDatepicker]="regStartPicker" formControlName="registrationStart">
+        <mat-datepicker-toggle matIconSuffix [for]="regStartPicker"></mat-datepicker-toggle>
+        <mat-datepicker #regStartPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <!-- Info Link -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.infoLink' | translate }}</mat-label>
+        <input matInput type="text" formControlName="infoLink" title="Info Link">
+      </mat-form-field>
+    </div>
+    <!-- Swisstour Points -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.swisstourPoints' | translate }}</mat-label>
+        <input matInput type="number" formControlName="points" title="Swisstour Points">
+        @if (points?.errors?.['required'] && points?.touched) {
+          <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
+        }
+        @if (points?.errors?.['pattern'] && points?.touched) {
+          <mat-error>{{ 'eventInput.mustBeNumber' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <!-- Swisstour Type -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.swisstourType' | translate }}</mat-label>
+        <mat-select formControlName="swisstourType" title="Swisstour Type">
+          <mat-option value="Challenger">Challenger</mat-option>
+          <mat-option value="Pro">Pro</mat-option>
+          <mat-option value="Championship">Championship</mat-option>
+          <mat-option value="Finals">Finals</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Year -->
+    <div class="flex justify-center items-center">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
+        <mat-label>{{ 'eventInput.year' | translate }}</mat-label>
+        <input matInput type="number" formControlName="year" title="Year">
+        @if (eventForm.get('year')?.errors?.['required'] && eventForm.get('year')?.touched) {
+          <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
+        }
+        @if (eventForm.get('year')?.errors?.['pattern'] && eventForm.get('year')?.touched) {
+          <mat-error>{{ 'eventInput.mustBeNumber' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <!-- CH Championship Boolean -->
+    <div class="flex justify-center items-center">
+      <mat-checkbox formControlName="isChampionship" color="primary">
+        {{ 'eventInput.chChampionship' | translate }}
+      </mat-checkbox>
+    </div>
+    <!-- Swisstour Boolean -->
+    <div class="flex justify-center items-center">
+      <mat-checkbox formControlName="isSwisstour" color="primary">
+        {{ 'eventInput.swisstourEvent' | translate }}
+      </mat-checkbox>
+    </div>
     <!-- Buttons -->
     <div class="flex justify-center items-center">
       <button
         type="submit"
         class="inline-flex items-center rounded-md bg-green-600 px-3 py-1 text-lg font-medium text-gray-100 shadow-sm hover:bg-green-500 focus:outline-none"
       >
-      {{ 'eventInput.saveEvent' | translate }}
+        {{ 'eventInput.saveEvent' | translate }}
       </button>
       <button
         type="button"
         class="cursor-pointer inline-flex items-center rounded-md bg-gray-300 mx-2 px-3 py-1 text-lg font-medium text-gray-600 shadow-sm hover:bg-gray-200 focus:outline-none"
-        (click)="router.navigate(['/events', eventForm.value.year || settings.currentYear])"
+        (click)="router.navigate(['/events', eventForm.value.year || settings.eventYear])"
       >
         {{ 'eventInput.cancel' | translate }}
       </button>

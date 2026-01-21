@@ -11,14 +11,34 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-event-create',
-  imports: [ReactiveFormsModule, TranslateModule],
+  imports: [
+    ReactiveFormsModule,
+    TranslateModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule
+  ],
   templateUrl: './event-input.component.html',
   styleUrl: './event-input.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [
+    { provide: APP_SETTINGS, useValue: appSettings },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
+    provideNativeDateAdapter()
+  ],
 })
 export class EventInputComponent implements OnInit {
   // inject dependencies
@@ -64,9 +84,24 @@ export class EventInputComponent implements OnInit {
             startDate: event.startDate,
             endDate: event.endDate
           });
+          this.updatePdgaFieldsState(event.eventId);
         });
       }
     });
+
+    // Listen to eventId changes to disable/enable date and city fields
+    this.eventForm.get('eventId')?.valueChanges.subscribe((value) => {
+      this.updatePdgaFieldsState(value);
+    });
+  }
+
+  private updatePdgaFieldsState(eventId: number | null | undefined): void {
+    const fields = ['startDate', 'endDate', 'city'];
+    if (eventId) {
+      fields.forEach(field => this.eventForm.get(field)?.disable());
+    } else {
+      fields.forEach(field => this.eventForm.get(field)?.enable());
+    }
   }
 
   // create form
@@ -103,6 +138,12 @@ export class EventInputComponent implements OnInit {
     this.bannerInfoOutput.emit(bannerInfo);
   }
 
+  private formatDate(date: Date | string | null): string | undefined {
+    if (!date) return undefined;
+    if (typeof date === 'string') return date;
+    return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD
+  }
+
   onSubmit() {
     if (this.eventForm.invalid) {
       this.eventForm.markAllAsTouched();
@@ -115,7 +156,7 @@ export class EventInputComponent implements OnInit {
       displayName: rawValue.displayName ?? undefined,
       infoLink: rawValue.infoLink ?? undefined,
       registrationLink: rawValue.registrationLink ?? undefined,
-      registrationStart: rawValue.registrationStart ?? undefined,
+      registrationStart: this.formatDate(rawValue.registrationStart),
       swisstourType: rawValue.swisstourType ?? undefined,
       eventId: rawValue.eventId ?? undefined,
       points: rawValue.points ?? 0,
@@ -123,8 +164,8 @@ export class EventInputComponent implements OnInit {
       city: rawValue.city ?? undefined,
       isChampionship: rawValue.isChampionship ?? false,
       isSwisstour: rawValue.isSwisstour ?? false,
-      startDate: rawValue.startDate ?? undefined,
-      endDate: rawValue.endDate ?? undefined
+      startDate: this.formatDate(rawValue.startDate),
+      endDate: this.formatDate(rawValue.endDate)
     };
     const isEdit = this.editMode;
     const request = isEdit
