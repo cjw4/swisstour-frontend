@@ -181,7 +181,19 @@ export class EventInputComponent implements OnInit {
 
     request.subscribe({
       next: (res) => {
-        const message = this.translateService.instant('banners.eventSaved', { id: res.eventId, name: res.name });
+        let message: string
+        if (res.eventId) {
+          message = this.translateService.instant('banners.eventSaved', {
+            id: res.eventId,
+            name: res.name,
+          });
+        } else {
+          message = this.translateService.instant('banners.eventSaved', {
+            id: res.id,
+            name: res.displayName
+          });
+        }
+
         this.bannerService.updateBanner(message, BannerType.SUCCESS);
         this.router.navigate(['/events', res.year]);
         this.loadingService.loadingOff();
