@@ -141,7 +141,11 @@ export class EventInputComponent implements OnInit {
   private formatDate(date: Date | string | null): string | undefined {
     if (!date) return undefined;
     if (typeof date === 'string') return date;
-    return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD
+    // Use local date methods to avoid timezone shift
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   onSubmit() {
