@@ -1,0 +1,16 @@
+{
+  "name": "Swisstour Disc Golf",
+  "short_name": "Swisstour",
+  "icons": [
+    {
+      "src": "assets/images/sdgv_favicon.png",
+      "sizes": "180x180 192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}
