@@ -27,6 +27,4 @@ export class BannerService {
   clearBanner() {
     this.bannerSubject.next(null);
   }
-
-  constructor() { }
 }
