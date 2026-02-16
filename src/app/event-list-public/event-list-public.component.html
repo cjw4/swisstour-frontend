@@ -14,7 +14,7 @@
         <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.displayName' | translate }}</th>
         <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.location' | translate }}</th>
         <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.registration' | translate }}</th>
-        <th scope="col" class="whitespace-nowrap px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.links' | translate }}</th>
+        <th scope="col" colspan="2" class="whitespace-nowrap px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.links' | translate }}</th>
 
       </tr>
     </thead>
@@ -25,6 +25,9 @@
           @switch (event.swisstourType) {
             @case ('Pro') {
               <img src="/assets/images/tour_logo_200.png" alt="Pro" class="h-10 w-auto shrink-0" />
+            }
+            @case ('Challenger_50') {
+              <img src="/assets/images/tour_logo_50.png" alt="Challenger" class="h-10 w-auto shrink-0" />
             }
             @case ('Challenger') {
               <img src="/assets/images/tour_logo_100.png" alt="Challenger" class="h-10 w-auto shrink-0" />
@@ -55,12 +58,13 @@
             [href]="event.infoLink" target="_blank" rel="noopener noreferrer">{{ 'eventListPublic.infoButton' | translate }}
             </a>
           }
+        </td>
+        <td>
           @if (event.registrationLink) {
             <a class="rounded-md bg-green-600 px-3 py-[0.4em] mx-2 shadow-sm text-gray-100 hover:bg-green-500"
             [href]="event.registrationLink" target="_blank" rel="noopener noreferrer">{{ 'eventListPublic.registrationButton' | translate }}
             </a>
           }
-
         </td>
       </tr>
       }
