@@ -33,7 +33,8 @@
     "player": "Spieler",
     "license": "Lizenz",
     "total": "Gesamt",
-    "dnf": "DNF"
+    "dnf": "DNF",
+    "noStandings": "Die Rangliste für {{category}} wird nach dem ersten Turnier verfügbar sein."
   },
   "admin": {
     "title": "Admin Anmeldung",

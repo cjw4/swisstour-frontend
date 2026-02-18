@@ -33,7 +33,8 @@
     "player": "Player",
     "license": "License",
     "total": "Total",
-    "dnf": "DNF"
+    "dnf": "DNF",
+    "noStandings": "The standings will be available for {{category}} after the first event has been played."
   },
   "admin": {
     "title": "Admin Login",

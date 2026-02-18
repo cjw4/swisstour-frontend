@@ -33,7 +33,8 @@
     "player": "Joueur",
     "license": "Licence",
     "total": "Total",
-    "dnf": "DNF"
+    "dnf": "DNF",
+    "noStandings": "Le classement pour {{category}} sera disponible après le premier tournoi."
   },
   "admin": {
     "title": "Connexion administrateur",

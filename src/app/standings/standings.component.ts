@@ -1,9 +1,9 @@
-import { Component, inject, input, OnInit, Signal } from '@angular/core';
+import { Component, inject, input, OnInit, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { EventDto } from '../api/models/event-dto';
 import { EventsService } from '../api/services/events.service';
-import { map, Observable, tap } from 'rxjs';
+import { delay, finalize, map, Observable, tap } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { StandingDto } from '../api/models/standing-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -11,10 +11,11 @@ import { PlayerDto } from '../api/models/player-dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StandingsService } from '../api/services/standings.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local-loading-indicator.component';
 
 @Component({
   selector: 'app-standings',
-  imports: [AsyncPipe, CommonModule, TranslateModule],
+  imports: [AsyncPipe, CommonModule, TranslateModule, LocalLoadingIndicatorComponent],
   templateUrl: './standings.component.html',
   styleUrl: './standings.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -35,6 +36,8 @@ export class StandingsComponent {
   year: number | undefined;
   playersSignal: Signal<any>;
   appSettings = appSettings;
+  loading = signal(false);
+  private loadingCount = 0;
 
   constructor() {
     this.activatedRoute.paramMap
@@ -57,11 +60,24 @@ export class StandingsComponent {
     this.playersSignal = toSignal(this.playersService.getAllPlayers());
   }
 
+  private localLoadingOn() {
+    this.loadingCount++;
+    this.loading.set(true);
+  }
+
+  private localLoadingOff() {
+    if (--this.loadingCount === 0) this.loading.set(false);
+  }
+
   public getStandings() {
-    this.standings$ = this.standingsService.getStandings({ year: this.year!, division: this.category! });
+    this.localLoadingOn();
+    this.standings$ = this.standingsService.getStandings({ year: this.year!, division: this.category! }).pipe(
+      finalize(() => this.localLoadingOff())
+    );
   }
 
   public getEvents() {
+    this.localLoadingOn();
     this.events$ = this.eventsService.getEventsByYear({ year: this.year!, division: this.category! }).pipe(
       map((events) => events.filter((event) => event.isSwisstour)),
       map((events) => events.filter((event) => event.hasResults)),
@@ -69,7 +85,9 @@ export class StandingsComponent {
         events.sort(
           (a, b) => new Date(a.startDate!).getTime() - new Date(b.startDate!).getTime()
         )
-      )
+      ),
+      delay(2000),
+      finalize(() => this.localLoadingOff())
     );
   }
 

@@ -14,7 +14,7 @@ export const appSettings: AppSettings = {
   version: '0.0.0',
   baseUrl: 'http://localhost:8080',
   apiUrl: 'http://localhost:8080/api',
-  currentYear: 2025,
+  currentYear: 2026,
   eventYear: 2026
 };
 
