@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { EventDto } from '../api/models/event-dto';
 import { EventsService } from '../api/services/events.service';
-import { delay, finalize, map, Observable, tap } from 'rxjs';
+import { finalize, map, Observable, tap } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { StandingDto } from '../api/models/standing-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -86,7 +86,6 @@ export class StandingsComponent {
           (a, b) => new Date(a.startDate!).getTime() - new Date(b.startDate!).getTime()
         )
       ),
-      delay(2000),
       finalize(() => this.localLoadingOff())
     );
   }

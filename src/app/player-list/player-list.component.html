@@ -27,8 +27,10 @@
   type="text" title="Search Player" [placeholder]="'playerList.searchPlayer' | translate" [value]="searchTerm()" (input)="updateSearchTerm($event)"  />
 </div>
 
+<app-local-loading-indicator [loading]="loading()" />
+
 <div class="overflow-x-auto bg-white rounded-lg shadow">
-  @if (players) {
+  @if (!loading() && players) {
   <table class="min-w-full divide-y divide-gray-200">
     <thead class="bg-gray-50">
       <tr class="[&>th]:py-2">

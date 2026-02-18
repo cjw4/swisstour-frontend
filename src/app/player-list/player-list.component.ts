@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { filter, map, Observable, switchMap, tap, toArray } from 'rxjs';
+import { delay, filter, finalize, map, Observable, switchMap, tap, toArray } from 'rxjs';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
 import { AsyncPipe } from '@angular/common';
@@ -8,10 +8,11 @@ import { BannerService, BannerType } from '../services/banner.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local-loading-indicator.component';
 
 @Component({
   selector: 'app-player-list',
-  imports: [AsyncPipe, TranslateModule],
+  imports: [AsyncPipe, TranslateModule, LocalLoadingIndicatorComponent],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
@@ -30,6 +31,7 @@ export class PlayerListComponent implements OnInit {
   players$: Observable<PlayerDto[]> | undefined;
   player$: Observable<PlayerDto> | undefined;
   searchTerm = signal('');
+  loading = signal(false);
 
   updateSearchTerm(event: Event) {
     const inputElement = event.target as HTMLInputElement;
@@ -46,6 +48,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   getPlayers() {
+    this.loading.set(true);
     if (this.authService.adminLoggedIn()) {
       this.players$ = this.playersService.getAllPlayers().pipe(
         map((arr) =>
@@ -57,13 +60,15 @@ export class PlayerListComponent implements OnInit {
             return a.sdaNumber - b.sdaNumber; // Regular ascending sort for non-null values
           })
         ),
-        map((players) => this.filterPlayers(players)) // Filter players based on searchTerm
+        map((players) => this.filterPlayers(players)), // Filter players based on searchTerm
+        finalize(() => this.loading.set(false))
       );
     } else {
       this.players$ = this.playersService.getAllPlayers().pipe(
         map((arr) => arr.sort((a, b) => (a.sdaNumber ?? 0) - (b.sdaNumber ?? 0))), // Sort by 'sdaNumber' in ascending order
         map((players) => players.filter((player) => player.swisstourLicense)),
-        map((players) => this.filterPlayers(players)) // Filter players based on searchTerm
+        map((players) => this.filterPlayers(players)), // Filter players based on searchTerm
+        finalize(() => this.loading.set(false))
       );
     }
   }
