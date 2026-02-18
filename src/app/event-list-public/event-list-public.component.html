@@ -48,7 +48,14 @@
             {{ event.startDate | dateRange:event.endDate }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-gray-500"
             [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
-            {{ event.displayName }}</td>
+            @if ( event.eventId ) {
+              <a [href]="'https://www.pdga.com/tour/event/' + event.eventId"
+              target="_blank"
+              rel="noopener noreferrer">{{ event.displayName }}</a>
+            } @else {
+              {{ event.displayName }}
+            }
+            </td>
         <td class="px-6 py-4 whitespace-nowrap text-gray-500"
             [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
             {{ event.city }}</td>
