@@ -1,10 +1,13 @@
-@let events = (events$ | async)!;
+@let events = (events$ | async);
 
 <div class="md:mx-20">
   <h1 class="flex justify-center text-3xl py-5">
     {{ year }} {{ 'eventListPublic.title' | translate }}
   </h1>
-  @if (events) {
+
+  <app-local-loading-indicator [loading]="loading()" />
+
+  @if (events !== null && events.length > 0) {
 <div class="overflow-x-auto bg-white rounded-lg shadow max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-250px)] max-w-[1200px] mx-auto">
   <table class="min-w-full divide-y divide-gray-200 table-fixed">
     <thead class="bg-gray-50 sticky top-0 z-20">
@@ -71,7 +74,7 @@
     </tbody>
   </table>
 </div>
-} @else {
+  } @else if (events !== null) {
 <p>{{ 'eventListPublic.noEvents' | translate }} {{ year }}</p>
-}
+  }
 </div>
