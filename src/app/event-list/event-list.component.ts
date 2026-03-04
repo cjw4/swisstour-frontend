@@ -59,10 +59,10 @@ export class EventListComponent implements OnInit {
       const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
       if (yearParam) {
         this.year.set(Number(yearParam));
-        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+        this.events$ = this.eventService.getEvents({ year: this.year()! });
       } else {
         this.year.set(this.appSettings.eventYear);
-        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+        this.events$ = this.eventService.getEvents({ year: this.year()! });
       }
     });
   }
@@ -90,7 +90,7 @@ export class EventListComponent implements OnInit {
           res.message,
           BannerType.SUCCESS
         );
-        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+        this.events$ = this.eventService.getEvents({ year: this.year()! });
         this.loadingService.loadingOff();
       },
       error: (err) => {
@@ -107,7 +107,7 @@ export class EventListComponent implements OnInit {
       this.eventService.deleteEvent({ id: event.id! }).subscribe(() => {
         const message = this.translateService.instant('banners.eventDeleted');
         this.bannerService.updateBanner(message, BannerType.SUCCESS);
-        this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+        this.events$ = this.eventService.getEvents({ year: this.year()! });
         this.cdr.detectChanges();
       });
     }
@@ -117,6 +117,6 @@ export class EventListComponent implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     this.year.set(Number(selectElement.value));
     this.router.navigate(['/events', this.year()]);
-    this.events$ = this.eventService.getEventsByYear({ year: this.year()! });
+    this.events$ = this.eventService.getEvents({ year: this.year()! });
   }
 }

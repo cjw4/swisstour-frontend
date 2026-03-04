@@ -78,7 +78,7 @@ export class StandingsComponent {
 
   public getEvents() {
     this.localLoadingOn();
-    this.events$ = this.eventsService.getEventsByYear({ year: this.year!, division: this.category! }).pipe(
+    this.events$ = this.eventsService.getEvents({ year: this.year!, division: this.category! }).pipe(
       map((events) => events.filter((event) => event.isSwisstour)),
       map((events) => events.filter((event) => event.hasResults)),
       map((events) =>
