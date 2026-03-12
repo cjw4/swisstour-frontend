@@ -338,6 +338,25 @@
         }
       }
     },
+    "/api/players/update": {
+      "post": {
+        "tags": ["Players"],
+        "operationId": "addPlayersFromGoogleSheet",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PlayerDTO" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/events": {
       "get": {
         "tags": ["Events"],
@@ -441,7 +460,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": { "$ref": "#/components/schemas/StandingDTO" }
@@ -472,39 +491,6 @@
                 "schema": {
                   "type": "array",
                   "items": { "$ref": "#/components/schemas/PlayerEventsDTO" }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/events/year/{year}": {
-      "get": {
-        "tags": ["Events"],
-        "operationId": "getEventsByYear",
-        "parameters": [
-          {
-            "name": "year",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int32" }
-          },
-          {
-            "name": "division",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/EventDTO" }
                 }
               }
             }

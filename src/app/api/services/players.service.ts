@@ -10,6 +10,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { addPlayersFromGoogleSheet } from '../fn/players/add-players-from-google-sheet';
+import { AddPlayersFromGoogleSheet$Params } from '../fn/players/add-players-from-google-sheet';
 import { createPlayer } from '../fn/players/create-player';
 import { CreatePlayer$Params } from '../fn/players/create-player';
 import { deletePlayer } from '../fn/players/delete-player';
@@ -167,6 +169,33 @@ export class PlayersService extends BaseService {
     const resp = this.createPlayer$Response(params, context);
     return resp.pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
+    );
+  }
+
+  /** Path part for operation `addPlayersFromGoogleSheet()` */
+  static readonly AddPlayersFromGoogleSheetPath = '/api/players/update';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `addPlayersFromGoogleSheet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  addPlayersFromGoogleSheet$Response(params?: AddPlayersFromGoogleSheet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PlayerDto>>> {
+    const obs = addPlayersFromGoogleSheet(this.http, this.rootUrl, params, context);
+    return obs;
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `addPlayersFromGoogleSheet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  addPlayersFromGoogleSheet(params?: AddPlayersFromGoogleSheet$Params, context?: HttpContext): Observable<Array<PlayerDto>> {
+    const resp = this.addPlayersFromGoogleSheet$Response(params, context);
+    return resp.pipe(
+      map((r: StrictHttpResponse<Array<PlayerDto>>): Array<PlayerDto> => r.body)
     );
   }
 

@@ -21,6 +21,8 @@ export type { GetAllPlayers$Params as GetAllPlayers$Params } from './fn/players/
 export { getAllPlayers as getAllPlayers } from './fn/players/get-all-players';
 export type { CreatePlayer$Params as CreatePlayer$Params } from './fn/players/create-player';
 export { createPlayer as createPlayer } from './fn/players/create-player';
+export type { AddPlayersFromGoogleSheet$Params as AddPlayersFromGoogleSheet$Params } from './fn/players/add-players-from-google-sheet';
+export { addPlayersFromGoogleSheet as addPlayersFromGoogleSheet } from './fn/players/add-players-from-google-sheet';
 export type { GetPlayerEvents$Params as GetPlayerEvents$Params } from './fn/players/get-player-events';
 export { getPlayerEvents as getPlayerEvents } from './fn/players/get-player-events';
 export type { GetEvent$Params as GetEvent$Params } from './fn/events/get-event';
@@ -35,8 +37,6 @@ export type { CreateEvent$Params as CreateEvent$Params } from './fn/events/creat
 export { createEvent as createEvent } from './fn/events/create-event';
 export type { GetEventResults$Params as GetEventResults$Params } from './fn/events/get-event-results';
 export { getEventResults as getEventResults } from './fn/events/get-event-results';
-export type { GetEventsByYear$Params as GetEventsByYear$Params } from './fn/events/get-events-by-year';
-export { getEventsByYear as getEventsByYear } from './fn/events/get-events-by-year';
 export type { Login$Params as Login$Params } from './fn/log-in/login';
 export { login as login } from './fn/log-in/login';
 export type { CreateUser$Params as CreateUser$Params } from './fn/create-user/create-user';

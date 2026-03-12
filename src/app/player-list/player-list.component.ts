@@ -43,6 +43,13 @@ export class PlayerListComponent implements OnInit {
     this.router.navigate(['/player/input']);
   }
 
+  updatePlayers() {
+    this.loading.set(true);
+    this.playersService.addPlayersFromGoogleSheet().pipe(
+      finalize(() => this.loading.set(false))
+    ).subscribe(() => this.getPlayers());
+  }
+
   editPlayer(id: number | undefined) {
     this.router.navigate(['/player/input', id]);
   }

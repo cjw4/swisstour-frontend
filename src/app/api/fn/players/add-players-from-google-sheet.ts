@@ -7,18 +7,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { EventDto } from '../../models/event-dto';
+import { PlayerDto } from '../../models/player-dto';
 
-export interface GetEventsByYear$Params {
-  year: number;
-  division?: string;
+export interface AddPlayersFromGoogleSheet$Params {
 }
 
-export function getEventsByYear(http: HttpClient, rootUrl: string, params: GetEventsByYear$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<EventDto>>> {
-  const rb = new RequestBuilder(rootUrl, getEventsByYear.PATH, 'get');
+export function addPlayersFromGoogleSheet(http: HttpClient, rootUrl: string, params?: AddPlayersFromGoogleSheet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PlayerDto>>> {
+  const rb = new RequestBuilder(rootUrl, addPlayersFromGoogleSheet.PATH, 'post');
   if (params) {
-    rb.path('year', params.year, {});
-    rb.query('division', params.division, {});
   }
 
   return http.request(
@@ -26,9 +22,9 @@ export function getEventsByYear(http: HttpClient, rootUrl: string, params: GetEv
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<EventDto>>;
+      return r as StrictHttpResponse<Array<PlayerDto>>;
     })
   );
 }
 
-getEventsByYear.PATH = '/api/events/year/{year}';
+addPlayersFromGoogleSheet.PATH = '/api/players/update';
