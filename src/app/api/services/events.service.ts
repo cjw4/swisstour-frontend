@@ -21,8 +21,6 @@ import { getEventResults } from '../fn/events/get-event-results';
 import { GetEventResults$Params } from '../fn/events/get-event-results';
 import { getEvents } from '../fn/events/get-events';
 import { GetEvents$Params } from '../fn/events/get-events';
-import { getEventsByYear } from '../fn/events/get-events-by-year';
-import { GetEventsByYear$Params } from '../fn/events/get-events-by-year';
 import { updateEvent } from '../fn/events/update-event';
 import { UpdateEvent$Params } from '../fn/events/update-event';
 
@@ -191,33 +189,6 @@ export class EventsService extends BaseService {
     const resp = this.getEventResults$Response(params, context);
     return resp.pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
-    );
-  }
-
-  /** Path part for operation `getEventsByYear()` */
-  static readonly GetEventsByYearPath = '/api/events/year/{year}';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `getEventsByYear()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  getEventsByYear$Response(params: GetEventsByYear$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<EventDto>>> {
-    const obs = getEventsByYear(this.http, this.rootUrl, params, context);
-    return obs;
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `getEventsByYear$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  getEventsByYear(params: GetEventsByYear$Params, context?: HttpContext): Observable<Array<EventDto>> {
-    const resp = this.getEventsByYear$Response(params, context);
-    return resp.pipe(
-      map((r: StrictHttpResponse<Array<EventDto>>): Array<EventDto> => r.body)
     );
   }
 

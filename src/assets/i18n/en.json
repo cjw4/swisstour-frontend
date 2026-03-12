@@ -92,6 +92,7 @@
     "deleteConfirm": "Are you sure you want to delete pdga event"
   },
   "playerList": {
+    "updatePlayers": "Update Players",
     "addPlayer": "Add Player",
     "searchPlayer": "Search Player",
     "firstName": "First Name",
@@ -130,6 +131,8 @@
     "resultsSaveError": "There was an error adding the results: {{error}}",
     "playerSaved": "Player {{name}} was saved",
     "playerSaveError": "Player could not be saved: {{error}}",
+    "playersUpdated": "Players updated",
+    "playersUpdateError": "Failed to update players",
     "playerDeleted": "Player was deleted",
     "eventDeleted": "PDGA event was deleted",
     "loginRequired": "Please log in to access that page",

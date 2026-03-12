@@ -43,6 +43,21 @@ export class PlayerListComponent implements OnInit {
     this.router.navigate(['/player/input']);
   }
 
+  updatePlayers() {
+    this.loading.set(true);
+    this.playersService.addPlayersFromGoogleSheet().pipe(
+      finalize(() => this.loading.set(false))
+    ).subscribe({
+      next: () => {
+        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdated'), BannerType.SUCCESS);
+        this.getPlayers();
+      },
+      error: () => {
+        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdateError'), BannerType.ERROR);
+      }
+    });
+  }
+
   editPlayer(id: number | undefined) {
     this.router.navigate(['/player/input', id]);
   }
