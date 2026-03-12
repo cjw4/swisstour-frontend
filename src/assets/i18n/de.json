@@ -92,6 +92,7 @@
     "deleteConfirm": "Möchten Sie das PDGA-Turnier wirklich löschen"
   },
   "playerList": {
+    "updatePlayers": "Spieler aktualisieren",
     "addPlayer": "Spieler hinzufügen",
     "searchPlayer": "Spieler suchen",
     "firstName": "Vorname",
@@ -130,6 +131,8 @@
     "resultsSaveError": "Fehler beim Hinzufügen der Ergebnisse: {{error}}",
     "playerSaved": "Spieler {{name}} wurde gespeichert",
     "playerSaveError": "Spieler konnte nicht gespeichert werden: {{error}}",
+    "playersUpdated": "Spielerliste aktualisiert",
+    "playersUpdateError": "Spieler konnten nicht aktualisiert werden",
     "playerDeleted": "Spieler wurde gelöscht",
     "eventDeleted": "PDGA Turnier wurde gelöscht",
     "loginRequired": "Bitte melden Sie sich an, um auf diese Seite zuzugreifen",
