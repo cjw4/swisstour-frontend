@@ -51,7 +51,7 @@ export class PlayerService {
     );
   }
 
-  getSwisstourStats(id: number, isChampionship: boolean = false) {
+  getSwisstourStats(id: number, isChampionship = false) {
     return this.getPlayersEvents(id).pipe(
       map((response) => {
         const stats: PlayerStatistics = {};

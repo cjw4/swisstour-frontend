@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, input, OnInit, output, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, input, OnInit, output, Output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerMessage } from '../services/banner.service';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.css',
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, OnDestroy {
   // inject service
   bannerService = inject(BannerService);
   private cdr = inject(ChangeDetectorRef);

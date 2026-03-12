@@ -1,6 +1,4 @@
-export interface PlayerStatistics {
-  [division: string]: DivisionStatistics;
-}
+export type PlayerStatistics = Record<string, DivisionStatistics>;
 
 export interface DivisionStatistics {
   tournaments: PlacementCategoryDetails;

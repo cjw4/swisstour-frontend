@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output, signal, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -14,7 +14,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './player-input.component.html',
   styleUrl: './player-input.component.css',
 })
-export class PlayerInputComponent implements OnInit {
+export class PlayerInputComponent implements OnInit, AfterViewInit {
   // inject services
   playersService = inject(PlayersService);
   bannerService = inject(BannerService);
@@ -25,7 +25,7 @@ export class PlayerInputComponent implements OnInit {
 
   // variables
   playerId: number | null = null;
-  editMode: boolean = false;
+  editMode = false;
 
   // lifecycle hooks
   ngOnInit(): void {

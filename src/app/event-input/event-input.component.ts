@@ -54,7 +54,7 @@ export class EventInputComponent implements OnInit {
   event = input<EventDto>();
   isEvent = signal(false);
   eventId: number | null = null;
-  editMode: boolean = false;
+  editMode = false;
 
   // lifecycle hooks
   ngOnInit(): void {
