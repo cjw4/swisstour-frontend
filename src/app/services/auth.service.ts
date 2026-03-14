@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { APP_SETTINGS } from '../app.settings';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { LoginCredentials } from '../login/login-credentials';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class AuthService {
     return '';
   }
 
-  login(formValue: any): Observable<string> {
+  login(formValue: LoginCredentials): Observable<string> {
     return this.http
       .post(this.loginUrl, formValue, { responseType: 'text' })
       .pipe(
@@ -50,7 +50,7 @@ export class AuthService {
             // Set up automatic token expiration
             this.scheduleTokenExpiration();
           },
-          error: (error) => {
+          error: () => {
             this.clearStoredToken();
             this.accessToken.set('');
           },

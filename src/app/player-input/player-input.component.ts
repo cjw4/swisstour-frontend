@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit, output, signal, AfterViewInit } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -54,8 +54,8 @@ export class PlayerInputComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.playerForm.get('pdgaNumber')?.valueChanges.subscribe((value) => {
-      const firstnameControl = this.playerForm.get('firstname');
-      const lastnameControl = this.playerForm.get('lastname');
+      //const firstnameControl = this.playerForm.get('firstname');
+      //const lastnameControl = this.playerForm.get('lastname');
       if (value) {
         this.playerForm.patchValue({
           firstname: '',

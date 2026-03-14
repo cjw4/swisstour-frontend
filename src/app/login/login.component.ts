@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APP_SETTINGS, appSettings } from '../app.settings';
@@ -8,6 +8,7 @@ import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoginCredentials } from './login-credentials';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +46,7 @@ export class LoginComponent {
       return;
     }
 
-    const formValue = this.loginForm.value;
+    const formValue: LoginCredentials = this.loginForm.getRawValue();
 
     // enable loader
     this.loadingService.loadingOn();

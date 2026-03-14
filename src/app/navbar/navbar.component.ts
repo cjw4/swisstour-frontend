@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { APP_SETTINGS } from '../app.settings';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { LanguageService, Language } from '../services/language.service';
 import { TranslateModule } from '@ngx-translate/core';

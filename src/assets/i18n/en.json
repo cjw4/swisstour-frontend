@@ -128,6 +128,7 @@
   "banners": {
     "eventSaved": "Event {{id}}: {{name}} was successfully saved",
     "eventSaveError": "Event could not be saved: {{error}}",
+    "resultsSaved": "Results were successfully added",
     "resultsSaveError": "There was an error adding the results: {{error}}",
     "playerSaved": "Player {{name}} was saved",
     "playerSaveError": "Player could not be saved: {{error}}",

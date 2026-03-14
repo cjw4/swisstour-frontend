@@ -83,13 +83,19 @@
       @for (player of players; track player.id) {
       <tr
         class="cursor-pointer group hover:bg-gray-100 [&>td]:py-2"
+        tabindex="0"
+        role="button"
         (click)="router.navigate(['/player', player.id])"
+        (keydown.enter)="router.navigate(['/player', player.id])"
       >
       @if (authService.adminLoggedIn()) {
         <td class="whitespace-nowrap group-hover:bg-white">
           <span
             class="ml-3 text-gray-600 cursor-pointer px-1"
+            tabindex="0"
+            role="button"
             (click)="editPlayer(player.id); $event.stopPropagation()"
+            (keydown.enter)="editPlayer(player.id); $event.stopPropagation()"
           >
             <span class="sr-only">Edit</span>✏️
           </span>
@@ -97,7 +103,10 @@
         <td class="whitespace-nowrap group-hover:bg-white">
           <span
             class=" text-gray-600 cursor-pointer px-1"
+            tabindex="0"
+            role="button"
             (click)="deletePlayer(player); $event.stopPropagation()"
+            (keydown.enter)="deletePlayer(player); $event.stopPropagation()"
           >
             <span class="sr-only">Delete</span>🗑️
           </span>

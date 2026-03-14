@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, inject, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { delay, filter, finalize, map, Observable, switchMap, tap, toArray } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
 import { AsyncPipe } from '@angular/common';
@@ -18,7 +18,6 @@ import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local
   providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
 })
 export class PlayerListComponent implements OnInit {
-  [x: string]: any;
   // inject services
   playersService = inject(PlayersService);
   bannerService = inject(BannerService);

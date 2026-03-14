@@ -1,5 +1,5 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, inject, OnInit, TemplateRef } from '@angular/core';
+import { Component, ContentChild, inject, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoadingService } from '../services/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -21,6 +21,6 @@ export class LoadingIndicatorComponent {
   }
 
   @ContentChild('loading')
-  customLoadingIndicator: TemplateRef<any> | null = null;
+  customLoadingIndicator: TemplateRef<void> | null = null;
 
 }

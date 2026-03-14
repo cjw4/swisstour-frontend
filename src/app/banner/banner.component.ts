@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, input, OnInit, output, Output, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, OnInit, output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerMessage } from '../services/banner.service';
@@ -46,7 +46,7 @@ export class BannerComponent implements OnInit, OnDestroy {
   }
 
   bannerInfo = input<BannerInfo>();
-  close = output();
+  closeBannerOutput = output();
 
   closeBanner() {
     this.bannerService.clearBanner();

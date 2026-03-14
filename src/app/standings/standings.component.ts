@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, Signal, signal } from '@angular/core';
+import { Component, inject, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { APP_SETTINGS, appSettings } from '../app.settings';
 import { EventDto } from '../api/models/event-dto';
@@ -34,7 +34,7 @@ export class StandingsComponent {
   standings$: Observable<StandingDto[]> | undefined;
   category: string | null = '';
   year: number | undefined;
-  playersSignal: Signal<any>;
+  playersSignal: Signal<PlayerDto[]>;
   appSettings = appSettings;
   loading = signal(false);
   private loadingCount = 0;
@@ -57,7 +57,7 @@ export class StandingsComponent {
       )
       .subscribe();
     // assign the observable of all players to a signal
-    this.playersSignal = toSignal(this.playersService.getAllPlayers());
+    this.playersSignal = toSignal(this.playersService.getAllPlayers(), { initialValue: [] });
   }
 
   private localLoadingOn() {
@@ -96,7 +96,7 @@ export class StandingsComponent {
 
   findPlayer(playerId: number) {
     const players = this.playersSignal();
-    const player = players.find((p: { id: number }) => p.id === playerId);
+    const player = players.find((p: PlayerDto) => p.id === playerId);
     return player;
   }
 

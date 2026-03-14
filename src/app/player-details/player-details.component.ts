@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Player } from '../interfaces/player';
+import { PlayerDto } from '../api/models/player-dto';
 import { PlayerStatistics } from '../interfaces/player-stats';
 import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -19,7 +19,7 @@ export class PlayerDetailsComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
 
   // variables
-  player$: Observable<Player> | undefined;
+  player$: Observable<PlayerDto> | undefined;
   swisstourStats: PlayerStatistics | undefined;
   swissChampionshipStats: PlayerStatistics | undefined;
   swisstourDivisions: string[] | undefined;
