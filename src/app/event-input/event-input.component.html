@@ -6,39 +6,62 @@
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.pdgaEventNumber' | translate }}</mat-label>
-        <input matInput type="number" formControlName="eventId" title="PDGA Event Number">
+        <input matInput type="number" formControlName="eventId" title="PDGA Event Number" />
       </mat-form-field>
     </div>
     <!-- Start Date -->
     <div class="flex justify-center items-center">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="w-half"
+        [class.disabled-field]="eventForm.get('eventId')?.value"
+      >
         <mat-label>{{ 'eventInput.startDate' | translate }}</mat-label>
-        <input matInput title="Start Date" [matDatepicker]="startPicker" formControlName="startDate">
-        <mat-datepicker-toggle matIconSuffix [for]="startPicker" [disabled]="eventForm.get('eventId')?.value"></mat-datepicker-toggle>
+        <input matInput title="Start Date" [matDatepicker]="startPicker" formControlName="startDate" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startPicker"
+          [disabled]="eventForm.get('eventId')?.value"
+        ></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
     </div>
     <!-- End Date -->
     <div class="flex justify-center items-center">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="w-half"
+        [class.disabled-field]="eventForm.get('eventId')?.value"
+      >
         <mat-label>{{ 'eventInput.endDate' | translate }}</mat-label>
-        <input matInput title="End Date" [matDatepicker]="endPicker" formControlName="endDate">
-        <mat-datepicker-toggle matIconSuffix [for]="endPicker" [disabled]="eventForm.get('eventId')?.value"></mat-datepicker-toggle>
+        <input matInput title="End Date" [matDatepicker]="endPicker" formControlName="endDate" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endPicker"
+          [disabled]="eventForm.get('eventId')?.value"
+        ></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
     </div>
     <!-- City -->
     <div class="flex justify-center items-center">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half" [class.disabled-field]="eventForm.get('eventId')?.value">
+      <mat-form-field
+        appearance="outline"
+        subscriptSizing="dynamic"
+        class="w-half"
+        [class.disabled-field]="eventForm.get('eventId')?.value"
+      >
         <mat-label>{{ 'eventInput.city' | translate }}</mat-label>
-        <input matInput type="text" formControlName="city" title="City">
+        <input matInput type="text" formControlName="city" title="City" />
       </mat-form-field>
     </div>
     <!-- Display Name -->
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.displayName' | translate }}</mat-label>
-        <input matInput type="text" formControlName="displayName" title="Display Name">
+        <input matInput type="text" formControlName="displayName" title="Display Name" />
         @if (displayName?.errors?.['required'] && displayName?.touched) {
           <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
         }
@@ -51,14 +74,19 @@
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.registrationLink' | translate }}</mat-label>
-        <input matInput type="text" formControlName="registrationLink" title="Registration Link">
+        <input matInput type="text" formControlName="registrationLink" title="Registration Link" />
       </mat-form-field>
     </div>
     <!-- Registration Start -->
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.registrationStart' | translate }}</mat-label>
-        <input matInput title="Registration Start" [matDatepicker]="regStartPicker" formControlName="registrationStart">
+        <input
+          matInput
+          title="Registration Start"
+          [matDatepicker]="regStartPicker"
+          formControlName="registrationStart"
+        />
         <mat-datepicker-toggle matIconSuffix [for]="regStartPicker"></mat-datepicker-toggle>
         <mat-datepicker #regStartPicker></mat-datepicker>
       </mat-form-field>
@@ -67,14 +95,14 @@
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.infoLink' | translate }}</mat-label>
-        <input matInput type="text" formControlName="infoLink" title="Info Link">
+        <input matInput type="text" formControlName="infoLink" title="Info Link" />
       </mat-form-field>
     </div>
     <!-- Swisstour Points -->
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.swisstourPoints' | translate }}</mat-label>
-        <input matInput type="number" formControlName="points" title="Swisstour Points">
+        <input matInput type="number" formControlName="points" title="Swisstour Points" />
         @if (points?.errors?.['required'] && points?.touched) {
           <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
         }
@@ -100,7 +128,7 @@
     <div class="flex justify-center items-center">
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-half">
         <mat-label>{{ 'eventInput.year' | translate }}</mat-label>
-        <input matInput type="number" formControlName="year" title="Year">
+        <input matInput type="number" formControlName="year" title="Year" />
         @if (eventForm.get('year')?.errors?.['required'] && eventForm.get('year')?.touched) {
           <mat-error>{{ 'eventInput.required' | translate }}</mat-error>
         }

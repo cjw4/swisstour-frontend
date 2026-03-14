@@ -4,7 +4,7 @@ import { PlayerStatistics } from '../interfaces/player-stats';
 import { PlayersService } from '../api/services/players.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PlayerService {
   private playersService = inject(PlayersService);
@@ -26,24 +26,24 @@ export class PlayerService {
             stats[division] = {
               tournaments: {
                 count: 0,
-                events: [],
+                events: []
               },
               wins: {
                 count: 0,
-                events: [],
+                events: []
               },
               podiumFinishes: {
                 count: 0,
-                events: [],
+                events: []
               },
               top5Finishes: {
                 count: 0,
-                events: [],
+                events: []
               },
               top10Finishes: {
                 count: 0,
-                events: [],
-              },
+                events: []
+              }
             };
           }
 
@@ -66,7 +66,7 @@ export class PlayerService {
               year: tournament.year!,
               place: tournament.tournamentPlace!,
               category: tournament.division!,
-              eventId: tournament.eventId!,
+              eventId: tournament.eventId!
             });
           }
           // Do same for podium
@@ -77,7 +77,7 @@ export class PlayerService {
               year: tournament.year!,
               place: tournament.tournamentPlace!,
               category: tournament.division!,
-              eventId: tournament.eventId!,
+              eventId: tournament.eventId!
             });
           }
           // Do same for top 5
@@ -88,7 +88,7 @@ export class PlayerService {
               year: tournament.year!,
               place: tournament.tournamentPlace!,
               category: tournament.division!,
-              eventId: tournament.eventId!,
+              eventId: tournament.eventId!
             });
           }
           // Do same for top 10
@@ -99,7 +99,7 @@ export class PlayerService {
               year: tournament.year!,
               place: tournament.tournamentPlace!,
               category: tournament.division!,
-              eventId: tournament.eventId!,
+              eventId: tournament.eventId!
             });
           }
         });

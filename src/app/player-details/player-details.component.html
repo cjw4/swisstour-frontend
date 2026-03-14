@@ -1,286 +1,336 @@
 @let player = (player$ | async)!;
 <div class="md:mx-20 md:my-5">
-<div class="flex justify-center items-baseline bg-gray-300 p-4 rounded-md">
-  <h2 class="font-semibold text-3xl">{{ player?.firstname }} {{ player?.lastname}}</h2>
-  <span class="font-medium text-xl px-3">SUI.{{ player?.sdaNumber }}</span>
+  <div class="flex justify-center items-baseline bg-gray-300 p-4 rounded-md">
+    <h2 class="font-semibold text-3xl">{{ player?.firstname }} {{ player?.lastname }}</h2>
+    <span class="font-medium text-xl px-3">SUI.{{ player?.sdaNumber }}</span>
+  </div>
+
+  <div class="flex flex-col md:flex-row md:gap-4">
+    @if (swisstourDivisions && swisstourStats) {
+      <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
+        <div class="text-center text-lg bg-blue-300 uppercase">{{ 'playerDetails.swisstour' | translate }}</div>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="w-[200px]"></th>
+              @for (division of swisstourDivisions; track $index) {
+                <th class="w-[200px] px-6 py-1">{{ division }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('tournaments')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.events' | translate }}</td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].tournaments.count }}</td>
+              }
+            </tr>
+            @if (expandedSwisstour()) {
+              <tr>
+                <td></td>
+                @for (division of swisstourDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swisstourStats![division].tournaments.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}</a
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('wins')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.wins' | translate }} 🥇</td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].wins.count }}</td>
+              }
+            </tr>
+            @if (expandedSwisstourWins()) {
+              <tr>
+                <td></td>
+                @for (division of swisstourDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swisstourStats![division].wins.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}</a
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('podiums')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.podiums' | translate }}</td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">
+                  {{ swisstourStats[division].podiumFinishes.count }}
+                </td>
+              }
+            </tr>
+            @if (expandedSwisstourPodiums()) {
+              <tr>
+                <td></td>
+                @for (division of swisstourDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swisstourStats![division].podiumFinishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top5s')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.top5s' | translate }}</td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top5Finishes.count }}</td>
+              }
+            </tr>
+            @if (expandedSwisstourTop5s()) {
+              <tr>
+                <td></td>
+                @for (division of swisstourDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swisstourStats![division].top5Finishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top10s')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.top10s' | translate }}</td>
+              @for (division of swisstourDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top10Finishes.count }}</td>
+              }
+            </tr>
+            @if (expandedSwisstourTop10s()) {
+              <tr>
+                <td></td>
+                @for (division of swisstourDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swisstourStats![division].top10Finishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    @if (swissChampionshipDivisions && swissChampionshipStats) {
+      <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
+        <div class="text-center text-lg bg-red-300 uppercase">{{ 'playerDetails.swissChampionships' | translate }}</div>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="w-[200px]"></th>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <th class="px-6 py-1 w-[200px]">{{ division }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('tournaments')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.events' | translate }}</td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">
+                  {{ swissChampionshipStats[division].tournaments.count }}
+                </td>
+              }
+            </tr>
+            @if (expandedChampionship()) {
+              <tr>
+                <td></td>
+                @for (division of swissChampionshipDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swissChampionshipStats![division].tournaments.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}</a
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('wins')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.wins' | translate }} 🥇</td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].wins.count }}</td>
+              }
+            </tr>
+
+            @if (expandedChampionshipWins()) {
+              <tr>
+                <td></td>
+                @for (division of swissChampionshipDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swissChampionshipStats![division].wins.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}</a
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('podiums')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.podiums' | translate }}</td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">
+                  {{ swissChampionshipStats[division].podiumFinishes.count }}
+                </td>
+              }
+            </tr>
+            @if (expandedChampionshipPodiums()) {
+              <tr>
+                <td></td>
+                @for (division of swissChampionshipDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swissChampionshipStats![division].podiumFinishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top5s')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.top5s' | translate }}</td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">
+                  {{ swissChampionshipStats[division].top5Finishes.count }}
+                </td>
+              }
+            </tr>
+            @if (expandedChampionshipTop5s()) {
+              <tr>
+                <td></td>
+                @for (division of swissChampionshipDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swissChampionshipStats![division].top5Finishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+
+            <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top10s')">
+              <td class="text-center px-6 py-1">{{ 'playerDetails.top10s' | translate }}</td>
+              @for (division of swissChampionshipDivisions; track $index) {
+                <td class="text-center px-6 py-1 cursor-pointer">
+                  {{ swissChampionshipStats[division].top10Finishes.count }}
+                </td>
+              }
+            </tr>
+            @if (expandedChampionshipTop10s()) {
+              <tr>
+                <td></td>
+                @for (division of swissChampionshipDivisions; track $index) {
+                  <td class="text-center align-top">
+                    <div class="inline-block text-left">
+                      @for (event of swissChampionshipStats![division].top10Finishes.events; track $index) {
+                        <a
+                          [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
+                          target="_blank"
+                          class="hover:text-blue-600"
+                          rel="noopener noreferrer"
+                          >{{ event.year + ' ' + event.name }}
+                        </a>
+                        <span class="font-bold">{{ event.place | ordinal }}</span
+                        ><br />
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
 </div>
-
-<div class="flex flex-col md:flex-row md:gap-4">
-  @if (swisstourDivisions && swisstourStats) {
-    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
-      <div class="text-center text-lg bg-blue-300 uppercase">{{ 'playerDetails.swisstour' | translate }}</div>
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="w-[200px]"></th>
-            @for (division of swisstourDivisions; track $index) {
-              <th class="w-[200px] px-6 py-1">{{ division }}</th>
-            }
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('tournaments')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.events' | translate }}</td>
-            @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].tournaments.count }}</td>
-            }
-          </tr>
-          @if (expandedSwisstour()) {
-            <tr>
-              <td></td>
-              @for (division of swisstourDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swisstourStats![division].tournaments.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('wins')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.wins' | translate }} 🥇</td>
-            @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].wins.count }}</td>
-            }
-          </tr>
-          @if (expandedSwisstourWins()) {
-            <tr>
-              <td></td>
-              @for (division of swisstourDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swisstourStats![division].wins.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('podiums')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.podiums' | translate }}</td>
-            @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].podiumFinishes.count }}</td>
-            }
-          </tr>
-          @if (expandedSwisstourPodiums()) {
-            <tr>
-              <td></td>
-              @for (division of swisstourDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swisstourStats![division].podiumFinishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top5s')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.top5s' | translate }}</td>
-            @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top5Finishes.count }}</td>
-            }
-          </tr>
-          @if (expandedSwisstourTop5s()) {
-            <tr>
-              <td></td>
-              @for (division of swisstourDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swisstourStats![division].top5Finishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleSwisstour('top10s')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.top10s' | translate }}</td>
-            @for (division of swisstourDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swisstourStats[division].top10Finishes.count }}</td>
-            }
-          </tr>
-          @if (expandedSwisstourTop10s()) {
-            <tr>
-              <td></td>
-              @for (division of swisstourDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swisstourStats![division].top10Finishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-
-  @if (swissChampionshipDivisions && swissChampionshipStats) {
-    <div class="overflow-x-auto bg-white rounded-lg shadow md:w-1/2 my-2">
-      <div class="text-center text-lg bg-red-300 uppercase">{{ 'playerDetails.swissChampionships' | translate }}</div>
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="w-[200px]"></th>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <th class="px-6 py-1 w-[200px]">{{ division }}</th>
-            }
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('tournaments')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.events' | translate }}</td>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].tournaments.count }}</td>
-            }
-          </tr>
-          @if (expandedChampionship()) {
-            <tr>
-              <td></td>
-              @for (division of swissChampionshipDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swissChampionshipStats![division].tournaments.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('wins')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.wins' | translate }} 🥇</td>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].wins.count }}</td>
-            }
-          </tr>
-
-          @if (expandedChampionshipWins()) {
-            <tr>
-              <td></td>
-              @for (division of swissChampionshipDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swissChampionshipStats![division].wins.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }}</a><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('podiums')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.podiums' | translate }}</td>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].podiumFinishes.count }}</td>
-            }
-          </tr>
-          @if (expandedChampionshipPodiums()) {
-            <tr>
-              <td></td>
-              @for (division of swissChampionshipDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swissChampionshipStats![division].podiumFinishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top5s')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.top5s' | translate }}</td>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].top5Finishes.count }}</td>
-            }
-          </tr>
-          @if (expandedChampionshipTop5s()) {
-            <tr>
-              <td></td>
-              @for (division of swissChampionshipDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swissChampionshipStats![division].top5Finishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-
-          <tr class="cursor-pointer hover:bg-gray-100" (click)="toggleChampionship('top10s')">
-            <td class="text-center px-6 py-1">{{ 'playerDetails.top10s' | translate }}</td>
-            @for (division of swissChampionshipDivisions; track $index) {
-              <td class="text-center px-6 py-1 cursor-pointer">{{ swissChampionshipStats[division].top10Finishes.count }}</td>
-            }
-          </tr>
-          @if (expandedChampionshipTop10s()) {
-            <tr>
-              <td></td>
-              @for (division of swissChampionshipDivisions; track $index) {
-                <td class="text-center align-top">
-                  <div class="inline-block text-left">
-                  @for (event of swissChampionshipStats![division].top10Finishes.events; track $index) {
-                    <a [href]="'https://www.pdga.com/tour/event/' + event.eventId + '#' + event.category"
-                        target="_blank"
-                        class="hover:text-blue-600"
-                        rel="noopener noreferrer">{{ event.year + " " + event.name }} </a> <span class="font-bold">{{ event.place | ordinal }}</span><br>
-                  }
-                  </div>
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-</div>
-</div>
-

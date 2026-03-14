@@ -38,7 +38,7 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
     { provide: APP_SETTINGS, useValue: appSettings },
     { provide: MAT_DATE_LOCALE, useValue: 'de-CH' },
     provideNativeDateAdapter()
-  ],
+  ]
 })
 export class EventInputComponent implements OnInit {
   // inject dependencies
@@ -98,24 +98,18 @@ export class EventInputComponent implements OnInit {
   private updatePdgaFieldsState(eventId: number | null | undefined): void {
     const fields = ['startDate', 'endDate', 'city'];
     if (eventId) {
-      fields.forEach(field => this.eventForm.get(field)?.disable());
+      fields.forEach((field) => this.eventForm.get(field)?.disable());
     } else {
-      fields.forEach(field => this.eventForm.get(field)?.enable());
+      fields.forEach((field) => this.eventForm.get(field)?.enable());
     }
   }
 
   // create form
   eventForm = new FormGroup({
     eventId: new FormControl<number | null>(null),
-    displayName: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    displayName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     city: new FormControl(''),
-    points: new FormControl<number | null>(null, [
-      Validators.required,
-      Validators.pattern(/^\d+$/),
-    ]),
+    points: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d+$/)]),
     year: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d+$/)]),
     infoLink: new FormControl(''),
     registrationLink: new FormControl(''),
@@ -181,11 +175,11 @@ export class EventInputComponent implements OnInit {
 
     request.subscribe({
       next: (res) => {
-        let message: string
+        let message: string;
         if (res.eventId) {
           message = this.translateService.instant('banners.eventSaved', {
             id: res.eventId,
-            name: res.name,
+            name: res.name
           });
         } else {
           message = this.translateService.instant('banners.eventSaved', {
@@ -202,9 +196,8 @@ export class EventInputComponent implements OnInit {
         const message = this.translateService.instant('banners.eventSaveError', { error: err.error?.message });
         this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
-      },
+      }
     });
-
   }
 
   get eventIdControl() {

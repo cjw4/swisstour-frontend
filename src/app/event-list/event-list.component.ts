@@ -15,7 +15,7 @@ import { DateRangePipe } from '../pipes/date-range.pipe';
   imports: [NgClass, AsyncPipe, TranslateModule, DateRangePipe],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class EventListComponent implements OnInit {
   // inject services
@@ -26,7 +26,7 @@ export class EventListComponent implements OnInit {
   private loadingService = inject(LoadingService);
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
-  appSettings = inject(APP_SETTINGS)
+  appSettings = inject(APP_SETTINGS);
 
   // inputs and outputs
   events = input<EventDto[]>();
@@ -45,24 +45,27 @@ export class EventListComponent implements OnInit {
   // lifecycle hooks
   ngOnInit(): void {
     // Get unique event years first
-    this.eventService.getEvents().pipe(
-      map((response) => {
-        const years = response.map(e => e.year!);
-        return Array.from(new Set(years));
-      })
-    ).subscribe(years => {
-      this.allYears.set(years);
+    this.eventService
+      .getEvents()
+      .pipe(
+        map((response) => {
+          const years = response.map((e) => e.year!);
+          return Array.from(new Set(years));
+        })
+      )
+      .subscribe((years) => {
+        this.allYears.set(years);
 
-      // Now that allYears is set, handle the year logic
-      const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
-      if (yearParam) {
-        this.year.set(Number(yearParam));
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-      } else {
-        this.year.set(this.appSettings.eventYear);
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-      }
-    });
+        // Now that allYears is set, handle the year logic
+        const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
+        if (yearParam) {
+          this.year.set(Number(yearParam));
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        } else {
+          this.year.set(this.appSettings.eventYear);
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        }
+      });
   }
 
   // functions
@@ -80,19 +83,20 @@ export class EventListComponent implements OnInit {
 
   public addResults(id: number) {
     this.loadingService.loadingOn();
-    this.eventService.getEventResults({ id }).pipe(
-      finalize(() => this.loadingService.loadingOff())
-    ).subscribe({
-      next: () => {
-        const message = this.translateService.instant('banners.resultsSaved');
-        this.bannerService.updateBanner(message, BannerType.SUCCESS);
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-      },
-      error: (err) => {
-        const message = this.translateService.instant('banners.resultsSaveError', { error: err });
-        this.bannerService.updateBanner(message, BannerType.ERROR);
-      },
-    });
+    this.eventService
+      .getEventResults({ id })
+      .pipe(finalize(() => this.loadingService.loadingOff()))
+      .subscribe({
+        next: () => {
+          const message = this.translateService.instant('banners.resultsSaved');
+          this.bannerService.updateBanner(message, BannerType.SUCCESS);
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        },
+        error: (err) => {
+          const message = this.translateService.instant('banners.resultsSaveError', { error: err });
+          this.bannerService.updateBanner(message, BannerType.ERROR);
+        }
+      });
   }
 
   public deleteEvent(event: EventDto) {

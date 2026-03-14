@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-banner',
   imports: [CommonModule],
   templateUrl: './banner.component.html',
-  styleUrl: './banner.component.css',
+  styleUrl: './banner.component.css'
 })
 export class BannerComponent implements OnInit, OnDestroy {
   // inject service
@@ -22,20 +22,19 @@ export class BannerComponent implements OnInit, OnDestroy {
 
   // lifecycle hooks
   ngOnInit(): void {
-    this.subscription = this.bannerService.bannerMessage$
-      .subscribe(banner => {
-        if (this.autoDismissTimeout) {
-          clearTimeout(this.autoDismissTimeout);
-          this.autoDismissTimeout = null;
-        }
-        this.currentBanner = banner;
-        if (banner) {
-          this.autoDismissTimeout = setTimeout(() => {
-            this.closeBanner();
-            this.cdr.detectChanges();
-          }, 3000);
-        }
-      });
+    this.subscription = this.bannerService.bannerMessage$.subscribe((banner) => {
+      if (this.autoDismissTimeout) {
+        clearTimeout(this.autoDismissTimeout);
+        this.autoDismissTimeout = null;
+      }
+      this.currentBanner = banner;
+      if (banner) {
+        this.autoDismissTimeout = setTimeout(() => {
+          this.closeBanner();
+          this.cdr.detectChanges();
+        }, 3000);
+      }
+    });
   }
 
   ngOnDestroy() {

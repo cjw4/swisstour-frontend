@@ -1,17 +1,15 @@
-<div class="flex flex-col justify-center items-center h-full bg-cover bg-center bg-white rounded-lg shadow px-3 py-4 text-lg">
+<div
+  class="flex flex-col justify-center items-center h-full bg-cover bg-center bg-white rounded-lg shadow px-3 py-4 text-lg"
+>
   <h1 class="flex justify-center text-gray-700 mb-5 font-medium text-2xl">{{ 'playerInput.title' | translate }}</h1>
-  <form
-    [formGroup]="playerForm"
-    (ngSubmit)="onSubmit()"
-    class="w-full space-y-4"
-  >
+  <form [formGroup]="playerForm" (ngSubmit)="onSubmit()" class="w-full space-y-4">
     <div class="flex justify-center items-center">
       <input
         type="number"
         formControlName="pdgaNumber"
         title="PDGA Number"
         [placeholder]="'playerInput.pdgaNumber' | translate"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center items-center">
@@ -23,7 +21,7 @@
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
         [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center items-center">
@@ -35,7 +33,7 @@
         [readOnly]="!!playerForm.get('pdgaNumber')?.value"
         [class.opacity-50]="!!playerForm.get('pdgaNumber')?.value"
         [class.bg-gray-100]="!!playerForm.get('pdgaNumber')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
       />
     </div>
     <div class="flex justify-center">
@@ -45,7 +43,7 @@
           formControlName="swisstourLicense"
           class="form-checkbox h-4 w-4 text-indigo-600 rounded"
         />
-        <span class=" text-gray-700">{{ 'playerInput.swisstourLicense' | translate }}</span>
+        <span class="text-gray-700">{{ 'playerInput.swisstourLicense' | translate }}</span>
       </label>
     </div>
     <div class="flex justify-center items-center">
@@ -57,7 +55,7 @@
         [readOnly]="!playerForm.get('swisstourLicense')?.value"
         [class.opacity-50]="!playerForm.get('swisstourLicense')?.value"
         [class.bg-gray-100]="!playerForm.get('swisstourLicense')?.value"
-        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  text-gray-900 py-2 px-3"
+        class="w-half rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 py-2 px-3"
         (active)="(playerForm.value.swisstourLicense)"
       />
     </div>

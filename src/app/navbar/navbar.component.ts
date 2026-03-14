@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-navbar',
   imports: [RouterLink, TranslateModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   settings = inject(APP_SETTINGS);

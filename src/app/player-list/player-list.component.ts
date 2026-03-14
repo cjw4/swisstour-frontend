@@ -15,7 +15,7 @@ import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local
   imports: [AsyncPipe, TranslateModule, LocalLoadingIndicatorComponent],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class PlayerListComponent implements OnInit {
   // inject services
@@ -35,7 +35,7 @@ export class PlayerListComponent implements OnInit {
   updateSearchTerm(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.searchTerm.set(inputElement.value);
-    this.getPlayers()
+    this.getPlayers();
   }
 
   addPlayer() {
@@ -44,17 +44,21 @@ export class PlayerListComponent implements OnInit {
 
   updatePlayers() {
     this.loading.set(true);
-    this.playersService.addPlayersFromGoogleSheet().pipe(
-      finalize(() => this.loading.set(false))
-    ).subscribe({
-      next: () => {
-        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdated'), BannerType.SUCCESS);
-        this.getPlayers();
-      },
-      error: () => {
-        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdateError'), BannerType.ERROR);
-      }
-    });
+    this.playersService
+      .addPlayersFromGoogleSheet()
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: () => {
+          this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdated'), BannerType.SUCCESS);
+          this.getPlayers();
+        },
+        error: () => {
+          this.bannerService.updateBanner(
+            this.translateService.instant('banners.playersUpdateError'),
+            BannerType.ERROR
+          );
+        }
+      });
   }
 
   editPlayer(id: number | undefined) {
@@ -94,10 +98,8 @@ export class PlayerListComponent implements OnInit {
       (player) =>
         player.firstname?.toLowerCase().includes(term) ||
         player.lastname?.toLowerCase().includes(term) ||
-        (player.sdaNumber != null &&
-          player.sdaNumber.toString().includes(term)) ||
-        (player.pdgaNumber != null &&
-          player.pdgaNumber.toString().includes(term))
+        (player.sdaNumber != null && player.sdaNumber.toString().includes(term)) ||
+        (player.pdgaNumber != null && player.pdgaNumber.toString().includes(term))
     );
   }
 

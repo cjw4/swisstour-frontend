@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'app-loading-indicator',
   imports: [AsyncPipe, NgTemplateOutlet, MatProgressSpinnerModule],
   templateUrl: './loading-indicator.component.html',
-  styleUrl: './loading-indicator.component.css',
+  styleUrl: './loading-indicator.component.css'
 })
 export class LoadingIndicatorComponent {
   // inject dependencies
@@ -22,5 +22,4 @@ export class LoadingIndicatorComponent {
 
   @ContentChild('loading')
   customLoadingIndicator: TemplateRef<void> | null = null;
-
 }

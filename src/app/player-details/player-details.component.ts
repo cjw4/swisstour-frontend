@@ -5,14 +5,14 @@ import { PlayerStatistics } from '../interfaces/player-stats';
 import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { PlayerDetailsData } from './player-details.resolver';
-import { OrdinalPipe } from "../pipes/ordinal.pipe";
+import { OrdinalPipe } from '../pipes/ordinal.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-player-details',
   imports: [AsyncPipe, OrdinalPipe, TranslateModule],
   templateUrl: './player-details.component.html',
-  styleUrl: './player-details.component.css',
+  styleUrl: './player-details.component.css'
 })
 export class PlayerDetailsComponent implements OnInit {
   // inject dependencies
@@ -40,19 +40,19 @@ export class PlayerDetailsComponent implements OnInit {
   toggleSwisstour(cat: string) {
     switch (cat) {
       case 'tournaments':
-        this.expandedSwisstour.update(v => !v);
+        this.expandedSwisstour.update((v) => !v);
         break;
       case 'wins':
-        this.expandedSwisstourWins.update(v => !v);
+        this.expandedSwisstourWins.update((v) => !v);
         break;
       case 'podiums':
-        this.expandedSwisstourPodiums.update(v => !v);
+        this.expandedSwisstourPodiums.update((v) => !v);
         break;
       case 'top5s':
-        this.expandedSwisstourTop5s.update(v => !v);
+        this.expandedSwisstourTop5s.update((v) => !v);
         break;
       case 'top10s':
-        this.expandedSwisstourTop10s.update(v => !v);
+        this.expandedSwisstourTop10s.update((v) => !v);
         break;
     }
   }
@@ -60,19 +60,19 @@ export class PlayerDetailsComponent implements OnInit {
   toggleChampionship(cat: string) {
     switch (cat) {
       case 'tournaments':
-        this.expandedChampionship.update(v => !v);
+        this.expandedChampionship.update((v) => !v);
         break;
       case 'wins':
-        this.expandedChampionshipWins.update(v => !v);
+        this.expandedChampionshipWins.update((v) => !v);
         break;
       case 'podiums':
-        this.expandedChampionshipPodiums.update(v => !v);
+        this.expandedChampionshipPodiums.update((v) => !v);
         break;
       case 'top5s':
-        this.expandedChampionshipTop5s.update(v => !v);
+        this.expandedChampionshipTop5s.update((v) => !v);
         break;
       case 'top10s':
-        this.expandedChampionshipTop10s.update(v => !v);
+        this.expandedChampionshipTop10s.update((v) => !v);
         break;
     }
   }

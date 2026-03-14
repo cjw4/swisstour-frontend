@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class AppComponent {
   settings = inject(APP_SETTINGS);

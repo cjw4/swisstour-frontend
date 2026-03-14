@@ -4,9 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'ordinal'
 })
 export class OrdinalPipe implements PipeTransform {
-
   transform(value: number): string {
-    if (value == null) { return ''}
+    if (value == null) {
+      return '';
+    }
 
     const j = value % 10;
     const k = value % 100;
@@ -22,5 +23,4 @@ export class OrdinalPipe implements PipeTransform {
     }
     return `${value}th`;
   }
-
 }

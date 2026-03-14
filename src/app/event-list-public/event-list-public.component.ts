@@ -34,8 +34,6 @@ export class EventListPublicComponent implements OnInit {
     }
 
     this.loading.set(true);
-    this.events$ = this.eventService.getEvents({ year: this.year }).pipe(
-      finalize(() => this.loading.set(false))
-    );
+    this.events$ = this.eventService.getEvents({ year: this.year }).pipe(finalize(() => this.loading.set(false)));
   }
 }

@@ -12,7 +12,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   selector: 'app-player-input',
   imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './player-input.component.html',
-  styleUrl: './player-input.component.css',
+  styleUrl: './player-input.component.css'
 })
 export class PlayerInputComponent implements OnInit, AfterViewInit {
   // inject services
@@ -30,16 +30,16 @@ export class PlayerInputComponent implements OnInit, AfterViewInit {
   // lifecycle hooks
   ngOnInit(): void {
     // check if the parameter id exists
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe((params) => {
       const id = params.get('id');
 
       // convert to number if exists, otherwise set to null
-      this.playerId = id ? Number(id) : null
+      this.playerId = id ? Number(id) : null;
 
       // patch the form with existing player data if we are editing
       if (this.playerId) {
         this.editMode = true;
-        this.playersService.getPlayer({ id: this.playerId }).subscribe(player => {
+        this.playersService.getPlayer({ id: this.playerId }).subscribe((player) => {
           this.playerForm.patchValue({
             pdgaNumber: player.pdgaNumber?.toString(),
             firstname: player.firstname,

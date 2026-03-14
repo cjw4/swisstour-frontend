@@ -17,14 +17,23 @@
 
     <!-- Right-side Navigation -->
     <div class="md:flex">
-
       <!-- Mobile menu icon -->
       <div class="flex md:hidden">
-        <button type="button" (click)="toggleMobileMenu()"
-          class="mx-4 p-1.5 inline-flex items-center justify-center rounded-md text-gray-700">
+        <button
+          type="button"
+          (click)="toggleMobileMenu()"
+          class="mx-4 p-1.5 inline-flex items-center justify-center rounded-md text-gray-700"
+        >
           <span class="sr-only">Open main menu</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
-            aria-hidden="true" class="size-8">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            data-slot="icon"
+            aria-hidden="true"
+            class="size-8"
+          >
             <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
@@ -32,51 +41,39 @@
 
       <!-- Links -->
       <div class="hidden md:flex items-center [&>*]:px-4 [&>*]:py-2 mr-3 [&>*]:rounded-xl">
-        @if(authService.adminLoggedIn()) {
-          <a [routerLink]="'events/' + settings.eventYear"
-            class="hover:bg-white text-gray-900 pr-1">
+        @if (authService.adminLoggedIn()) {
+          <a [routerLink]="'events/' + settings.eventYear" class="hover:bg-white text-gray-900 pr-1">
             {{ 'nav.events' | translate }}
           </a>
         } @else {
-          <a [routerLink]="'event-list/' + settings.eventYear"
-            class="hover:bg-white text-gray-900">
+          <a [routerLink]="'event-list/' + settings.eventYear" class="hover:bg-white text-gray-900">
             {{ 'nav.events' | translate }}
           </a>
         }
 
-        <div class="relative group cursor-pointer hover:bg-white text-gray-900 !pr-[0.5em]"
-            tabindex="0"
-            role="button"
-            [class.open]="isStandingsOpen"
-            (click)="toggleStandings()"
-            (keydown.enter)="toggleStandings()">
+        <div
+          class="relative group cursor-pointer hover:bg-white text-gray-900 !pr-[0.5em]"
+          tabindex="0"
+          role="button"
+          [class.open]="isStandingsOpen"
+          (click)="toggleStandings()"
+          (keydown.enter)="toggleStandings()"
+        >
           <div class="flex items-center">
             {{ 'nav.standings' | translate }}
-            <svg class="ml-2 w-4 h-4 transition-transform transform group-[.open]:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
+            <svg
+              class="ml-2 w-4 h-4 transition-transform transform group-[.open]:rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          <div class="absolute z-50 top-14 left-0 w-full
-                      flex flex-col
-                      bg-gray-100
-                      rounded-xl
-                      shadow-xl
-                      shadow-gray-400
-                      [&>a]:px-4
-                      [&>a]:py-2
-                      [&>a]:hover:bg-gray-200
-                      [&>*:first-child]:rounded-t-xl
-                      [&>*:last-child]:rounded-b-xl
-                      origin-top
-                      duration-300
-                      scale-y-0
-                      group-[.open]:scale-y-100
-                      opacity-0
-                      group-[.open]:opacity-100">
+          <div
+            class="absolute z-50 top-14 left-0 w-full flex flex-col bg-gray-100 rounded-xl shadow-xl shadow-gray-400 [&>a]:px-4 [&>a]:py-2 [&>a]:hover:bg-gray-200 [&>*:first-child]:rounded-t-xl [&>*:last-child]:rounded-b-xl origin-top duration-300 scale-y-0 group-[.open]:scale-y-100 opacity-0 group-[.open]:opacity-100"
+          >
             <a [routerLink]="'standings/' + settings.currentYear + '/MPO'">MPO</a>
             <a [routerLink]="'standings/' + settings.currentYear + '/FPO'">FPO</a>
             <a [routerLink]="'standings/' + settings.currentYear + '/MP40'">MP40</a>
@@ -87,52 +84,70 @@
           </div>
         </div>
 
-        <a routerLink="players"
-          class="hover:bg-white text-gray-900">
+        <a routerLink="players" class="hover:bg-white text-gray-900">
           {{ 'nav.players' | translate }}
         </a>
 
-        @if(authService.adminLoggedIn()) {
-          <a tabindex="0"
+        @if (authService.adminLoggedIn()) {
+          <a
+            tabindex="0"
             (click)="this.authService.logout()"
             (keydown.enter)="this.authService.logout()"
-            class="hover:bg-white text-gray-900 hover:cursor-pointer">
+            class="hover:bg-white text-gray-900 hover:cursor-pointer"
+          >
             {{ 'nav.logout' | translate }}
           </a>
         }
-
       </div>
 
       <!-- Language Selection -->
-      <div class="md:flex md:gap-x-6 group relative hover:bg-white cursor-pointer py-2 px-4 mr-2 rounded-lg hidden"
+      <div
+        class="md:flex md:gap-x-6 group relative hover:bg-white cursor-pointer py-2 px-4 mr-2 rounded-lg hidden"
         tabindex="0"
         role="button"
         [class.open]="isLanguageOpen"
         (click)="toggleLanguage()"
-        (keydown.enter)="toggleLanguage()">
+        (keydown.enter)="toggleLanguage()"
+      >
         <div class="flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <circle cx="12" cy="12  " r="10"></circle>
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
           <span class="uppercase">{{ currentLanguage }}</span>
         </div>
-        <div class="absolute z-50 top-14 left-0.5 scale-y-0 group-[.open]:scale-y-100  bg-gray-100
-                      rounded-xl
-                      shadow-xl
-                      shadow-gray-400 flex flex-col origin-top duration-300
-                  [&>a]:hover:bg-gray-200
-                  [&>a]:py-3
-                  [&>a]:px-4
-                  [&>*:first-child]:rounded-t-xl
-                  [&>*:last-child]:rounded-b-xl
-                  opacity-0
-                  group-[.open]:opacity-100">
-            <a tabindex="0" (click)="changeLanguage('en'); $event.stopPropagation()" (keydown.enter)="changeLanguage('en'); $event.stopPropagation()">EN</a>
-            <a tabindex="0" (click)="changeLanguage('de'); $event.stopPropagation()" (keydown.enter)="changeLanguage('de'); $event.stopPropagation()">DE</a>
-            <a tabindex="0" (click)="changeLanguage('fr'); $event.stopPropagation()" (keydown.enter)="changeLanguage('fr'); $event.stopPropagation()">FR</a>
+        <div
+          class="absolute z-50 top-14 left-0.5 scale-y-0 group-[.open]:scale-y-100 bg-gray-100 rounded-xl shadow-xl shadow-gray-400 flex flex-col origin-top duration-300 [&>a]:hover:bg-gray-200 [&>a]:py-3 [&>a]:px-4 [&>*:first-child]:rounded-t-xl [&>*:last-child]:rounded-b-xl opacity-0 group-[.open]:opacity-100"
+        >
+          <a
+            tabindex="0"
+            (click)="changeLanguage('en'); $event.stopPropagation()"
+            (keydown.enter)="changeLanguage('en'); $event.stopPropagation()"
+            >EN</a
+          >
+          <a
+            tabindex="0"
+            (click)="changeLanguage('de'); $event.stopPropagation()"
+            (keydown.enter)="changeLanguage('de'); $event.stopPropagation()"
+            >DE</a
+          >
+          <a
+            tabindex="0"
+            (click)="changeLanguage('fr'); $event.stopPropagation()"
+            (keydown.enter)="changeLanguage('fr'); $event.stopPropagation()"
+            >FR</a
+          >
         </div>
       </div>
     </div>
@@ -140,112 +155,175 @@
 
   <!-- Mobile menu -->
   @if (mobileMenuOpen()) {
-  <div class="md:hidden" role="dialog" aria-modal="true">
-    <div class="fixed inset-0 z-10"></div>
-    <div
-      class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-      <div class="flex items-center justify-between">
-        <button type="button" (click)="mobileMenuOpen.set(false)" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-          <span class="sr-only">Close menu</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon"
-            aria-hidden="true" class="size-6">
-            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-      </div>
-      <div class="mt-6 flow-root">
-        <div class="-my-6 divide-y divide-gray-500/10">
-          <div class="space-y-2 py-6 [&>div]:my-8">
-            @if (this.authService.adminLoggedIn()) {
-              <div>
-                <a [routerLink]="'events/' + settings.currentYear" (click)="mobileMenuOpen.set(false)"
-                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
-                {{ 'nav.events' | translate }}
-                </a>
-              </div>
-            } @else {
-              <div>
-                <a [routerLink]="'event-list/' + settings.eventYear" (click)="mobileMenuOpen.set(false)"
-                  class="text-lg -mx-3 px-3 py-2 text-gray-900">
-                  {{ 'nav.events' | translate }}
-                </a>
-              </div>
-            }
-
-            <div class="relative group cursor-pointer text-gray-900 flex items-center"
-              tabindex="0"
-              role="button"
-              [class.open]="isStandingsOpen"
-              (click)="toggleStandings()"
-              (keydown.enter)="toggleStandings()">
-              <span>{{ 'nav.standings' | translate }}</span>
-              <svg class="ml-2 w-4 h-4 transition-transform transform group-[.open]:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-            <!-- Standings Links -->
-             @if (isStandingsOpen) {
-            <div class="flex flex-col mt-2 [&>a]:px-4 [&>a]:py-2 [&>a]:text-lg">
-              <a [routerLink]="'standings/' + settings.currentYear + '/MPO'" (click)="mobileMenuOpen.set(false)">MPO</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/FPO'" (click)="mobileMenuOpen.set(false)">FPO</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/MP40'" (click)="mobileMenuOpen.set(false)">MP40</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/FP40'" (click)="mobileMenuOpen.set(false)">FP40</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/MP50'" (click)="mobileMenuOpen.set(false)">MP50</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/MP60'" (click)="mobileMenuOpen.set(false)">MP60</a>
-              <a [routerLink]="'standings/' + settings.currentYear + '/MJ18'" (click)="mobileMenuOpen.set(false)">MJ18</a>
-            </div>
-             }
-
-            <div>
-              <a routerLink="players" (click)="mobileMenuOpen.set(false)"
-              class="text-lg -mx-3 px-3 py-2 text-gray-900">
-              {{ 'nav.players' | translate }}
-              </a>
-            </div>
-
-            @if (this.authService.adminLoggedIn()) {
-              <div class="hover:cursor-pointer">
-                <a tabindex="0"
-                (click)="this.authService.logout(); mobileMenuOpen.set(false)"
-                (keydown.enter)="this.authService.logout(); mobileMenuOpen.set(false)"
-                class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900">
-                {{ 'nav.logout' | translate }}
-                </a>
-              </div>
-            }
-
-
-           <div class="relative group text-lg cursor-pointer text-gray-900 flex items-center"
-              tabindex="0"
-              role="button"
-              [class.open]="isLanguageOpen"
-              (click)="toggleLanguage()"
-              (keydown.enter)="toggleLanguage()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-              </path>
+    <div class="md:hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 z-10"></div>
+      <div
+        class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+      >
+        <div class="flex items-center justify-between">
+          <button type="button" (click)="mobileMenuOpen.set(false)" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+            <span class="sr-only">Close menu</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              data-slot="icon"
+              aria-hidden="true"
+              class="size-6"
+            >
+              <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span class="ml-2 uppercase">{{ currentLanguage }}</span>
-           </div>
-           <!-- Language Links -->
-             @if (isLanguageOpen) {
-            <div class="flex flex-row mt-2 [&>a]:p-4 [&>a]:py-2 [&>a]:hover:cursor-pointer [&>a]:text-lg">
-              <a tabindex="0" (click)="changeLanguage('en'); mobileMenuOpen.set(false)" (keydown.enter)="changeLanguage('en'); mobileMenuOpen.set(false)">EN</a>
-              <a tabindex="0" (click)="changeLanguage('de'); mobileMenuOpen.set(false)" (keydown.enter)="changeLanguage('de'); mobileMenuOpen.set(false)">DE</a>
-              <a tabindex="0" (click)="changeLanguage('fr'); mobileMenuOpen.set(false)" (keydown.enter)="changeLanguage('fr'); mobileMenuOpen.set(false)">FR</a>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6 [&>div]:my-8">
+              @if (this.authService.adminLoggedIn()) {
+                <div>
+                  <a
+                    [routerLink]="'events/' + settings.currentYear"
+                    (click)="mobileMenuOpen.set(false)"
+                    class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900"
+                  >
+                    {{ 'nav.events' | translate }}
+                  </a>
+                </div>
+              } @else {
+                <div>
+                  <a
+                    [routerLink]="'event-list/' + settings.eventYear"
+                    (click)="mobileMenuOpen.set(false)"
+                    class="text-lg -mx-3 px-3 py-2 text-gray-900"
+                  >
+                    {{ 'nav.events' | translate }}
+                  </a>
+                </div>
+              }
+
+              <div
+                class="relative group cursor-pointer text-gray-900 flex items-center"
+                tabindex="0"
+                role="button"
+                [class.open]="isStandingsOpen"
+                (click)="toggleStandings()"
+                (keydown.enter)="toggleStandings()"
+              >
+                <span>{{ 'nav.standings' | translate }}</span>
+                <svg
+                  class="ml-2 w-4 h-4 transition-transform transform group-[.open]:rotate-180"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              <!-- Standings Links -->
+              @if (isStandingsOpen) {
+                <div class="flex flex-col mt-2 [&>a]:px-4 [&>a]:py-2 [&>a]:text-lg">
+                  <a [routerLink]="'standings/' + settings.currentYear + '/MPO'" (click)="mobileMenuOpen.set(false)"
+                    >MPO</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/FPO'" (click)="mobileMenuOpen.set(false)"
+                    >FPO</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/MP40'" (click)="mobileMenuOpen.set(false)"
+                    >MP40</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/FP40'" (click)="mobileMenuOpen.set(false)"
+                    >FP40</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/MP50'" (click)="mobileMenuOpen.set(false)"
+                    >MP50</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/MP60'" (click)="mobileMenuOpen.set(false)"
+                    >MP60</a
+                  >
+                  <a [routerLink]="'standings/' + settings.currentYear + '/MJ18'" (click)="mobileMenuOpen.set(false)"
+                    >MJ18</a
+                  >
+                </div>
+              }
+
+              <div>
+                <a
+                  routerLink="players"
+                  (click)="mobileMenuOpen.set(false)"
+                  class="text-lg -mx-3 px-3 py-2 text-gray-900"
+                >
+                  {{ 'nav.players' | translate }}
+                </a>
+              </div>
+
+              @if (this.authService.adminLoggedIn()) {
+                <div class="hover:cursor-pointer">
+                  <a
+                    tabindex="0"
+                    (click)="this.authService.logout(); mobileMenuOpen.set(false)"
+                    (keydown.enter)="this.authService.logout(); mobileMenuOpen.set(false)"
+                    class="text-lg -mx-3 m-6 px-3 py-2 text-gray-900"
+                  >
+                    {{ 'nav.logout' | translate }}
+                  </a>
+                </div>
+              }
+
+              <div
+                class="relative group text-lg cursor-pointer text-gray-900 flex items-center"
+                tabindex="0"
+                role="button"
+                [class.open]="isLanguageOpen"
+                (click)="toggleLanguage()"
+                (keydown.enter)="toggleLanguage()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path
+                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                  ></path>
+                </svg>
+                <span class="ml-2 uppercase">{{ currentLanguage }}</span>
+              </div>
+              <!-- Language Links -->
+              @if (isLanguageOpen) {
+                <div class="flex flex-row mt-2 [&>a]:p-4 [&>a]:py-2 [&>a]:hover:cursor-pointer [&>a]:text-lg">
+                  <a
+                    tabindex="0"
+                    (click)="changeLanguage('en'); mobileMenuOpen.set(false)"
+                    (keydown.enter)="changeLanguage('en'); mobileMenuOpen.set(false)"
+                    >EN</a
+                  >
+                  <a
+                    tabindex="0"
+                    (click)="changeLanguage('de'); mobileMenuOpen.set(false)"
+                    (keydown.enter)="changeLanguage('de'); mobileMenuOpen.set(false)"
+                    >DE</a
+                  >
+                  <a
+                    tabindex="0"
+                    (click)="changeLanguage('fr'); mobileMenuOpen.set(false)"
+                    (keydown.enter)="changeLanguage('fr'); mobileMenuOpen.set(false)"
+                    >FR</a
+                  >
+                </div>
+              }
             </div>
-             }
           </div>
         </div>
       </div>
     </div>
-  </div>
   }
 </header>

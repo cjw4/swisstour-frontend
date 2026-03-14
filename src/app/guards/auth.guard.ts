@@ -15,5 +15,5 @@ export const authGuard: CanActivateFn = () => {
   }
   const message = translateService.instant('banners.loginRequired');
   bannerService.updateBanner(message);
-  return router.parseUrl('admin/login')
+  return router.parseUrl('admin/login');
 };

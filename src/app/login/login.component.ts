@@ -16,7 +16,7 @@ import { LoginCredentials } from './login-credentials';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class LoginComponent {
   // inject dependencies
@@ -32,12 +32,8 @@ export class LoginComponent {
 
   // create form
   loginForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required
-    ]),
-    password: new FormControl('', [
-      Validators.required
-    ]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required])
   });
 
   onSubmit() {
@@ -63,7 +59,7 @@ export class LoginComponent {
         const message = this.translateService.instant('banners.loginError', { error: errorText });
         this.bannerService.updateBanner(message, BannerType.ERROR);
         this.loadingService.loadingOff();
-      },
+      }
     });
   }
 

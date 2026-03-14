@@ -10,16 +10,13 @@
   background-color: white !important;
 }
 
-
 ::ng-deep .mdc-text-field--outlined {
   --mdc-outlined-text-field-outline-width: 1px;
 }
 
-
-::ng-deep input[type="number"] {
+::ng-deep input[type='number'] {
   appearance: textfield;
 }
-
 
 /* Remove vertical line in notched outline */
 ::ng-deep .mdc-notched-outline__notch {

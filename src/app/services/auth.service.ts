@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { LoginCredentials } from '../login/login-credentials';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
@@ -34,28 +34,26 @@ export class AuthService {
   }
 
   login(formValue: LoginCredentials): Observable<string> {
-    return this.http
-      .post(this.loginUrl, formValue, { responseType: 'text' })
-      .pipe(
-        tap({
-          next: (token) => {
-            // Set token with expiration (24 hrs from now)
-            const expiryTime = Date.now() + 84600000; // 24 hrs in milliseconds
+    return this.http.post(this.loginUrl, formValue, { responseType: 'text' }).pipe(
+      tap({
+        next: (token) => {
+          // Set token with expiration (24 hrs from now)
+          const expiryTime = Date.now() + 84600000; // 24 hrs in milliseconds
 
-            localStorage.setItem('authToken', token);
-            localStorage.setItem('authTokenExpiry', expiryTime.toString());
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('authTokenExpiry', expiryTime.toString());
 
-            this.accessToken.set(token);
+          this.accessToken.set(token);
 
-            // Set up automatic token expiration
-            this.scheduleTokenExpiration();
-          },
-          error: () => {
-            this.clearStoredToken();
-            this.accessToken.set('');
-          },
-        })
-      );
+          // Set up automatic token expiration
+          this.scheduleTokenExpiration();
+        },
+        error: () => {
+          this.clearStoredToken();
+          this.accessToken.set('');
+        }
+      })
+    );
   }
 
   // Schedule automatic token expiration
