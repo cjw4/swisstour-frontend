@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { BannerService } from '../services/banner.service';
 import { TranslateService } from '@ngx-translate/core';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const bannerService = inject(BannerService);
@@ -15,5 +15,5 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
   const message = translateService.instant('banners.loginRequired');
   bannerService.updateBanner(message);
-  return router.parseUrl('admin/login')
+  return router.parseUrl('admin/login');
 };

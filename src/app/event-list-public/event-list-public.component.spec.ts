@@ -9,8 +9,7 @@ describe('EventListPublicComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EventListPublicComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventListPublicComponent);
     component = fixture.componentInstance;

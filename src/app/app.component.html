@@ -8,9 +8,9 @@
 <footer class="fixed bottom-0 left-0 right-0 h-22 font-medium bg-gray-100 text-center py-3 text-sm text-gray-700">
   <div class="flex text-lg space-x-10 justify-center [&>a]:hover:text-gray-900">
     @if (!authService.adminLoggedIn()) {
-    <a routerLink="/admin/login">Admin</a>
+      <a routerLink="/admin/login">Admin</a>
     } @else {
-    <a href="#" (click)="authService.logout()">{{ "footer.logout" | translate }}</a>
+      <a href="#" (click)="authService.logout()">{{ 'footer.logout' | translate }}</a>
     }
     <!-- <a [routerLink]="'/faq'">{{ "footer.faq" | translate }}</a> -->
     <!-- <a [routerLink]="'/feedback'">{{ "footer.feedback" | translate }}</a> -->

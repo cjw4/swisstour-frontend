@@ -9,8 +9,7 @@ describe('LoadingIndicatorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoadingIndicatorComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoadingIndicatorComponent);
     component = fixture.componentInstance;

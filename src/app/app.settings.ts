@@ -1,12 +1,12 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 
 export interface AppSettings {
   title: string;
   version: string;
   baseUrl: string;
   apiUrl: string;
-  currentYear: number,
-  eventYear: number
+  currentYear: number;
+  eventYear: number;
 }
 
 export const appSettings: AppSettings = {

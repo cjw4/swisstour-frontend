@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -31,6 +31,6 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient]
         }
       })
-    ),
-  ],
+    )
+  ]
 };

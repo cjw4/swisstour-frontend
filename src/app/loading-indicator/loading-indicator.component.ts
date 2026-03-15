@@ -1,5 +1,5 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, inject, OnInit, TemplateRef } from '@angular/core';
+import { Component, ContentChild, inject, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoadingService } from '../services/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'app-loading-indicator',
   imports: [AsyncPipe, NgTemplateOutlet, MatProgressSpinnerModule],
   templateUrl: './loading-indicator.component.html',
-  styleUrl: './loading-indicator.component.css',
+  styleUrl: './loading-indicator.component.css'
 })
 export class LoadingIndicatorComponent {
   // inject dependencies
@@ -21,6 +21,5 @@ export class LoadingIndicatorComponent {
   }
 
   @ContentChild('loading')
-  customLoadingIndicator: TemplateRef<any> | null = null;
-
+  customLoadingIndicator: TemplateRef<void> | null = null;
 }

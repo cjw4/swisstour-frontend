@@ -7,7 +7,6 @@ import { EventInputComponent } from './event-input/event-input.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { appSettings } from './app.settings';
 import { PlayerDetailsResolver } from './player-details/player-details.resolver';
 import { FeedbackComponent } from './feedback/feedback.component';
@@ -15,74 +14,74 @@ import { FaqComponent } from './faq/faq.component';
 import { EventListPublicComponent } from './event-list-public/event-list-public.component';
 
 export const routes: Routes = [
-    {
-      path:'',
-      component: EventListPublicComponent,
-    },
-    {
-      path: 'event-list/:year',
-      component: EventListPublicComponent
-    },
-    {
-      path: 'events',
-      component: EventListComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'events/:year',
-      component: EventListComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'event/input',
-      component: EventInputComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'event/input/:id',
-      component: EventInputComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'players',
-      component: PlayerListComponent
-    },
-    {
-      path: 'player/input',
-      component: PlayerInputComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'player/input/:id',
-      component: PlayerInputComponent,
-      canActivate: [authGuard]
-    },
-    {
-      path: 'player/:id',
-      component: PlayerDetailsComponent,
-      resolve: {
-        data: PlayerDetailsResolver
-      }
-    },
-    {
-      path: 'standings/:year/:category',
-      component: StandingsComponent
-    },
-    {
-      path: 'admin/login',
-      component: LoginComponent
-    },
-    {
-      path: 'feedback',
-      component: FeedbackComponent
-    },
-    {
-      path: 'faq',
-      component: FaqComponent
-    },
-    {
-      path: '**',
-      redirectTo: 'standings/' + appSettings.currentYear,
-      pathMatch: 'full',
-    },
+  {
+    path: '',
+    component: EventListPublicComponent
+  },
+  {
+    path: 'event-list/:year',
+    component: EventListPublicComponent
+  },
+  {
+    path: 'events',
+    component: EventListComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'events/:year',
+    component: EventListComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'event/input',
+    component: EventInputComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'event/input/:id',
+    component: EventInputComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'players',
+    component: PlayerListComponent
+  },
+  {
+    path: 'player/input',
+    component: PlayerInputComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'player/input/:id',
+    component: PlayerInputComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'player/:id',
+    component: PlayerDetailsComponent,
+    resolve: {
+      data: PlayerDetailsResolver
+    }
+  },
+  {
+    path: 'standings/:year/:category',
+    component: StandingsComponent
+  },
+  {
+    path: 'admin/login',
+    component: LoginComponent
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent
+  },
+  {
+    path: 'faq',
+    component: FaqComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'standings/' + appSettings.currentYear,
+    pathMatch: 'full'
+  }
 ];

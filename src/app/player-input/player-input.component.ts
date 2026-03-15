@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -12,9 +12,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   selector: 'app-player-input',
   imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './player-input.component.html',
-  styleUrl: './player-input.component.css',
+  styleUrl: './player-input.component.css'
 })
-export class PlayerInputComponent implements OnInit {
+export class PlayerInputComponent implements OnInit, AfterViewInit {
   // inject services
   playersService = inject(PlayersService);
   bannerService = inject(BannerService);
@@ -25,21 +25,21 @@ export class PlayerInputComponent implements OnInit {
 
   // variables
   playerId: number | null = null;
-  editMode: boolean = false;
+  editMode = false;
 
   // lifecycle hooks
   ngOnInit(): void {
     // check if the parameter id exists
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe((params) => {
       const id = params.get('id');
 
       // convert to number if exists, otherwise set to null
-      this.playerId = id ? Number(id) : null
+      this.playerId = id ? Number(id) : null;
 
       // patch the form with existing player data if we are editing
       if (this.playerId) {
         this.editMode = true;
-        this.playersService.getPlayer({ id: this.playerId }).subscribe(player => {
+        this.playersService.getPlayer({ id: this.playerId }).subscribe((player) => {
           this.playerForm.patchValue({
             pdgaNumber: player.pdgaNumber?.toString(),
             firstname: player.firstname,
@@ -54,8 +54,8 @@ export class PlayerInputComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.playerForm.get('pdgaNumber')?.valueChanges.subscribe((value) => {
-      const firstnameControl = this.playerForm.get('firstname');
-      const lastnameControl = this.playerForm.get('lastname');
+      //const firstnameControl = this.playerForm.get('firstname');
+      //const lastnameControl = this.playerForm.get('lastname');
       if (value) {
         this.playerForm.patchValue({
           firstname: '',

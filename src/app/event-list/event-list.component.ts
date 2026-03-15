@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, inject, input, OnInit, output, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { EventsService } from '../api/services/events.service';
-import { map, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { EventDto } from '../api/models/event-dto';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
-import { ResultsService } from '../services/results.service';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService, BannerType } from '../services/banner.service';
 import { LoadingService } from '../services/loading.service';
@@ -16,19 +15,18 @@ import { DateRangePipe } from '../pipes/date-range.pipe';
   imports: [NgClass, AsyncPipe, TranslateModule, DateRangePipe],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class EventListComponent implements OnInit {
   // inject services
   private eventService = inject(EventsService);
-  private resultsService = inject(ResultsService);
   private bannerService = inject(BannerService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
-  appSettings = inject(APP_SETTINGS)
+  appSettings = inject(APP_SETTINGS);
 
   // inputs and outputs
   events = input<EventDto[]>();
@@ -47,24 +45,27 @@ export class EventListComponent implements OnInit {
   // lifecycle hooks
   ngOnInit(): void {
     // Get unique event years first
-    this.eventService.getEvents().pipe(
-      map((response) => {
-        const years = response.map(e => e.year!);
-        return Array.from(new Set(years));
-      })
-    ).subscribe(years => {
-      this.allYears.set(years);
+    this.eventService
+      .getEvents()
+      .pipe(
+        map((response) => {
+          const years = response.map((e) => e.year!);
+          return Array.from(new Set(years));
+        })
+      )
+      .subscribe((years) => {
+        this.allYears.set(years);
 
-      // Now that allYears is set, handle the year logic
-      const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
-      if (yearParam) {
-        this.year.set(Number(yearParam));
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-      } else {
-        this.year.set(this.appSettings.eventYear);
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-      }
-    });
+        // Now that allYears is set, handle the year logic
+        const yearParam = this.activatedRoute.snapshot.paramMap.get('year');
+        if (yearParam) {
+          this.year.set(Number(yearParam));
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        } else {
+          this.year.set(this.appSettings.eventYear);
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        }
+      });
   }
 
   // functions
@@ -81,24 +82,21 @@ export class EventListComponent implements OnInit {
   }
 
   public addResults(id: number) {
-    // start loader
     this.loadingService.loadingOn();
-    this.resultsService.addResults(id).subscribe({
-      next: (res) => {
-        // res.message comes from the server, so we use it directly
-        this.bannerService.updateBanner(
-          res.message,
-          BannerType.SUCCESS
-        );
-        this.events$ = this.eventService.getEvents({ year: this.year()! });
-        this.loadingService.loadingOff();
-      },
-      error: (err) => {
-        const message = this.translateService.instant('banners.resultsSaveError', { error: err });
-        this.bannerService.updateBanner(message, BannerType.ERROR);
-        this.loadingService.loadingOff();
-      },
-    });
+    this.eventService
+      .getEventResults({ id })
+      .pipe(finalize(() => this.loadingService.loadingOff()))
+      .subscribe({
+        next: () => {
+          const message = this.translateService.instant('banners.resultsSaved');
+          this.bannerService.updateBanner(message, BannerType.SUCCESS);
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        },
+        error: (err) => {
+          const message = this.translateService.instant('banners.resultsSaveError', { error: err });
+          this.bannerService.updateBanner(message, BannerType.ERROR);
+        }
+      });
   }
 
   public deleteEvent(event: EventDto) {

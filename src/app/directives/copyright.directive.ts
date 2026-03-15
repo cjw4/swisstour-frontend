@@ -10,9 +10,8 @@ export class CopyrightDirective implements OnInit {
 
   ngOnInit() {
     const currentYear = new Date().getFullYear();
-    this.translateService.stream('copyright.text', { year: currentYear }).subscribe(translatedText => {
+    this.translateService.stream('copyright.text', { year: currentYear }).subscribe((translatedText) => {
       this.el.nativeElement.innerHTML = translatedText;
     });
   }
-
 }

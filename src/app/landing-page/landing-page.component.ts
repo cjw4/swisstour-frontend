@@ -7,6 +7,4 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })
-export class LandingPageComponent {
-
-}
+export class LandingPageComponent {}

@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, inject, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { APP_SETTINGS, appSettings } from '../app.settings';
-import { delay, filter, finalize, map, Observable, switchMap, tap, toArray } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
 import { AsyncPipe } from '@angular/common';
@@ -15,10 +15,9 @@ import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local
   imports: [AsyncPipe, TranslateModule, LocalLoadingIndicatorComponent],
   templateUrl: './player-list.component.html',
   styleUrl: './player-list.component.css',
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class PlayerListComponent implements OnInit {
-  [x: string]: any;
   // inject services
   playersService = inject(PlayersService);
   bannerService = inject(BannerService);
@@ -36,7 +35,7 @@ export class PlayerListComponent implements OnInit {
   updateSearchTerm(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.searchTerm.set(inputElement.value);
-    this.getPlayers()
+    this.getPlayers();
   }
 
   addPlayer() {
@@ -45,17 +44,21 @@ export class PlayerListComponent implements OnInit {
 
   updatePlayers() {
     this.loading.set(true);
-    this.playersService.addPlayersFromGoogleSheet().pipe(
-      finalize(() => this.loading.set(false))
-    ).subscribe({
-      next: () => {
-        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdated'), BannerType.SUCCESS);
-        this.getPlayers();
-      },
-      error: () => {
-        this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdateError'), BannerType.ERROR);
-      }
-    });
+    this.playersService
+      .addPlayersFromGoogleSheet()
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: () => {
+          this.bannerService.updateBanner(this.translateService.instant('banners.playersUpdated'), BannerType.SUCCESS);
+          this.getPlayers();
+        },
+        error: () => {
+          this.bannerService.updateBanner(
+            this.translateService.instant('banners.playersUpdateError'),
+            BannerType.ERROR
+          );
+        }
+      });
   }
 
   editPlayer(id: number | undefined) {
@@ -95,10 +98,8 @@ export class PlayerListComponent implements OnInit {
       (player) =>
         player.firstname?.toLowerCase().includes(term) ||
         player.lastname?.toLowerCase().includes(term) ||
-        (player.sdaNumber != null &&
-          player.sdaNumber.toString().includes(term)) ||
-        (player.pdgaNumber != null &&
-          player.pdgaNumber.toString().includes(term))
+        (player.sdaNumber != null && player.sdaNumber.toString().includes(term)) ||
+        (player.pdgaNumber != null && player.pdgaNumber.toString().includes(term))
     );
   }
 

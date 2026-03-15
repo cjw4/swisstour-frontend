@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { BannerComponent } from './banner/banner.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }],
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
 })
 export class AppComponent {
   settings = inject(APP_SETTINGS);

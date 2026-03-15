@@ -1,87 +1,150 @@
-@let events = (events$ | async);
+@let events = events$ | async;
 
 <div class="md:mx-20">
-  <h1 class="flex justify-center text-3xl py-5">
-    {{ year }} {{ 'eventListPublic.title' | translate }}
-  </h1>
+  <h1 class="flex justify-center text-3xl py-5">{{ year }} {{ 'eventListPublic.title' | translate }}</h1>
 
   <app-local-loading-indicator [loading]="loading()" />
 
   @if (events !== null && events.length > 0) {
-<div class="overflow-x-auto bg-white rounded-lg shadow max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-250px)] max-w-[1200px] mx-auto">
-  <table class="min-w-full divide-y divide-gray-200 table-fixed">
-    <thead class="bg-gray-50 sticky top-0 z-20">
-      <tr>
-        <th scope="col" class="min-w-12 px-3 py-3"></th>
-        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.date' | translate }}</th>
-        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.displayName' | translate }}</th>
-        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.location' | translate }}</th>
-        <th scope="col" class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.registration' | translate }}</th>
-        <th scope="col" colspan="2" class="whitespace-nowrap px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">{{ 'eventListPublic.links' | translate }}</th>
-
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200">
-      @for (event of events; track $index) {
-      <tr>
-        <td class="min-w-13 pl-3 py-1 whitespace-nowrap  text-gray-500">
-          @switch (event.swisstourType) {
-            @case ('Pro') {
-              <img src="/assets/images/tour_logo_200.png" alt="Pro" class="h-10 w-auto shrink-0" />
-            }
-            @case ('Challenger_50') {
-              <img src="/assets/images/tour_logo_50.png" alt="Challenger" class="h-10 w-auto shrink-0" />
-            }
-            @case ('Challenger') {
-              <img src="/assets/images/tour_logo_100.png" alt="Challenger" class="h-10 w-auto shrink-0" />
-            }
-            @case ('Championship') {
-              <img src="/assets/images/tour_logo_250_c.png" alt="Championship" class="h-10 w-auto shrink-0" />
-            }
-            @case ('Finals') {
-              <img src="/assets/images/tour_logo_250_f.png" alt="Finals" class="h-10 w-auto shrink-0" />
-            }
+    <div
+      class="overflow-x-auto bg-white rounded-lg shadow max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-250px)] max-w-[1200px] mx-auto"
+    >
+      <table class="min-w-full divide-y divide-gray-200 table-fixed">
+        <thead class="bg-gray-50 sticky top-0 z-20">
+          <tr>
+            <th scope="col" class="min-w-12 px-3 py-3"></th>
+            <th
+              scope="col"
+              class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ 'eventListPublic.date' | translate }}
+            </th>
+            <th
+              scope="col"
+              class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ 'eventListPublic.displayName' | translate }}
+            </th>
+            <th
+              scope="col"
+              class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ 'eventListPublic.location' | translate }}
+            </th>
+            <th
+              scope="col"
+              class="whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ 'eventListPublic.registration' | translate }}
+            </th>
+            <th
+              scope="col"
+              colspan="2"
+              class="whitespace-nowrap px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ 'eventListPublic.links' | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          @for (event of events; track $index) {
+            <tr>
+              <td class="min-w-13 pl-3 py-1 whitespace-nowrap text-gray-500">
+                @switch (event.swisstourType) {
+                  @case ('Pro') {
+                    <img src="/assets/images/tour_logo_200.png" alt="Pro" class="h-10 w-auto shrink-0" />
+                  }
+                  @case ('Challenger_50') {
+                    <img src="/assets/images/tour_logo_50.png" alt="Challenger" class="h-10 w-auto shrink-0" />
+                  }
+                  @case ('Challenger') {
+                    <img src="/assets/images/tour_logo_100.png" alt="Challenger" class="h-10 w-auto shrink-0" />
+                  }
+                  @case ('Championship') {
+                    <img src="/assets/images/tour_logo_250_c.png" alt="Championship" class="h-10 w-auto shrink-0" />
+                  }
+                  @case ('Finals') {
+                    <img src="/assets/images/tour_logo_250_f.png" alt="Finals" class="h-10 w-auto shrink-0" />
+                  }
+                }
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-gray-500"
+                [class.bold-font]="
+                  event.swisstourType === 'Pro' ||
+                  event.swisstourType === 'Championship' ||
+                  event.swisstourType === 'Finals'
+                "
+              >
+                {{ event.startDate | dateRange: event.endDate }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-gray-500"
+                [class.bold-font]="
+                  event.swisstourType === 'Pro' ||
+                  event.swisstourType === 'Championship' ||
+                  event.swisstourType === 'Finals'
+                "
+              >
+                @if (event.eventId) {
+                  <a
+                    [href]="'https://www.pdga.com/tour/event/' + event.eventId"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ event.displayName }}</a
+                  >
+                } @else {
+                  {{ event.displayName }}
+                }
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-gray-500"
+                [class.bold-font]="
+                  event.swisstourType === 'Pro' ||
+                  event.swisstourType === 'Championship' ||
+                  event.swisstourType === 'Finals'
+                "
+              >
+                {{ event.city }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-gray-500"
+                [class.bold-font]="
+                  event.swisstourType === 'Pro' ||
+                  event.swisstourType === 'Championship' ||
+                  event.swisstourType === 'Finals'
+                "
+              >
+                {{ event.registrationStart | dateRange: undefined }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                @if (event.infoLink) {
+                  <a
+                    class="rounded-md bg-blue-600 px-3 py-[0.4em] mx-2 shadow-sm text-gray-100 hover:bg-blue-500"
+                    [href]="event.infoLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ 'eventListPublic.infoButton' | translate }}
+                  </a>
+                }
+              </td>
+              <td>
+                @if (event.registrationLink) {
+                  <a
+                    class="rounded-md bg-green-600 px-3 py-[0.4em] mx-2 shadow-sm text-gray-100 hover:bg-green-500"
+                    [href]="event.registrationLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ 'eventListPublic.registrationButton' | translate }}
+                  </a>
+                }
+              </td>
+            </tr>
           }
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-500"
-            [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
-            {{ event.startDate | dateRange:event.endDate }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-500"
-            [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
-            @if ( event.eventId ) {
-              <a [href]="'https://www.pdga.com/tour/event/' + event.eventId"
-              target="_blank"
-              rel="noopener noreferrer">{{ event.displayName }}</a>
-            } @else {
-              {{ event.displayName }}
-            }
-            </td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-500"
-            [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
-            {{ event.city }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-500"
-            [class.bold-font]="event.swisstourType === 'Pro' || event.swisstourType === 'Championship' || event.swisstourType ==='Finals'">
-            {{ event.registrationStart | dateRange:undefined }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-          @if (event.infoLink) {
-            <a class="rounded-md bg-blue-600 px-3 py-[0.4em] mx-2 shadow-sm text-gray-100 hover:bg-blue-500"
-            [href]="event.infoLink" target="_blank" rel="noopener noreferrer">{{ 'eventListPublic.infoButton' | translate }}
-            </a>
-          }
-        </td>
-        <td>
-          @if (event.registrationLink) {
-            <a class="rounded-md bg-green-600 px-3 py-[0.4em] mx-2 shadow-sm text-gray-100 hover:bg-green-500"
-            [href]="event.registrationLink" target="_blank" rel="noopener noreferrer">{{ 'eventListPublic.registrationButton' | translate }}
-            </a>
-          }
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
+        </tbody>
+      </table>
+    </div>
   } @else if (events !== null) {
-<p>{{ 'eventListPublic.noEvents' | translate }} {{ year }}</p>
+    <p>{{ 'eventListPublic.noEvents' | translate }} {{ year }}</p>
   }
 </div>

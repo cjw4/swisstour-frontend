@@ -128,6 +128,7 @@
   "banners": {
     "eventSaved": "Tournoi {{id}}: {{name}} a été enregistré avec succès",
     "eventSaveError": "Le tournoi n'a pas pu être enregistré: {{error}}",
+    "resultsSaved": "Les résultats ont été ajoutés avec succès",
     "resultsSaveError": "Erreur lors de l'ajout des résultats: {{error}}",
     "playerSaved": "Joueur {{name}} a été enregistré",
     "playerSaveError": "Le joueur n'a pas pu être enregistré: {{error}}",

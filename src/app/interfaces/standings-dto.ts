@@ -1,4 +1,4 @@
-import { EventPointsDTO } from "./event-points-dto";
+import { EventPointsDTO } from './event-points-dto';
 
 export interface StandingsDTO {
   playerId: number;

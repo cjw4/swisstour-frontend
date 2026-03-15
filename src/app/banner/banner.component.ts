@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, input, OnInit, output, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, OnInit, output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BannerInfo } from '../interfaces/banner-info';
 import { BannerService, BannerMessage } from '../services/banner.service';
@@ -8,9 +8,9 @@ import { Subscription } from 'rxjs';
   selector: 'app-banner',
   imports: [CommonModule],
   templateUrl: './banner.component.html',
-  styleUrl: './banner.component.css',
+  styleUrl: './banner.component.css'
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, OnDestroy {
   // inject service
   bannerService = inject(BannerService);
   private cdr = inject(ChangeDetectorRef);
@@ -22,20 +22,19 @@ export class BannerComponent implements OnInit {
 
   // lifecycle hooks
   ngOnInit(): void {
-    this.subscription = this.bannerService.bannerMessage$
-      .subscribe(banner => {
-        if (this.autoDismissTimeout) {
-          clearTimeout(this.autoDismissTimeout);
-          this.autoDismissTimeout = null;
-        }
-        this.currentBanner = banner;
-        if (banner) {
-          this.autoDismissTimeout = setTimeout(() => {
-            this.closeBanner();
-            this.cdr.detectChanges();
-          }, 3000);
-        }
-      });
+    this.subscription = this.bannerService.bannerMessage$.subscribe((banner) => {
+      if (this.autoDismissTimeout) {
+        clearTimeout(this.autoDismissTimeout);
+        this.autoDismissTimeout = null;
+      }
+      this.currentBanner = banner;
+      if (banner) {
+        this.autoDismissTimeout = setTimeout(() => {
+          this.closeBanner();
+          this.cdr.detectChanges();
+        }, 3000);
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -46,7 +45,7 @@ export class BannerComponent implements OnInit {
   }
 
   bannerInfo = input<BannerInfo>();
-  close = output();
+  closeBannerOutput = output();
 
   closeBanner() {
     this.bannerService.clearBanner();
