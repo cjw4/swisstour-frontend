@@ -1,0 +1,10 @@
+a {
+  color: rgb(23, 146, 195);
+  text-decoration: underline;
+}
+a:hover {
+  color: rgb(72, 192, 239);
+}
+span.blockspam {
+  display: none;
+}
