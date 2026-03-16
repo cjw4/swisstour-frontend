@@ -122,6 +122,34 @@
     "savePlayer": "Enregistrer le Joueur",
     "cancel": "Annuler"
   },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Foire aux questions",
+    "q1": {
+      "question": "Pourquoi mon nom n'apparaît-il pas dans le classement actuel ou sur la page des joueurs?",
+      "answer": {
+        "part1": "La raison la plus probable est que vous n'avez pas de licence SDA en cours. Vous pouvez renouveler votre licence ou vous inscrire en tant que nouveau joueur licencié SDA via l'outil fairgate",
+        "fairgateLink": "ici",
+        "seeInstructions": "(voir les instructions",
+        "instructionsLink": "ici",
+        "part2": "). Après l'inscription ou le renouvellement, vous devriez voir votre nom dans le classement et la liste des joueurs dans les prochains jours.",
+        "part3": "De plus amples informations sur le système de licence SDA se trouvent dans le",
+        "licenseRegLink": "Règlement des licences",
+        "part4": ". Si vous avez d'autres questions concernant les commandes de licences, veuillez contacter"
+      }
+    },
+    "q2": {
+      "question": "Comment les classements sont-ils calculés?",
+      "answer": {
+        "part1": "Des points sont attribués à chaque joueur pour les tournois auxquels il participe selon la",
+        "distributionKeyLink": "clé de répartition",
+        "part2": ". Les points des joueurs sont additionnés selon le",
+        "tournamentRegLink": "Règlement des tournois",
+        "part3": "au paragraphe",
+        "part4": "ainsi qu'au paragraphe"
+      }
+    }
+  },
   "copyright": {
     "text": "Copyright © {{year}} Tous droits réservés"
   },
