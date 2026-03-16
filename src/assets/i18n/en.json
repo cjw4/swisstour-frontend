@@ -122,6 +122,34 @@
     "savePlayer": "Save Player",
     "cancel": "Cancel"
   },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "q1": {
+      "question": "Why don't I see my name in the current standings or on the players page?",
+      "answer": {
+        "part1": "The most likely reason is that you don't have a current SDA license. You can renew your license or register yourself as a new SDA licensed player using the fairgate tool",
+        "fairgateLink": "here",
+        "seeInstructions": "(see instructions",
+        "instructionsLink": "here",
+        "part2": "). After registration or renewal you should see your name in the standings and players list within the next few days.",
+        "part3": "Further details about the SDA licensing system can be found in the",
+        "licenseRegLink": "License Regulations",
+        "part4": ". If you have further questions about license orders please contact"
+      }
+    },
+    "q2": {
+      "question": "How are the standings calculated?",
+      "answer": {
+        "part1": "Points are awarded to each player for tournaments that they play according to the",
+        "distributionKeyLink": "distribution key",
+        "part2": ". The players points are summed according to the",
+        "tournamentRegLink": "Tournament Regulations",
+        "part3": "under paragraph",
+        "part4": "as well as paragraph"
+      }
+    }
+  },
   "copyright": {
     "text": "Copyright © {{year}} All rights reserved"
   },
