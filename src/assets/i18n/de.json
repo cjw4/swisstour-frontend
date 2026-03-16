@@ -122,6 +122,34 @@
     "savePlayer": "Spieler speichern",
     "cancel": "Abbrechen"
   },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Häufig gestellte Fragen",
+    "q1": {
+      "question": "Warum sehe ich meinen Namen nicht in der aktuellen Rangliste oder auf der Spielerseite?",
+      "answer": {
+        "part1": "Der wahrscheinlichste Grund ist, dass Sie keine aktuelle SDA-Lizenz haben. Sie können Ihre Lizenz erneuern oder sich als neuen SDA-lizenzierten Spieler über das Fairgate-Tool registrieren",
+        "fairgateLink": "hier",
+        "seeInstructions": "(Anleitung",
+        "instructionsLink": "hier",
+        "part2": "). Nach der Registrierung oder Erneuerung sollten Sie Ihren Namen innerhalb der nächsten Tage in der Rangliste und Spielerliste sehen.",
+        "part3": "Weitere Details zum SDA-Lizenzsystem finden Sie im",
+        "licenseRegLink": "Lizenzreglement",
+        "part4": ". Bei weiteren Fragen zur Lizenzbestellung wenden Sie sich bitte an"
+      }
+    },
+    "q2": {
+      "question": "Wie werden die Ranglisten berechnet?",
+      "answer": {
+        "part1": "Den Spielern werden für ihre Turniere Punkte gemäss dem",
+        "distributionKeyLink": "Verteilungsschlüssel",
+        "part2": " vergeben. Die Punkte der Spieler werden gemäss dem",
+        "tournamentRegLink": "Turnierreglement",
+        "part3": "unter Abschnitt",
+        "part4": "sowie Abschnitt"
+      }
+    }
+  },
   "copyright": {
     "text": "Copyright © {{year}} Alle Rechte vorbehalten"
   },

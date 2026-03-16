@@ -1,43 +1,44 @@
 <div class="md:mx-20 md:my-5">
-  <div class="flex justify-center text-3xl m-4">FAQ</div>
-  <div class="flex justify-center text-2xl md:mb-6">Frequently Asked Questions</div>
+  <div class="flex justify-center text-3xl m-4">{{ 'faq.title' | translate }}</div>
+  <div class="flex justify-center text-2xl md:mb-6">{{ 'faq.subtitle' | translate }}</div>
   <div class="bg-gray-200 rounded-md p-3 md:w-2/3 flex flex-col mx-auto my-4">
-    <div class="font-medium w-full my-3">Why don't I see my name in the current standings or on the players page?</div>
+    <div class="font-medium w-full my-3">{{ 'faq.q1.question' | translate }}</div>
     <div class="my-2 w-full">
-      The most likely reason is that you don't have a current SDA license. You can renew your license or register
-      yourself as a new SDA licensed player using the fairgate tool
-      <a href=" https://mein.fairgate.ch/swissdiscgolf/internal/signin" target="_blank" rel="noopener noreferrer"
-        >here</a
-      >
-      (see instructions
+      {{ 'faq.q1.answer.part1' | translate }}
+      <a href=" https://mein.fairgate.ch/swissdiscgolf/internal/signin" target="_blank" rel="noopener noreferrer">{{
+        'faq.q1.answer.fairgateLink' | translate
+      }}</a>
+      {{ 'faq.q1.answer.seeInstructions' | translate }}
       <a
         href="https://mein.fairgate.ch/swissdiscgolf/public/document/download/358339"
         target="_blank"
         rel="noopener noreferrer"
-        >here</a
-      >). After registration or renewal you should see your name in the standings and players list within the next few
-      days.
+        >{{ 'faq.q1.answer.instructionsLink' | translate }}</a
+      >{{ 'faq.q1.answer.part2' | translate }}
       <br />
       <br />
-      Further details about the SDA licensing system can be found in the
-      <a href="assets/files/SDA-Lizenzreglement-2026.pdf" target="_blank" rel="noopener noreferrer"
-        >License Regulations</a
-      >. If you have further questions about license orders please contact
+      {{ 'faq.q1.answer.part3' | translate }}
+      <a href="assets/files/SDA-Lizenzreglement-2026.pdf" target="_blank" rel="noopener noreferrer">{{
+        'faq.q1.answer.licenseRegLink' | translate
+      }}</a
+      >{{ 'faq.q1.answer.part4' | translate }}
       <span class="blockspam" aria-hidden="true">PLEASE GO AWAY!</span>
       sui.lizenz&#64;<!-- sdfjsdhfkjypcs -->discgolf.ch.
     </div>
   </div>
   <div class="bg-gray-200 rounded-md p-3 md:w-2/3 flex flex-col mx-auto my-4">
-    <div class="font-medium w-full my-3">How are the standings calculated?</div>
+    <div class="font-medium w-full my-3">{{ 'faq.q2.question' | translate }}</div>
     <div class="my-2 w-full">
-      Points are awarded to each player for tournaments that they play according to the
-      <a href="assets/files/ST_Points_2025.pdf" target="_blank" rel="noopener noreferrer">distribution key</a>. The
-      players points are summed according to the
-      <a href="assets/files/SDA-Turnierreglement-2026.pdf" target="_blank" rel="noopener noreferrer"
-        >Tournament Regulations</a
-      >
-      under paragraph <strong>6 Swisstour-Wertung</strong> as well as paragraph
-      <strong>C Swisstour-Wertung und Punktesystem </strong>.
+      {{ 'faq.q2.answer.part1' | translate }}
+      <a href="assets/files/ST_Points_2025.pdf" target="_blank" rel="noopener noreferrer">{{
+        'faq.q2.answer.distributionKeyLink' | translate
+      }}</a
+      >{{ 'faq.q2.answer.part2' | translate }}
+      <a href="assets/files/SDA-Turnierreglement-2026.pdf" target="_blank" rel="noopener noreferrer">{{
+        'faq.q2.answer.tournamentRegLink' | translate
+      }}</a>
+      {{ 'faq.q2.answer.part3' | translate }} <strong>6 Swisstour-Wertung</strong>
+      {{ 'faq.q2.answer.part4' | translate }} <strong>C Swisstour-Wertung und Punktesystem</strong>.
     </div>
   </div>
 </div>
