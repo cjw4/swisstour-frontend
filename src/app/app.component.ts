@@ -27,4 +27,5 @@ import { TranslateModule } from '@ngx-translate/core';
 export class AppComponent {
   settings = inject(APP_SETTINGS);
   authService = inject(AuthService);
+  title = 'Swisstour';
 }
