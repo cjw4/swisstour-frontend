@@ -26,6 +26,19 @@ export class EventListPublicComponent implements OnInit {
   appSettings = inject(APP_SETTINGS);
   year: number = this.appSettings.eventYear;
   loading = signal(false);
+  today = new Date().toISOString().split('T')[0];
+  weekStart = (() => {
+    const d = new Date();
+    const day = d.getDay();
+    d.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
+    return d.toISOString().split('T')[0];
+  })();
+  weekEnd = (() => {
+    const d = new Date();
+    const day = d.getDay();
+    d.setDate(d.getDate() + (day === 0 ? 0 : 7 - day));
+    return d.toISOString().split('T')[0];
+  })();
 
   ngOnInit(): void {
     const yearParam = Number(this.activatedRoute.snapshot.paramMap.get('year'));
