@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, AfterViewInit } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PlayerDto } from '../api/models/player-dto';
 import { PlayersService } from '../api/services/players.service';
@@ -7,10 +7,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '../services/loading.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
+import { LocalLoadingIndicatorComponent } from '../local-loading-indicator/local-loading-indicator.component';
 
 @Component({
   selector: 'app-player-input',
-  imports: [ReactiveFormsModule, TranslateModule],
+  imports: [ReactiveFormsModule, TranslateModule, LocalLoadingIndicatorComponent],
   templateUrl: './player-input.component.html',
   styleUrl: './player-input.component.css'
 })
@@ -26,6 +28,7 @@ export class PlayerInputComponent implements OnInit, AfterViewInit {
   // variables
   playerId: number | null = null;
   editMode = false;
+  isLoaded = signal<boolean>(false);
 
   // lifecycle hooks
   ngOnInit(): void {
@@ -39,23 +42,26 @@ export class PlayerInputComponent implements OnInit, AfterViewInit {
       // patch the form with existing player data if we are editing
       if (this.playerId) {
         this.editMode = true;
-        this.playersService.getPlayer({ id: this.playerId }).subscribe((player) => {
-          this.playerForm.patchValue({
-            pdgaNumber: player.pdgaNumber?.toString(),
-            firstname: player.firstname,
-            lastname: player.lastname,
-            swisstourLicense: player.swisstourLicense,
-            sdaNumber: player.sdaNumber?.toString()
+        this.playersService
+          .getPlayer({ id: this.playerId })
+          .pipe(finalize(() => this.isLoaded.set(true)))
+          .subscribe((player) => {
+            this.playerForm.patchValue({
+              pdgaNumber: player.pdgaNumber?.toString(),
+              firstname: player.firstname,
+              lastname: player.lastname,
+              swisstourLicense: player.swisstourLicense,
+              sdaNumber: player.sdaNumber?.toString()
+            });
           });
-        });
+      } else {
+        this.isLoaded.set(true);
       }
     });
   }
 
   ngAfterViewInit(): void {
     this.playerForm.get('pdgaNumber')?.valueChanges.subscribe((value) => {
-      //const firstnameControl = this.playerForm.get('firstname');
-      //const lastnameControl = this.playerForm.get('lastname');
       if (value) {
         this.playerForm.patchValue({
           firstname: '',
