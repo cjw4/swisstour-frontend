@@ -34,7 +34,8 @@
     "license": "License",
     "total": "Total",
     "dnf": "DNF",
-    "noStandings": "The standings will be available for {{category}} after the first event has been played."
+    "noStandings": "The standings will be available for {{category}} after the first event has been played.",
+    "archivedNotImplemented": "The archived standings calculation for this year is not yet implemented."
   },
   "admin": {
     "title": "Admin Login",
@@ -88,6 +89,7 @@
     "championship": "Championship",
     "date": "Date",
     "addResults": "Add Results",
+    "removeResults": "Remove Results",
     "loading": "Loading...",
     "deleteConfirm": "Are you sure you want to delete pdga event"
   },
@@ -157,6 +159,7 @@
     "eventSaved": "Event {{id}}: {{name}} was successfully saved",
     "eventSaveError": "Event could not be saved: {{error}}",
     "resultsSaved": "Results were successfully added",
+    "resultsRemoved": "Event results were successfully removed",
     "resultsSaveError": "There was an error adding the results: {{error}}",
     "playerSaved": "Player {{name}} was saved",
     "playerSaveError": "Player could not be saved: {{error}}",
