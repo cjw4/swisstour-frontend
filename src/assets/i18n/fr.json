@@ -34,7 +34,8 @@
     "license": "Licence",
     "total": "Total",
     "dnf": "DNF",
-    "noStandings": "Le classement pour {{category}} sera disponible après le premier tournoi."
+    "noStandings": "Le classement pour {{category}} sera disponible après le premier tournoi.",
+    "archivedNotImplemented": "Le calcul du classement archivé pour cette année n'est pas encore implémenté."
   },
   "admin": {
     "title": "Connexion administrateur",
@@ -88,6 +89,7 @@
     "championship": "Championnat",
     "date": "Date",
     "addResults": "Ajouter des Résultats",
+    "removeResults": "Supprimer les Résultats",
     "loading": "Chargement...",
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer le tournoi pdga"
   },
@@ -157,6 +159,7 @@
     "eventSaved": "Tournoi {{id}}: {{name}} a été enregistré avec succès",
     "eventSaveError": "Le tournoi n'a pas pu être enregistré: {{error}}",
     "resultsSaved": "Les résultats ont été ajoutés avec succès",
+    "resultsRemoved": "Les résultats du tournoi ont été supprimés avec succès",
     "resultsSaveError": "Erreur lors de l'ajout des résultats: {{error}}",
     "playerSaved": "Joueur {{name}} a été enregistré",
     "playerSaveError": "Le joueur n'a pas pu être enregistré: {{error}}",

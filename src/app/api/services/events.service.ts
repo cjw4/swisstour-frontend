@@ -14,6 +14,8 @@ import { createEvent } from '../fn/events/create-event';
 import { CreateEvent$Params } from '../fn/events/create-event';
 import { deleteEvent } from '../fn/events/delete-event';
 import { DeleteEvent$Params } from '../fn/events/delete-event';
+import { deleteEventResults } from '../fn/events/delete-event-results';
+import { DeleteEventResults$Params } from '../fn/events/delete-event-results';
 import { EventDto } from '../models/event-dto';
 import { getEvent } from '../fn/events/get-event';
 import { GetEvent$Params } from '../fn/events/get-event';
@@ -189,6 +191,33 @@ export class EventsService extends BaseService {
     const resp = this.getEventResults$Response(params, context);
     return resp.pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
+    );
+  }
+
+  /** Path part for operation `deleteEventResults()` */
+  static readonly DeleteEventResultsPath = '/api/events/results/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteEventResults()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteEventResults$Response(params: DeleteEventResults$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    const obs = deleteEventResults(this.http, this.rootUrl, params, context);
+    return obs;
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `deleteEventResults$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteEventResults(params: DeleteEventResults$Params, context?: HttpContext): Observable<void> {
+    const resp = this.deleteEventResults$Response(params, context);
+    return resp.pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

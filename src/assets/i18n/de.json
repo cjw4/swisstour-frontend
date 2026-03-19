@@ -34,7 +34,8 @@
     "license": "Lizenz",
     "total": "Gesamt",
     "dnf": "DNF",
-    "noStandings": "Die Rangliste für {{category}} wird nach dem ersten Turnier verfügbar sein."
+    "noStandings": "Die Rangliste für {{category}} wird nach dem ersten Turnier verfügbar sein.",
+    "archivedNotImplemented": "Die Berechnung der archivierten Rangliste für dieses Jahr ist noch nicht implementiert."
   },
   "admin": {
     "title": "Admin Anmeldung",
@@ -88,6 +89,7 @@
     "championship": "Meisterschaft",
     "date": "Datum",
     "addResults": "Ergebnisse hinzufügen",
+    "removeResults": "Ergebnisse entfernen",
     "loading": "Wird geladen...",
     "deleteConfirm": "Möchten Sie das PDGA-Turnier wirklich löschen"
   },
@@ -157,6 +159,7 @@
     "eventSaved": "Turnier {{id}}: {{name}} wurde erfolgreich gespeichert",
     "eventSaveError": "Turnier konnte nicht gespeichert werden: {{error}}",
     "resultsSaved": "Ergebnisse wurden erfolgreich hinzugefügt",
+    "resultsRemoved": "Turnierergebnisse wurden erfolgreich entfernt",
     "resultsSaveError": "Fehler beim Hinzufügen der Ergebnisse: {{error}}",
     "playerSaved": "Spieler {{name}} wurde gespeichert",
     "playerSaveError": "Spieler konnte nicht gespeichert werden: {{error}}",

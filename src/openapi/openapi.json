@@ -7,10 +7,7 @@
   },
   "servers": [
     { "url": "http://localhost:8080", "description": "Local ENV" },
-    {
-      "url": "https://swiss-dg-db.onrender.com",
-      "description": "Production ENV"
-    }
+    { "url": "https://swiss-dg-db.onrender.com", "description": "Production ENV" }
   ],
   "paths": {
     "/api/tournaments/{id}": {
@@ -18,21 +15,12 @@
         "tags": ["tournament-resource"],
         "operationId": "getTournament",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/TournamentDTO" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TournamentDTO" } } }
           }
         }
       },
@@ -40,29 +28,16 @@
         "tags": ["tournament-resource"],
         "operationId": "updateTournament",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/TournamentDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TournamentDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "type": "integer", "format": "int64" }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "integer", "format": "int64" } } }
           }
         }
       },
@@ -70,12 +45,7 @@
         "tags": ["tournament-resource"],
         "operationId": "deleteTournament",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": { "200": { "description": "OK" } }
       }
@@ -86,21 +56,12 @@
         "description": "Get player by id",
         "operationId": "getPlayer",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/PlayerDTO" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PlayerDTO" } } }
           }
         }
       },
@@ -108,29 +69,16 @@
         "tags": ["Players"],
         "operationId": "updatePlayer",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/PlayerDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PlayerDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "type": "integer", "format": "int64" }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "integer", "format": "int64" } } }
           }
         }
       },
@@ -138,12 +86,7 @@
         "tags": ["Players"],
         "operationId": "deletePlayer",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": { "200": { "description": "OK" } }
       }
@@ -153,21 +96,12 @@
         "tags": ["Events"],
         "operationId": "getEvent",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/EventDTO" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EventDTO" } } }
           }
         }
       },
@@ -175,29 +109,16 @@
         "tags": ["Events"],
         "operationId": "updateEvent",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/EventDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EventDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/EventDTO" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EventDTO" } } }
           }
         }
       },
@@ -205,12 +126,7 @@
         "tags": ["Events"],
         "operationId": "deleteEvent",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": { "200": { "description": "OK" } }
       }
@@ -220,19 +136,10 @@
         "tags": ["Log In"],
         "operationId": "login",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CustomUser" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CustomUser" } } },
           "required": true
         },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": { "*/*": { "schema": { "type": "object" } } }
-          }
-        }
+        "responses": { "200": { "description": "OK", "content": { "*/*": { "schema": { "type": "object" } } } } }
       }
     },
     "/create-user": {
@@ -240,19 +147,10 @@
         "tags": ["Create User"],
         "operationId": "createUser",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CustomUser" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CustomUser" } } },
           "required": true
         },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": { "*/*": { "schema": { "type": "string" } } }
-          }
-        }
+        "responses": { "200": { "description": "OK", "content": { "*/*": { "schema": { "type": "string" } } } } }
       }
     },
     "/api/tournaments": {
@@ -264,10 +162,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/TournamentDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/TournamentDTO" } }
               }
             }
           }
@@ -277,21 +172,13 @@
         "tags": ["tournament-resource"],
         "operationId": "createTournament",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/TournamentDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TournamentDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "type": "integer", "format": "int64" }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "integer", "format": "int64" } } }
           }
         }
       }
@@ -305,10 +192,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/PlayerDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/PlayerDTO" } }
               }
             }
           }
@@ -319,21 +203,13 @@
         "tags": ["Players"],
         "operationId": "createPlayer",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/PlayerDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PlayerDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "type": "integer", "format": "int64" }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "integer", "format": "int64" } } }
           }
         }
       }
@@ -347,10 +223,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/PlayerDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/PlayerDTO" } }
               }
             }
           }
@@ -362,28 +235,15 @@
         "tags": ["Events"],
         "operationId": "getEvents",
         "parameters": [
-          {
-            "name": "year",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32" }
-          },
-          {
-            "name": "division",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" }
-          }
+          { "name": "year", "in": "query", "required": false, "schema": { "type": "integer", "format": "int32" } },
+          { "name": "division", "in": "query", "required": false, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/EventDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/EventDTO" } }
               }
             }
           }
@@ -394,21 +254,13 @@
         "tags": ["Events"],
         "operationId": "createEvent",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/EventDTO" }
-            }
-          },
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EventDTO" } } },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/EventDTO" }
-              }
-            }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EventDTO" } } }
           }
         },
         "security": [{ "bearerAuth": [] }]
@@ -419,23 +271,23 @@
         "tags": ["Events"],
         "operationId": "getEventResults",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { "type": "integer", "format": "int64" }
-              }
-            }
+            "content": { "application/json": { "schema": { "type": "integer", "format": "int64" } } }
           }
         }
+      },
+      "delete": {
+        "tags": ["Events"],
+        "operationId": "deleteEventResults",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
+        ],
+        "responses": { "200": { "description": "OK" } },
+        "security": [{ "bearerAuth": [] }]
       }
     },
     "/api/standings/{year}/{division}": {
@@ -443,28 +295,15 @@
         "tags": ["Standings"],
         "operationId": "getStandings",
         "parameters": [
-          {
-            "name": "division",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "year",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int32" }
-          }
+          { "name": "division", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "year", "in": "path", "required": true, "schema": { "type": "integer", "format": "int32" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/StandingDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/StandingDTO" } }
               }
             }
           }
@@ -476,22 +315,14 @@
         "tags": ["Players"],
         "operationId": "getPlayerEvents",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer", "format": "int64" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/PlayerEventsDTO" }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/PlayerEventsDTO" } }
               }
             }
           }
@@ -502,12 +333,7 @@
       "get": {
         "tags": ["home-resource"],
         "operationId": "index",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": { "*/*": { "schema": { "type": "string" } } }
-          }
-        }
+        "responses": { "200": { "description": "OK", "content": { "*/*": { "schema": { "type": "string" } } } } }
       }
     }
   },
@@ -556,17 +382,9 @@
           "points": { "type": "integer", "format": "int32" },
           "purse": { "type": "number", "format": "double" },
           "infoLink": { "type": "string", "maxLength": 500, "minLength": 0 },
-          "registrationLink": {
-            "type": "string",
-            "maxLength": 500,
-            "minLength": 0
-          },
+          "registrationLink": { "type": "string", "maxLength": 500, "minLength": 0 },
           "registrationStart": { "type": "string", "format": "date" },
-          "swisstourType": {
-            "type": "string",
-            "maxLength": 50,
-            "minLength": 0
-          },
+          "swisstourType": { "type": "string", "maxLength": 50, "minLength": 0 },
           "startDate": { "type": "string", "format": "date" },
           "endDate": { "type": "string", "format": "date" },
           "isChampionship": { "type": "boolean" },
@@ -577,16 +395,15 @@
       },
       "CustomUser": {
         "type": "object",
-        "properties": {
-          "username": { "type": "string" },
-          "password": { "type": "string" }
-        }
+        "properties": { "username": { "type": "string" }, "password": { "type": "string" } }
       },
       "EventPointsDTO": {
         "type": "object",
         "properties": {
           "eventId": { "type": "integer", "format": "int64" },
           "points": { "type": "number", "format": "double" },
+          "eventPoints": { "type": "integer", "format": "int32" },
+          "championship": { "type": "boolean" },
           "included": { "type": "boolean" }
         }
       },
@@ -594,10 +411,7 @@
         "type": "object",
         "properties": {
           "playerId": { "type": "integer", "format": "int64" },
-          "eventPoints": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/EventPointsDTO" }
-          },
+          "eventPoints": { "type": "array", "items": { "$ref": "#/components/schemas/EventPointsDTO" } },
           "totalPoints": { "type": "number", "format": "double" },
           "rank": { "type": "integer", "format": "int32" }
         }
@@ -631,10 +445,7 @@
           "tournamentPrize": { "type": "number", "format": "double" },
           "tournamentScore": { "type": "integer", "format": "int32" },
           "tournamentPoints": { "type": "number", "format": "double" },
-          "rounds": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/RoundDTOsmall" }
-          }
+          "rounds": { "type": "array", "items": { "$ref": "#/components/schemas/RoundDTOsmall" } }
         }
       },
       "RoundDTOsmall": {
