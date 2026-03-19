@@ -37,6 +37,8 @@ export type { CreateEvent$Params as CreateEvent$Params } from './fn/events/creat
 export { createEvent as createEvent } from './fn/events/create-event';
 export type { GetEventResults$Params as GetEventResults$Params } from './fn/events/get-event-results';
 export { getEventResults as getEventResults } from './fn/events/get-event-results';
+export type { DeleteEventResults$Params as DeleteEventResults$Params } from './fn/events/delete-event-results';
+export { deleteEventResults as deleteEventResults } from './fn/events/delete-event-results';
 export type { Login$Params as Login$Params } from './fn/log-in/login';
 export { login as login } from './fn/log-in/login';
 export type { CreateUser$Params as CreateUser$Params } from './fn/create-user/create-user';

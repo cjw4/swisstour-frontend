@@ -99,6 +99,24 @@ export class EventListComponent implements OnInit {
       });
   }
 
+  public removeResults(id: number) {
+    this.loadingService.loadingOn();
+    this.eventService
+      .deleteEventResults({ id })
+      .pipe(finalize(() => this.loadingService.loadingOff()))
+      .subscribe({
+        next: () => {
+          const message = this.translateService.instant('banners.resultsRemoved');
+          this.bannerService.updateBanner(message, BannerType.SUCCESS);
+          this.events$ = this.eventService.getEvents({ year: this.year()! });
+        },
+        error: (err) => {
+          const message = this.translateService.instant('banners.resultsSaveError', { error: err });
+          this.bannerService.updateBanner(message, BannerType.ERROR);
+        }
+      });
+  }
+
   public deleteEvent(event: EventDto) {
     const confirmMessage = `${this.translateService.instant('eventList.deleteConfirm')} ${event.id}?`;
     if (confirm(confirmMessage)) {
