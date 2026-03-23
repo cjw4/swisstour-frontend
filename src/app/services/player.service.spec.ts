@@ -5,8 +5,19 @@ import { PlayerService } from './player.service';
 describe('PlayerService', () => {
   let service: PlayerService;
 
+  const playerServiceMock = {
+    getPlayerEvents: jasmine.createSpy('getPlayerEvents')
+  };
+
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: PlayerService,
+          useValue: playerServiceMock
+        }
+      ]
+    });
     service = TestBed.inject(PlayerService);
   });
 
