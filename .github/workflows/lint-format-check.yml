@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Check formatting
-        run: npx prettier --check .
+        run: npm run prettier:check
 
       - name: Lint
-        run: ng lint
+        run: npm run lint
