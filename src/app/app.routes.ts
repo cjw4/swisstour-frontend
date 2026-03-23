@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
-import { StandingsComponent } from './standings/standings.component';
-import { PlayerInputComponent } from './player-input/player-input.component';
-import { PlayerListComponent } from './player-list/player-list.component';
-import { EventListComponent } from './event-list/event-list.component';
-import { EventInputComponent } from './event-input/event-input.component';
-import { PlayerDetailsComponent } from './player-details/player-details.component';
-import { LoginComponent } from './login/login.component';
-import { authGuard } from './guards/auth.guard';
+import { StandingsComponent } from './features/standings/standings/standings.component';
+import { PlayerInputComponent } from './features/players/player-input/player-input.component';
+import { PlayerListComponent } from './features/players/player-list/player-list.component';
+import { EventListComponent } from './features/events/event-list/event-list.component';
+import { EventInputComponent } from './features/events/event-input/event-input.component';
+import { PlayerDetailsComponent } from './features/players/player-details/player-details.component';
+import { LoginComponent } from './core/auth/login/login.component';
+import { authGuard } from './core/auth/auth.guard';
 import { appSettings } from './app.settings';
-import { PlayerDetailsResolver } from './player-details/player-details.resolver';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { FaqComponent } from './faq/faq.component';
-import { EventListPublicComponent } from './event-list-public/event-list-public.component';
+import { PlayerDetailsResolver } from './features/players/player-details/player-details.resolver';
+import { FeedbackComponent } from './features/static/feedback/feedback.component';
+import { FaqComponent } from './features/static/faq/faq.component';
+import { EventListPublicComponent } from './features/events/event-list-public/event-list-public.component';
 
 export const routes: Routes = [
   {
