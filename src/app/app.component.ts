@@ -3,7 +3,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { BannerComponent } from './banner/banner.component';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { CopyrightDirective } from './directives/copyright.directive';
-import { APP_SETTINGS, appSettings } from './app.settings';
+import { APP_SETTINGS } from './app.settings';
 import { AuthService } from './services/auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,8 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   settings = inject(APP_SETTINGS);
