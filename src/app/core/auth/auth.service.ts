@@ -1,0 +1,91 @@
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { LoginCredentials } from './login/login-credentials';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private http = inject(HttpClient);
+  private loginUrl = environment.baseUrl + '/login';
+
+  accessToken = signal(this.getValidStoredToken());
+  adminLoggedIn = computed(() => this.accessToken() !== '');
+
+  // Method to get and validate stored token
+  private getValidStoredToken(): string {
+    const storedToken = localStorage.getItem('authToken');
+    const storedTokenExpiry = localStorage.getItem('authTokenExpiry');
+
+    if (storedToken && storedTokenExpiry) {
+      const expiryTime = parseInt(storedTokenExpiry, 10);
+
+      // Check if token is still valid
+      if (Date.now() < expiryTime) {
+        return storedToken;
+      }
+    }
+
+    // Remove expired token
+    this.clearStoredToken();
+    return '';
+  }
+
+  login(formValue: LoginCredentials): Observable<string> {
+    return this.http.post(this.loginUrl, formValue, { responseType: 'text' }).pipe(
+      tap({
+        next: (token) => {
+          // Set token with expiration (24 hrs from now)
+          const expiryTime = Date.now() + 84600000; // 24 hrs in milliseconds
+
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('authTokenExpiry', expiryTime.toString());
+
+          this.accessToken.set(token);
+
+          // Set up automatic token expiration
+          this.scheduleTokenExpiration();
+        },
+        error: () => {
+          this.clearStoredToken();
+          this.accessToken.set('');
+        }
+      })
+    );
+  }
+
+  // Schedule automatic token expiration
+  private scheduleTokenExpiration() {
+    // Clear any existing timeout
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+
+    // Set a new timeout
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.clearStoredToken();
+      this.accessToken.set('');
+    }, 84600000); // 1 day
+  }
+
+  // Clear stored token
+  private clearStoredToken() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('authTokenExpiry');
+  }
+
+  logout() {
+    this.clearStoredToken();
+    this.accessToken.set('');
+
+    // Clear the expiration timer
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+  }
+
+  // Property to store timeout reference
+  private tokenExpirationTimer: ReturnType<typeof setTimeout> | null = null;
+}

@@ -1,0 +1,112 @@
+import { Component, inject, Signal, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { APP_SETTINGS, appSettings } from '../../../app.settings';
+import { EventDto } from '../../../api/models/event-dto';
+import { EventsService } from '../../../api/services/events.service';
+import { finalize, map, Observable, tap } from 'rxjs';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { StandingDto } from '../../../api/models/standing-dto';
+import { PlayersService } from '../../../api/services/players.service';
+import { PlayerDto } from '../../../api/models/player-dto';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StandingsService } from '../../../api/services/standings.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocalLoadingIndicatorComponent } from '../../../shared/components/local-loading-indicator/local-loading-indicator.component';
+
+@Component({
+  selector: 'app-standings',
+  imports: [AsyncPipe, CommonModule, TranslateModule, LocalLoadingIndicatorComponent],
+  templateUrl: './standings.component.html',
+  styleUrl: './standings.component.css',
+  providers: [{ provide: APP_SETTINGS, useValue: appSettings }]
+})
+export class StandingsComponent {
+  // inject dependencies
+  private activatedRoute = inject(ActivatedRoute);
+  private playersService = inject(PlayersService);
+  private eventsService = inject(EventsService);
+  private standingsService = inject(StandingsService);
+  router = inject(Router);
+
+  // define variables
+  events$: Observable<EventDto[]> | undefined;
+  players$: Observable<PlayerDto[]> | undefined;
+  standings$: Observable<StandingDto[]> | undefined;
+  category: string | null = '';
+  year: number | undefined;
+  playersSignal: Signal<PlayerDto[]>;
+  appSettings = appSettings;
+  loading = signal(false);
+  private loadingCount = 0;
+
+  constructor() {
+    this.activatedRoute.paramMap
+      .pipe(
+        map((params) => ({
+          category: params.get('category'),
+          year: params.get('year')
+        })),
+        tap(({ category, year }) => {
+          this.category = category;
+          this.year = Number(year);
+        }),
+        tap(() => {
+          this.getStandings();
+          this.getEvents();
+        })
+      )
+      .subscribe();
+    // assign the observable of all players to a signal
+    this.playersSignal = toSignal(this.playersService.getAllPlayers(), { initialValue: [] });
+  }
+
+  private localLoadingOn() {
+    this.loadingCount++;
+    this.loading.set(true);
+  }
+
+  private localLoadingOff() {
+    if (--this.loadingCount === 0) this.loading.set(false);
+  }
+
+  public getStandings() {
+    this.localLoadingOn();
+    this.standings$ = this.standingsService
+      .getStandings({ year: this.year!, division: this.category! })
+      .pipe(finalize(() => this.localLoadingOff()));
+  }
+
+  public getEvents() {
+    this.localLoadingOn();
+    this.events$ = this.eventsService.getEvents({ year: this.year!, division: this.category! }).pipe(
+      map((events) => events.filter((event) => event.isSwisstour)),
+      map((events) => events.filter((event) => event.hasResults)),
+      map((events) => events.sort((a, b) => new Date(a.startDate!).getTime() - new Date(b.startDate!).getTime())),
+      finalize(() => this.localLoadingOff())
+    );
+  }
+
+  public getPlayers() {
+    this.players$ = this.playersService.getAllPlayers();
+  }
+
+  findPlayer(playerId: number) {
+    const players = this.playersSignal();
+    const player = players.find((p: PlayerDto) => p.id === playerId);
+    return player;
+  }
+
+  hasEventId(standing: StandingDto, eventIdToFind: number): boolean {
+    return standing.eventPoints?.some((event) => event.eventId === eventIdToFind) ?? false;
+  }
+
+  getEventPoints(standing: StandingDto, eventIdToFind: number): number {
+    const foundEvent = standing.eventPoints?.find((event) => event.eventId === eventIdToFind);
+    return foundEvent?.points ?? 0;
+  }
+
+  isEventIncluded(standing: StandingDto, eventIdToFind: number): boolean {
+    const foundEvent = standing.eventPoints?.find((event) => event.eventId == eventIdToFind);
+    return foundEvent?.included ?? false;
+  }
+}

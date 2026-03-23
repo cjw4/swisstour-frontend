@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { BannerComponent } from './banner/banner.component';
-import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
-import { CopyrightDirective } from './directives/copyright.directive';
+import { BannerComponent } from './shared/components/banner/banner.component';
+import { LoadingIndicatorComponent } from './shared/components/loading-indicator/loading-indicator.component';
+import { CopyrightDirective } from './shared/directives/copyright.directive';
 import { APP_SETTINGS } from './app.settings';
-import { AuthService } from './services/auth.service';
-import { NavbarComponent } from './navbar/navbar.component';
+import { AuthService } from './core/auth/auth.service';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
