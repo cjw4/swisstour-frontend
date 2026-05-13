@@ -77,7 +77,8 @@
     "links": "Links",
     "noEvents": "No events listed for",
     "infoButton": "Info",
-    "registrationButton": "Registration"
+    "registrationButton": "Registration",
+    "resultsButton": "Results"
   },
   "eventList": {
     "addEvent": "Add Event",
