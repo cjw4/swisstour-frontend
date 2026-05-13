@@ -77,7 +77,8 @@
     "links": "Links",
     "noEvents": "Keine Turniere geplant für",
     "infoButton": "Info",
-    "registrationButton": "Anmeldung"
+    "registrationButton": "Anmeldung",
+    "resultsButton": "Resultaten"
   },
   "eventList": {
     "addEvent": "Turnier hinzufügen",
