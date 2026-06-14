@@ -12,6 +12,7 @@ import { PlayerDetailsResolver } from './features/players/player-details/player-
 import { FeedbackComponent } from './features/static/feedback/feedback.component';
 import { FaqComponent } from './features/static/faq/faq.component';
 import { EventListPublicComponent } from './features/events/event-list-public/event-list-public.component';
+import { LeadersComponent } from './features/standings/leaders/leaders.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +67,10 @@ export const routes: Routes = [
   {
     path: 'standings/:year/:category',
     component: StandingsComponent
+  },
+  {
+    path: 'leaders/:year',
+    component: LeadersComponent
   },
   {
     path: 'admin/login',

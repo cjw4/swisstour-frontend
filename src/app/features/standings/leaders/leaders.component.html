@@ -1,0 +1,9 @@
+<div class="md:mx-15 mb-5">
+  <h1 class="flex justify-center text-3xl py-5">{{ year }} Leaderboards</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    @for (category of categories; track category) {
+      <app-leaderboard [category]="category" />
+    }
+  </div>
+</div>

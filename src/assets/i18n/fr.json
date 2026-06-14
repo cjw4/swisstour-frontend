@@ -18,15 +18,6 @@
     "faq": "FAQ",
     "feedback": "Feedback"
   },
-  "divisions": {
-    "MPO": "MPO",
-    "FPO": "FPO",
-    "MP40": "MP40",
-    "FP40": "FP40",
-    "MP50": "MP50",
-    "MP60": "MP60",
-    "MJ18": "MJ18"
-  },
   "standings": {
     "title": "Classement",
     "place": "Place",
@@ -36,6 +27,9 @@
     "dnf": "DNF",
     "noStandings": "Le classement pour {{category}} sera disponible après le premier tournoi.",
     "archivedNotImplemented": "Le calcul du classement archivé pour cette année n'est pas encore implémenté."
+  },
+  "leaderboard": {
+    "viewFullStandings": "Voir le classement complet"
   },
   "admin": {
     "title": "Connexion administrateur",

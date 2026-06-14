@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { LanguageService, Language } from '../../../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { CATEGORIES } from '../../constants/categories.constant';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +19,7 @@ export class NavbarComponent {
   isLanguageOpen = false;
   authService = inject(AuthService);
   languageService = inject(LanguageService);
+  categories = CATEGORIES;
 
   toggleStandings() {
     this.isStandingsOpen = !this.isStandingsOpen;
