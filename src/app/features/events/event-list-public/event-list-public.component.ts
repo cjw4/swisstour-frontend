@@ -7,38 +7,23 @@ import { EventDto } from '../../../api/models';
 import { AsyncPipe } from '@angular/common';
 import { APP_SETTINGS } from '../../../app.settings';
 import { TranslateModule } from '@ngx-translate/core';
-import { DateRangePipe } from '../../../shared/pipes/date-range.pipe';
 import { LocalLoadingIndicatorComponent } from '../../../shared/components/local-loading-indicator/local-loading-indicator.component';
+import { EventCardComponent } from '../event-card/event-card.component';
 
 @Component({
   selector: 'app-event-list-public',
-  imports: [AsyncPipe, TranslateModule, DateRangePipe, LocalLoadingIndicatorComponent],
+  imports: [AsyncPipe, TranslateModule, LocalLoadingIndicatorComponent, EventCardComponent],
   templateUrl: './event-list-public.component.html',
   styleUrl: './event-list-public.component.css'
 })
 export class EventListPublicComponent implements OnInit {
-  // inject services
   private eventService = inject(EventsService);
   private activatedRoute = inject(ActivatedRoute);
 
-  // variables
   events$: Observable<EventDto[]> | undefined;
   appSettings = inject(APP_SETTINGS);
   year: number = this.appSettings.eventYear;
   loading = signal(false);
-  today = new Date().toISOString().split('T')[0];
-  weekStart = (() => {
-    const d = new Date();
-    const day = d.getDay();
-    d.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
-    return d.toISOString().split('T')[0];
-  })();
-  weekEnd = (() => {
-    const d = new Date();
-    const day = d.getDay();
-    d.setDate(d.getDate() + (day === 0 ? 0 : 7 - day));
-    return d.toISOString().split('T')[0];
-  })();
 
   ngOnInit(): void {
     const yearParam = Number(this.activatedRoute.snapshot.paramMap.get('year'));
