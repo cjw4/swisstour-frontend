@@ -6,7 +6,7 @@
   <app-local-loading-indicator [loading]="loading()" />
 
   @if (events !== null && events.length > 0) {
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-6">
       @for (event of events; track event.id) {
         <app-event-card [eventDto]="event" />
       }

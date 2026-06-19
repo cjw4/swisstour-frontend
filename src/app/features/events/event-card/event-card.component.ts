@@ -61,15 +61,28 @@ export class EventCardComponent {
     return !!start && start >= this.weekStart && start <= this.weekEnd;
   });
 
-  cardClasses = computed(() => ({
-    'bg-gray-100 opacity-60': this.isPast(),
-    'bg-green-50': !this.isPast() && this.isThisWeek(),
-    'bg-gradient-to-r from-amber-50 to-white border-l-4 border-amber-500':
-      !this.isPast() && !this.isThisWeek() && this.isHighlighted(),
-    'bg-white': !this.isPast() && !this.isThisWeek() && !this.isHighlighted()
-  }));
+  hasExpandableContent = computed(() => {
+    const e = this.eventDto();
+    if (this.isPast()) return !!e.eventId;
+    return !!(e.registrationStart || e.infoLink || e.registrationLink || e.hasResults || e.eventId);
+  });
+
+  cardClasses = computed(() => {
+    const past = this.isPast();
+    const thisWeek = this.isThisWeek();
+    const highlighted = this.isHighlighted();
+    return {
+      'bg-gray-300 opacity-75': past,
+      'bg-green-50': !past && thisWeek,
+      'bg-gradient-to-r from-amber-50 to-white': !past && !thisWeek && highlighted,
+      'bg-white': !past && !thisWeek && !highlighted,
+      'border-l-4 border-amber-500': highlighted
+    };
+  });
 
   toggle(): void {
-    this.isExpanded.update((v) => !v);
+    if (this.hasExpandableContent()) {
+      this.isExpanded.update((v) => !v);
+    }
   }
 }

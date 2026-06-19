@@ -72,7 +72,9 @@
     "noEvents": "No events listed for",
     "infoButton": "Info",
     "registrationButton": "Registration",
-    "resultsButton": "Results"
+    "resultsButton": "Results",
+    "viewOnPdga": "View on PDGA →",
+    "viewResultsOnPdga": "View results on PDGA →"
   },
   "eventList": {
     "addEvent": "Add Event",
