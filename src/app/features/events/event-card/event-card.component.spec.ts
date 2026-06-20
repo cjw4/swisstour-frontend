@@ -13,6 +13,7 @@ describe('EventCardComponent', () => {
 
     fixture = TestBed.createComponent(EventCardComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('eventDto', {});
     fixture.detectChanges();
   });
 
