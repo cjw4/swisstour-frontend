@@ -72,7 +72,9 @@
     "noEvents": "Keine Turniere geplant für",
     "infoButton": "Info",
     "registrationButton": "Anmeldung",
-    "resultsButton": "Resultate"
+    "resultsButton": "Resultate",
+    "viewOnPdga": "Auf PDGA ansehen →",
+    "viewResultsOnPdga": "Resultate auf PDGA ansehen →"
   },
   "eventList": {
     "addEvent": "Turnier hinzufügen",

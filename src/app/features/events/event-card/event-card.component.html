@@ -1,0 +1,139 @@
+<div
+  class="rounded-xl shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg select-none"
+  [class.cursor-pointer]="hasExpandableContent()"
+  [class.cursor-default]="!hasExpandableContent()"
+  [ngClass]="cardClasses()"
+  [attr.role]="hasExpandableContent() ? 'button' : null"
+  [attr.tabindex]="hasExpandableContent() ? '0' : null"
+  [attr.aria-expanded]="hasExpandableContent() ? isExpanded() : null"
+  (click)="toggle()"
+  (keydown.enter)="toggle()"
+  (keydown.space)="$event.preventDefault(); toggle()"
+>
+  <!-- Collapsed header — always visible -->
+  <div class="flex items-center gap-4 p-4">
+    <!-- Date block on the left -->
+    <div class="flex w-16 flex-shrink-0 flex-col items-center justify-center text-center">
+      @if (isMultiDay() && !isSameMonth()) {
+        <span class="text-sm font-bold leading-tight text-gray-900">{{ startMonthAbbr() }} {{ startDay() }}</span>
+        <span class="text-xs leading-none text-gray-400">–</span>
+        <span class="text-sm font-bold leading-tight text-gray-900">{{ endMonthAbbr() }} {{ endDay() }}</span>
+      } @else {
+        <span
+          class="font-bold leading-none text-gray-900"
+          [class.text-2xl]="!isMultiDay()"
+          [class.text-xl]="isMultiDay()"
+        >
+          @if (isMultiDay()) {
+            {{ startDay() }}–{{ endDay() }}
+          } @else {
+            {{ startDay() }}
+          }
+        </span>
+        <span class="mt-0.5 text-xs font-medium uppercase text-gray-500">{{ startMonthAbbr() }}</span>
+      }
+    </div>
+    @if (imagePath()) {
+      <img [src]="imagePath()" alt="" class="h-12 w-12 flex-shrink-0 object-contain" />
+    }
+    <div class="flex-1 min-w-0">
+      <p
+        class="truncate leading-snug text-gray-900"
+        [class.font-bold]="isHighlighted()"
+        [class.text-lg]="isHighlighted()"
+        [class.text-base]="!isHighlighted()"
+      >
+        {{ eventDto().displayName }}
+      </p>
+      <p class="text-sm text-gray-500 mt-0.5">
+        {{ eventDto().city }}
+      </p>
+    </div>
+    @if (hasExpandableContent()) {
+      <div class="flex-shrink-0 text-gray-400 transition-transform duration-300" [class.rotate-180]="isExpanded()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+    }
+  </div>
+
+  <!-- Expandable section -->
+  <div
+    class="overflow-hidden transition-all duration-300 ease-in-out"
+    [style.max-height]="isExpanded() ? '300px' : '0px'"
+  >
+    <div class="border-t border-gray-100 px-4 py-3 space-y-3">
+      @if (isPast()) {
+        <!-- Past events: single PDGA results link -->
+        @if (eventDto().eventId) {
+          <div class="flex flex-wrap gap-2">
+            <a
+              class="rounded-full border border-gray-300 bg-white px-5 py-1.5 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+              [href]="'https://www.pdga.com/tour/event/' + eventDto().eventId"
+              target="_blank"
+              rel="noopener noreferrer"
+              (click)="$event.stopPropagation()"
+              >{{ 'eventListPublic.viewResultsOnPdga' | translate }}</a
+            >
+          </div>
+        }
+      } @else {
+        <!-- Future/current events: registration date + all action buttons -->
+        @if (eventDto().registrationStart) {
+          <p class="text-sm text-gray-600">
+            <span class="font-medium">{{ 'eventListPublic.registration' | translate }}:</span>
+            {{ eventDto().registrationStart | dateRange: undefined }}
+          </p>
+        }
+        <div class="flex flex-wrap gap-2">
+          @if (eventDto().eventId) {
+            <a
+              class="rounded-full border border-gray-300 bg-white px-5 py-1.5 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+              [href]="'https://www.pdga.com/tour/event/' + eventDto().eventId"
+              target="_blank"
+              rel="noopener noreferrer"
+              (click)="$event.stopPropagation()"
+              >{{ 'eventListPublic.viewOnPdga' | translate }}</a
+            >
+          }
+          @if (eventDto().hasResults) {
+            <a
+              class="rounded-full border border-gray-300 bg-white px-5 py-1.5 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+              [href]="'https://www.pdga.com/tour/event/' + eventDto().eventId"
+              target="_blank"
+              rel="noopener noreferrer"
+              (click)="$event.stopPropagation()"
+              >{{ 'eventListPublic.resultsButton' | translate }}</a
+            >
+          } @else {
+            @if (eventDto().infoLink) {
+              <a
+                class="rounded-full border border-blue-200 bg-blue-50 px-5 py-1.5 text-sm text-blue-700 hover:bg-blue-100 transition-colors"
+                [href]="eventDto().infoLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                (click)="$event.stopPropagation()"
+                >{{ 'eventListPublic.infoButton' | translate }}</a
+              >
+            }
+            @if (eventDto().registrationLink) {
+              <a
+                class="rounded-full border border-green-200 bg-green-50 px-5 py-1.5 text-sm text-green-700 hover:bg-green-100 transition-colors"
+                [href]="eventDto().registrationLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                (click)="$event.stopPropagation()"
+                >{{ 'eventListPublic.registrationButton' | translate }}</a
+              >
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
