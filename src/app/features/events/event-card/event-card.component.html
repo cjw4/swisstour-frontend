@@ -12,14 +12,33 @@
 >
   <!-- Collapsed header — always visible -->
   <div class="flex items-center gap-4 p-4">
+    <!-- Date block on the left -->
+    <div class="flex w-16 flex-shrink-0 flex-col items-center justify-center text-center">
+      @if (isMultiDay() && !isSameMonth()) {
+        <span class="text-sm font-bold leading-tight text-gray-900">{{ startMonthAbbr() }} {{ startDay() }}</span>
+        <span class="text-xs leading-none text-gray-400">–</span>
+        <span class="text-sm font-bold leading-tight text-gray-900">{{ endMonthAbbr() }} {{ endDay() }}</span>
+      } @else {
+        <span
+          class="font-bold leading-none text-gray-900"
+          [class.text-2xl]="!isMultiDay()"
+          [class.text-xl]="isMultiDay()"
+        >
+          @if (isMultiDay()) {
+            {{ startDay() }}–{{ endDay() }}
+          } @else {
+            {{ startDay() }}
+          }
+        </span>
+        <span class="mt-0.5 text-xs font-medium uppercase text-gray-500">{{ startMonthAbbr() }}</span>
+      }
+    </div>
     @if (imagePath()) {
-      <img [src]="imagePath()" alt="" class="h-14 w-14 object-contain flex-shrink-0" />
-    } @else {
-      <div class="h-14 w-14 flex-shrink-0"></div>
+      <img [src]="imagePath()" alt="" class="h-12 w-12 flex-shrink-0 object-contain" />
     }
     <div class="flex-1 min-w-0">
       <p
-        class="leading-snug text-gray-900 truncate"
+        class="truncate leading-snug text-gray-900"
         [class.font-bold]="isHighlighted()"
         [class.text-lg]="isHighlighted()"
         [class.text-base]="!isHighlighted()"
@@ -27,7 +46,7 @@
         {{ eventDto().displayName }}
       </p>
       <p class="text-sm text-gray-500 mt-0.5">
-        {{ eventDto().startDate | dateRange: eventDto().endDate }} · {{ eventDto().city }}
+        {{ eventDto().city }}
       </p>
     </div>
     @if (hasExpandableContent()) {

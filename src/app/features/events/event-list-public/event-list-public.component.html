@@ -1,17 +1,22 @@
-@let events = events$ | async;
+@let groups = groupedEvents$ | async;
 
 <div class="mx-4 sm:mx-6 md:mx-15 mb-5">
   <h1 class="flex justify-center text-3xl py-5">{{ year }} {{ 'eventListPublic.title' | translate }}</h1>
 
   <app-local-loading-indicator [loading]="loading()" />
 
-  @if (events !== null && events.length > 0) {
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-6">
-      @for (event of events; track event.id) {
-        <app-event-card [eventDto]="event" />
-      }
-    </div>
-  } @else if (events !== null) {
+  @if (groups !== null && groups.length > 0) {
+    @for (group of groups; track group.key) {
+      <h2 class="mt-8 mb-3 border-b border-gray-200 pb-2 text-xl font-semibold text-gray-800">
+        {{ group.label }}
+      </h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-6">
+        @for (event of group.events; track event.id) {
+          <app-event-card [eventDto]="event" />
+        }
+      </div>
+    }
+  } @else if (groups !== null) {
     <p>{{ 'eventListPublic.noEvents' | translate }} {{ year }}</p>
   }
 </div>

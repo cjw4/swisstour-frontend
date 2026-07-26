@@ -29,6 +29,33 @@ export class EventCardComponent {
     return d.toISOString().split('T')[0];
   })();
 
+  startDay = computed(() => {
+    const start = this.eventDto().startDate;
+    return start ? new Date(start).getDate() : null;
+  });
+
+  startMonthAbbr = computed(() => {
+    const start = this.eventDto().startDate;
+    return start ? new Date(start).toLocaleDateString('en-US', { month: 'short' }) : '';
+  });
+
+  endDay = computed(() => {
+    const end = this.eventDto().endDate;
+    return end ? new Date(end).getDate() : null;
+  });
+
+  endMonthAbbr = computed(() => {
+    const end = this.eventDto().endDate;
+    return end ? new Date(end).toLocaleDateString('en-US', { month: 'short' }) : '';
+  });
+
+  isMultiDay = computed(() => {
+    const { startDate, endDate } = this.eventDto();
+    return !!endDate && !!startDate && endDate !== startDate;
+  });
+
+  isSameMonth = computed(() => this.startMonthAbbr() === this.endMonthAbbr());
+
   imagePath = computed(() => {
     switch (this.eventDto().swisstourType) {
       case 'Pro':
